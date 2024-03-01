@@ -6,15 +6,17 @@ public class SpawnOnSphere : MonoBehaviour
 {
     // Old settings
     public GameObject prefab;
-    public bool spawned = true;
-    public float radius = 10f;
+    public GameObject planet;
+    
+    private float radius;
 
     // New
 
     
     private void Start()
     {
-        Invoke(nameof(Spawn), 1);
+        radius = planet.transform.localScale.x;
+        //Invoke(nameof(Spawn), 1);
         //Invoke(nameof(SpawnOriented), 1);
     }
 
