@@ -565,7 +565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planet: {fileID: 1720933383}
-  obstacle: {fileID: 8337042592648960967, guid: 5d0f21c43aecd2f4da52860e70790449, type: 3}
+  obstacle: {fileID: 566019402426485797, guid: 03a2809eef6f4534ca5e75c8e113a298, type: 3}
   spawnPeriod: 1
 --- !u!4 &1333565520
 Transform:

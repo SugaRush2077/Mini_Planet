@@ -8,6 +8,7 @@ public class Crater : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //transform.RotateAround(Vector3.forward, 90f);
         Invoke(nameof(DestroyCrater), destroy_time);
     }
 

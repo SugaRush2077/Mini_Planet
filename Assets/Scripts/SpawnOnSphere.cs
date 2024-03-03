@@ -11,8 +11,6 @@ public class SpawnOnSphere : MonoBehaviour
     private float radius;
 
     // New
-
-    
     private void Start()
     {
         radius = planet.transform.localScale.x;
