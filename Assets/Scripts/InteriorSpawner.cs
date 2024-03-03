@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnOnSphere : MonoBehaviour
+public class InteriorSpawner : MonoBehaviour
 {
     // Old settings
     public GameObject prefab;

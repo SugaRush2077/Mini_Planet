@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class meteor : MonoBehaviour
+public class Meteor : MonoBehaviour
 {
     //public GameObject targetPlanet;
     public GameObject crater;
@@ -56,7 +56,7 @@ public class meteor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Planet")
+        if(other.CompareTag("Planet"))
         {
             Debug.Log("Hit Planet!");
 
