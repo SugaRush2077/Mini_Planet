@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpacePlayer : MonoBehaviour
+public class Player : MonoBehaviour
 {
 
     public GameObject Planet;

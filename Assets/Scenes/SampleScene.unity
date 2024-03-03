@@ -134,10 +134,10 @@ GameObject:
   - component: {fileID: 356543620}
   - component: {fileID: 356543622}
   - component: {fileID: 356543616}
-  - component: {fileID: 356543621}
+  - component: {fileID: 356543623}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -186,8 +186,24 @@ Transform:
   - {fileID: 963194228}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &356543621
-BoxCollider:
+--- !u!114 &356543622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356543615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1058b5ad4c9cc404f8818f06d20f2209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Planet: {fileID: 1720933383}
+  PlayerPlaceholder: {fileID: 932321249}
+  speed: 4
+  JumpHeight: 1.2
+--- !u!135 &356543623
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -205,24 +221,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &356543622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 356543615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1058b5ad4c9cc404f8818f06d20f2209, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Planet: {fileID: 1720933383}
-  PlayerPlaceholder: {fileID: 932321249}
-  speed: 4
-  JumpHeight: 1.2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0.08}
 --- !u!1 &500567349
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +249,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1691755936}
@@ -567,6 +567,7 @@ MonoBehaviour:
   planet: {fileID: 1720933383}
   obstacle: {fileID: 566019402426485797, guid: 03a2809eef6f4534ca5e75c8e113a298, type: 3}
   spawnPeriod: 1
+  range: 3
 --- !u!4 &1333565520
 Transform:
   m_ObjectHideFlags: 0
@@ -963,8 +964,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 705507995}
-  - {fileID: 1720933387}
   - {fileID: 356543620}
+  - {fileID: 1720933387}
   - {fileID: 932321251}
   - {fileID: 1427825584}
   - {fileID: 1333565520}

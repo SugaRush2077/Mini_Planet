@@ -63,7 +63,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crater: {fileID: 974781282163733114, guid: 140d61cd9f2975046b1a71eaa0519d41, type: 3}
-  explosionEffect: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b, type: 3}
+  explosionEffect: {fileID: 1000011797152326, guid: 60bcda38b0de1cb4e873524c67292007, type: 3}
+  explosionScale: 1
 --- !u!54 &3988516128403075264
 Rigidbody:
   m_ObjectHideFlags: 0

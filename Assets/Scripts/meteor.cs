@@ -7,6 +7,7 @@ public class meteor : MonoBehaviour
     //public GameObject targetPlanet;
     public GameObject crater;
     public GameObject explosionEffect;
+    public float explosionScale = 1.0f;
 
     private Vector3 P_center;
     private Vector3 landing;
@@ -77,6 +78,8 @@ public class meteor : MonoBehaviour
     void Explode()
     {
         Instantiate(explosionEffect, transform.position, transform.rotation);
+        //GameObject explode = Instantiate(explosionEffect, transform.position, transform.rotation);
+        //explode.transform.localScale = new Vector3(explosionScale, explosionScale, explosionScale);
         Destroy(gameObject);
     }
     void FixedUpdate()
