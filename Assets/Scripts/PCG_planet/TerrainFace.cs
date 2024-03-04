@@ -28,20 +28,20 @@ public class TerrainFace
         // Vertice on a 
         int[] triangles = new int[(resolution - 1) * (resolution - 1) * 2 * 3];
         int triIndex = 0;   // check boundary
+        Vector2[] uv = (mesh.uv.Length == vertices.Length) ? mesh.uv : new Vector2[vertices.Length];
 
         for (int y = 0; y < resolution; y++)
         {
             for(int x = 0; x < resolution; x++)
             {
+                // Calculate the point on each face of cube
                 int i = x + y * resolution;
                 Vector2 percent = new Vector2(x, y) / (resolution - 1);
-                // Calculate the point on each face of cube
                 Vector3 pointOnUnitCube = localUp + (percent.x - .5f) * 2 * axisA + (percent.y - .5f) * 2 * axisB;
                 Vector3 pointOnUnitSphere = pointOnUnitCube.normalized;
-                
-                //vertices[i] = pointOnUnitCube;
-                //vertices[i] = pointOnUnitSphere;
-                vertices[i] = shapeGenerator.CalculatePointOnPlanet(pointOnUnitSphere);
+                float unscaledElevation = shapeGenerator.CalculateUnscaledElevation(pointOnUnitSphere);
+                vertices[i] = pointOnUnitCube * shapeGenerator.GetScaledElevation(unscaledElevation);
+                uv[i].y = unscaledElevation;
 
                 if (x != resolution - 1 && y != resolution - 1)
                 {
@@ -63,5 +63,27 @@ public class TerrainFace
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
+        mesh.uv = uv;
+    }
+
+
+    public void UpdateUVs(ColorGenerator colorGenerator)
+    {
+        Vector2[] uv = mesh.uv;
+
+        for (int y = 0; y < resolution; y++)
+        {
+            for (int x = 0; x < resolution; x++)
+            {
+                // Calculate the point on each face of cube
+                int i = x + y * resolution;
+                Vector2 percent = new Vector2(x, y) / (resolution - 1);
+                Vector3 pointOnUnitCube = localUp + (percent.x - .5f) * 2 * axisA + (percent.y - .5f) * 2 * axisB;
+                Vector3 pointOnUnitSphere = pointOnUnitCube.normalized;
+                
+                uv[i].x = colorGenerator.BiomePercentFromPoint(pointOnUnitSphere);
+            }
+        }
+        mesh.uv = uv;
     }
 }
