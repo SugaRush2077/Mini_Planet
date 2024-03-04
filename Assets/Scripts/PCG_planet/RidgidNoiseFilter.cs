@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class RidgidNoiseFilter : INoiseFilter
 {
-    NoiseSettings settings;
+    NoiseSettings.RidgidNoiseSettings settings;
     Noise noise = new Noise();
 
-    public RidgidNoiseFilter(NoiseSettings settings)
+    public RidgidNoiseFilter(NoiseSettings.RidgidNoiseSettings settings)
     {
         this.settings = settings;
     }
@@ -25,7 +25,7 @@ public class RidgidNoiseFilter : INoiseFilter
             float v = 1 - Mathf.Abs(noise.Evaluate(point * frequency + settings.center));
             v *= v;
             v *= weight;
-            weight = v;
+            weight = Mathf.Clamp01(v * settings.weightMultiplier);
 
             noiseValue += v * amplitude;
             frequency *= settings.roughness;
