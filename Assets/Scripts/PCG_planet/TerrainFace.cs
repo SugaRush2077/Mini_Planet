@@ -40,7 +40,7 @@ public class TerrainFace
                 Vector3 pointOnUnitCube = localUp + (percent.x - .5f) * 2 * axisA + (percent.y - .5f) * 2 * axisB;
                 Vector3 pointOnUnitSphere = pointOnUnitCube.normalized;
                 float unscaledElevation = shapeGenerator.CalculateUnscaledElevation(pointOnUnitSphere);
-                vertices[i] = pointOnUnitCube * shapeGenerator.GetScaledElevation(unscaledElevation);
+                vertices[i] = pointOnUnitSphere * shapeGenerator.GetScaledElevation(unscaledElevation);
                 uv[i].y = unscaledElevation;
 
                 if (x != resolution - 1 && y != resolution - 1)
