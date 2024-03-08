@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class ExteriorSpawner : MonoBehaviour
 {
-    public GameObject planet;
+    public GameObject centerPlanet;
+    //public Planet centerPlanet;
     public Meteor meteor;
 
     public bool Generate = true;
     public float spawnPeriod = 1f;
-    public float range = 5f;
-    private Vector3 spawnCenter = Vector3.zero;
-    private float radius;
+    public float range = 20f;
+    private Vector3 spawnCenter;
+    private float spawnRadius;
     // Start is called before the first frame update
     void Start()
     {
-        radius = planet.transform.localScale.x;
-        spawnCenter = planet.transform.position;
+        spawnRadius = centerPlanet.transform.localScale.x;
+        //spawnRadius = centerPlanet.shapeSettings.planetRadius;
+        spawnCenter = centerPlanet.transform.position;
         Debug.Log(spawnCenter);
         if (Generate)
         {
@@ -27,7 +29,8 @@ public class ExteriorSpawner : MonoBehaviour
 
     void Spawn()
     {
-        Vector3 spawnPoint = Random.onUnitSphere * radius * range;
+        Vector3 spawnPoint = spawnCenter + (Random.onUnitSphere * spawnRadius * range);
+        Debug.Log(spawnPoint);
         Instantiate(meteor, spawnPoint, Quaternion.identity);
         //meteor.setTargetCenter(spawnCenter);
         //meteor.setTargetCenter(spawnCenter);

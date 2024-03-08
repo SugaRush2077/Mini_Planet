@@ -9,10 +9,10 @@ public class Meteor : MonoBehaviour
     public GameObject explosionEffect;
     public float explosionScale = 1.0f;
 
-    private Vector3 P_center;
-    private Vector3 landing;
-    private Quaternion ori;
-    private Vector3 direction;
+    private Vector3 towardPlanetCenter;
+    private Vector3 landingPoint;
+    private Quaternion landingOrientation;
+    private Vector3 flyingDirection;
     //private float destroy_time = 10f;
     
     private float moveSpeed = 10.0f;
@@ -22,13 +22,13 @@ public class Meteor : MonoBehaviour
     void Start()
     {
         //P_center = targetPlanet.transform.position;
-        P_center = Vector3.zero;
-        direction = transform.position - P_center;
+        towardPlanetCenter = Vector3.zero;
+        flyingDirection = transform.position - towardPlanetCenter;
         calculateLandPoint();
 
         //m_rotation = m_rotation.normalized;
-        direction = direction.normalized;
-        transform.rotation = ori;
+        flyingDirection = flyingDirection.normalized;
+        transform.rotation = landingOrientation;
     }
 
     private void DestroyCrater()
@@ -39,23 +39,23 @@ public class Meteor : MonoBehaviour
     private void calculateLandPoint()
     {
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, -direction, out hit))
+        if(Physics.Raycast(transform.position, -flyingDirection, out hit))
         {
             Debug.Log("hit: " + hit.point);
-            landing = hit.point;
-            ori = Quaternion.LookRotation(hit.normal);
+            landingPoint = hit.point;
+            landingOrientation = Quaternion.LookRotation(hit.normal);
             
             //Quaternion.Normalize(ori);
         }
     }
     private void Shoot()
     {
-        direction = transform.position - P_center;
+        flyingDirection = transform.position - towardPlanetCenter;
         calculateLandPoint();
 
         //m_rotation = m_rotation.normalized;
-        direction = direction.normalized;
-        transform.rotation = ori;
+        flyingDirection = flyingDirection.normalized;
+        transform.rotation = landingOrientation;
     }
 
     public void setTargetCenter(Vector3 vtr)
@@ -69,17 +69,7 @@ public class Meteor : MonoBehaviour
         if(other.CompareTag("Planet") || other.CompareTag("PCG_Planet"))
         {
             Debug.Log("Hit Planet!");
-
-            //Quaternion orientation = Quaternion.Euler(direction.x, direction.y, direction.z);
-            //Debug.Log(orientation.ToString());
-            Instantiate(crater, landing, ori);
-            /*
-            RaycastHit hit;
-            Quaternion orientation = transform.rotation;
-            if(Physics.Raycast(gameObject.transform.position, direction, out hit))
-            {
-                Debug.Log("Hit Ray!");
-            }*/
+            Instantiate(crater, landingPoint, landingOrientation);
             Explode();
 
         }
@@ -94,6 +84,6 @@ public class Meteor : MonoBehaviour
     }
     void FixedUpdate()
     {
-        transform.position -= direction * moveSpeed * Time.deltaTime;
+        transform.position -= flyingDirection * moveSpeed * Time.deltaTime;
     }
 }
