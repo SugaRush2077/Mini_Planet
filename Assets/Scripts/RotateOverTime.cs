@@ -16,6 +16,6 @@ public class RotateOverTime : MonoBehaviour
     void FixedUpdate()
     {
         transform.rotation *= Quaternion.Euler(m_rotation * Time.deltaTime * rotateSpeed);
-        Debug.Log(transform.rotation.ToString());
+        //Debug.Log(transform.rotation.ToString());
     }
 }

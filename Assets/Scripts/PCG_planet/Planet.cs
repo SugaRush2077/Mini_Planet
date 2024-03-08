@@ -7,6 +7,7 @@ public class Planet : MonoBehaviour
     [Range(2, 256)]
     public int resolution = 10;
     public bool autoUpdate = true;
+    public bool usePCG = false;
     public enum FaceRenderMask { All, Top, Bottom, Left, Right, Front, Back };
     public FaceRenderMask faceRenderMask;
 
@@ -24,17 +25,49 @@ public class Planet : MonoBehaviour
     MeshFilter[] meshFilters;
     TerrainFace[] terrainFaces;
 
+
+    ShapeSettings defaultShapeSettings;
+    ColorSettings defaultColorSettings;
+
+
     /*
     private void OnValidate()
     {
         GeneratePlanet();
     }
     */
+    private void Start()
+    {
+        if(usePCG)
+        {
+            InvokeRepeating(nameof(RandomGeneratePlanet), 1, 3);
+        }
+        
+    }
+
+    private void RandomGeneratePlanet()
+    {
+        shapeSettings.planetRadius = 4f;
+        shapeSettings.GenerateNoiseLayer();
+        
+        //colorSettings.GenerateColorSetting();
+
+
+
+        Initialize();
+        GenerateMesh();
+        GenerateColor();
+        Debug.Log("Generate New Planet!");
+    }
+
+
 
     private void Initialize()
     {
+        gameObject.tag = "PCG_Planet";
         shapeGenerator.UpdateSettings(shapeSettings);
         colorGenerator.UpdateSettings(colorSettings);
+        
         if (meshFilters == null || meshFilters.Length == 0)
         { 
             meshFilters = new MeshFilter[6]; 
@@ -58,9 +91,11 @@ public class Planet : MonoBehaviour
             meshFilters[i].GetComponent<MeshRenderer>().sharedMaterial = colorSettings.planetMaterial;
 
             terrainFaces[i] = new TerrainFace(shapeGenerator, meshFilters[i].sharedMesh, resolution, directions[i]);
+            // Choose which face rendering
             bool renderFace = faceRenderMask == FaceRenderMask.All || (int)faceRenderMask - 1 == i;
             meshFilters[i].gameObject.SetActive(renderFace);
         }
+        
     }
 
     public void GeneratePlanet()

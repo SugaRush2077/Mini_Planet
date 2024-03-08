@@ -7,6 +7,7 @@ public class ShapeSettings : ScriptableObject
 {
     public float planetRadius = 1f;
     public NoiseLayer[] noiseLayers;
+    const int NumOfNoiseLayer = 3;
 
     [System.Serializable]
     public class NoiseLayer
@@ -14,5 +15,39 @@ public class ShapeSettings : ScriptableObject
         public bool enabled = true;
         public bool useFirstLayerAsMask;
         public NoiseSettings noiseSettings;
+        public NoiseLayer() {
+            noiseSettings = new NoiseSettings();
+        }
     }
+
+    public ShapeSettings()
+    {
+        noiseLayers = new NoiseLayer[NumOfNoiseLayer];
+    }
+
+    public void GenerateNoiseLayer()
+    {
+        //noiseLayers = new NoiseLayer[3];
+        for(int i = 0; i < noiseLayers.Length; i++)
+        {
+            //noiseLayers[i] = new NoiseLayer();
+            //Debug.Log(noiseLayers[i]);
+            noiseLayers[i].enabled = true;
+            if (i != 0)
+            {
+                noiseLayers[i].useFirstLayerAsMask = true;
+            }
+            if (i != noiseLayers.Length - 1)
+            {
+                noiseLayers[i].noiseSettings.filterType = NoiseSettings.FilterType.Simple;
+            }
+            else
+            {
+                noiseLayers[i].noiseSettings.filterType = NoiseSettings.FilterType.Ridgid;
+            }
+                
+            noiseLayers[i].noiseSettings.RandomizeSettings();
+        }
+    }
+
 }

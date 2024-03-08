@@ -5,20 +5,33 @@ using UnityEngine;
 public class ExteriorSpawner : MonoBehaviour
 {
     public GameObject planet;
-    public GameObject obstacle;
+    public Meteor meteor;
+
+    public bool Generate = true;
     public float spawnPeriod = 1f;
     public float range = 5f;
+    private Vector3 spawnCenter = Vector3.zero;
     private float radius;
     // Start is called before the first frame update
     void Start()
     {
         radius = planet.transform.localScale.x;
-        InvokeRepeating(nameof(Spawn), 1f, spawnPeriod);
+        spawnCenter = planet.transform.position;
+        Debug.Log(spawnCenter);
+        if (Generate)
+        {
+            InvokeRepeating(nameof(Spawn), 1f, spawnPeriod);
+        }
+        
     }
 
     void Spawn()
     {
-        Instantiate(obstacle, Random.onUnitSphere * radius * range, Quaternion.identity);
+        Vector3 spawnPoint = Random.onUnitSphere * radius * range;
+        Instantiate(meteor, spawnPoint, Quaternion.identity);
+        //meteor.setTargetCenter(spawnCenter);
+        //meteor.setTargetCenter(spawnCenter);
+        //Debug.Log(obstacle.transform.position);
     }
     // Update is called once per frame
     void Update()

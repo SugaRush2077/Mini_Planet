@@ -22,18 +22,13 @@ public class Meteor : MonoBehaviour
     void Start()
     {
         //P_center = targetPlanet.transform.position;
-
-        
-        
         P_center = Vector3.zero;
         direction = transform.position - P_center;
         calculateLandPoint();
-        
-        
+
         //m_rotation = m_rotation.normalized;
         direction = direction.normalized;
         transform.rotation = ori;
-        
     }
 
     private void DestroyCrater()
@@ -53,10 +48,25 @@ public class Meteor : MonoBehaviour
             //Quaternion.Normalize(ori);
         }
     }
+    private void Shoot()
+    {
+        direction = transform.position - P_center;
+        calculateLandPoint();
+
+        //m_rotation = m_rotation.normalized;
+        direction = direction.normalized;
+        transform.rotation = ori;
+    }
+
+    public void setTargetCenter(Vector3 vtr)
+    {
+        //P_center = vtr;
+        //Shoot();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Planet"))
+        if(other.CompareTag("Planet") || other.CompareTag("PCG_Planet"))
         {
             Debug.Log("Hit Planet!");
 
