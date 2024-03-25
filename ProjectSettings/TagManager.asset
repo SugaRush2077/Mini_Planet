@@ -7,6 +7,7 @@ TagManager:
   - Planet
   - Obstacle
   - PCG_Planet
+  - PlanetSurface
   layers:
   - Default
   - TransparentFX

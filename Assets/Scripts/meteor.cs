@@ -15,7 +15,7 @@ public class Meteor : MonoBehaviour
     private Vector3 flyingDirection;
     //private float destroy_time = 10f;
     
-    private float moveSpeed = 10.0f;
+    private float moveSpeed = 30.0f;
     //private bool isCollide = false;
     
     // Start is called before the first frame update
@@ -66,7 +66,7 @@ public class Meteor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Planet") || other.CompareTag("PCG_Planet"))
+        if(other.CompareTag("Planet") || other.CompareTag("PCG_Planet") || other.CompareTag("PlanetSurface"))
         {
             Debug.Log("Hit Planet!");
             Instantiate(crater, landingPoint, landingOrientation);

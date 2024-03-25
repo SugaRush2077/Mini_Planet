@@ -64,6 +64,14 @@ public class TerrainFace
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
         mesh.uv = uv;
+
+        if(mesh == null)
+        {
+            Debug.Log("NULL");
+            
+        }
+
+
     }
 
 
@@ -85,5 +93,10 @@ public class TerrainFace
             }
         }
         mesh.uv = uv;
+
+        if (mesh == null)
+        {
+            Debug.Log("NULL");
+        }
     }
 }

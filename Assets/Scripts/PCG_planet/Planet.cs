@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Planet : MonoBehaviour
@@ -40,14 +41,15 @@ public class Planet : MonoBehaviour
     {
         if(usePCG)
         {
-            InvokeRepeating(nameof(RandomGeneratePlanet), 1, 3);
+            InvokeRepeating(nameof(RandomGeneratePlanet), .5f, 2);
         }
         
     }
 
+    // Procedural Generate Planet
     private void RandomGeneratePlanet()
     {
-        shapeSettings.planetRadius = 4f;
+        shapeSettings.planetRadius = 10f;
         shapeSettings.GenerateNoiseLayer();
         
         //colorSettings.GenerateColorSetting();
@@ -83,14 +85,19 @@ public class Planet : MonoBehaviour
             {
                 GameObject meshObj = new GameObject("mesh");
                 meshObj.transform.parent = transform;
+                meshObj.tag = "PlanetSurface";
 
                 meshObj.AddComponent<MeshRenderer>();
                 meshFilters[i] = meshObj.AddComponent<MeshFilter>();
                 meshFilters[i].sharedMesh = new Mesh();
+                meshFilters[i].AddComponent<MeshCollider>();
+                //meshFilters[i].AddComponent<MeshCollider>();
             }
+            meshFilters[i].GetComponent<MeshCollider>().sharedMesh = meshFilters[i].sharedMesh;
+            //meshFilters[i].GetComponent<MeshCollider>().convex = true;
             meshFilters[i].GetComponent<MeshRenderer>().sharedMaterial = colorSettings.planetMaterial;
-
             terrainFaces[i] = new TerrainFace(shapeGenerator, meshFilters[i].sharedMesh, resolution, directions[i]);
+            
             // Choose which face rendering
             bool renderFace = faceRenderMask == FaceRenderMask.All || (int)faceRenderMask - 1 == i;
             meshFilters[i].gameObject.SetActive(renderFace);

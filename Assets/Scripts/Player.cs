@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
     public GameObject Planet;
     public GameObject PlayerPlaceholder;
 
