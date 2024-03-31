@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
 
         //GroundControl
         RaycastHit hit = new RaycastHit();
-        if (Physics.Raycast(transform.position, -transform.up, out hit, 10))
+        if (Physics.Raycast(transform.position, -transform.up, out hit, 20))
         {
             distanceToGround = hit.distance;
             Groundnormal = hit.normal;

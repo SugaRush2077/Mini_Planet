@@ -13,6 +13,8 @@ public class ExteriorSpawner : MonoBehaviour
     public float range = 20f;
     private Vector3 spawnCenter;
     private float spawnRadius;
+
+    
     // Start is called before the first frame update
     void Start()
     {
