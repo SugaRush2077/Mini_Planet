@@ -49,8 +49,8 @@ public class UltimatePlayer : MonoBehaviour
             rb.AddForce(transform.up * 40000 * JumpHeight * Time.deltaTime);
         }
 
-        /*
-        //GroundControl
+        
+        // Detect Ground Direction and adjust player belly to the ground 
         RaycastHit hit = new RaycastHit();
         if (Physics.Raycast(transform.position, -transform.up, out hit, 20))
         {
@@ -65,7 +65,7 @@ public class UltimatePlayer : MonoBehaviour
             {
                 OnGround = false;
             }
-        }*/
+        }
 
 
         //GRAVITY and ROTATION
