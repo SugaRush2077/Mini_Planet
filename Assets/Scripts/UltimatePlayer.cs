@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class UltimatePlayer : MonoBehaviour
 {
     public GameObject Planet;
-    public GameObject PlayerPlaceholder;
+    //public GameObject PlayerPlaceholder;
 
     public float speed = 4;
     public float JumpHeight = 1.2f;
@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
 
     private Rigidbody rb;
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -26,9 +26,8 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        /*
         //MOVEMENT
         float x = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
         float z = Input.GetAxis("Vertical") * Time.deltaTime * speed;
@@ -49,8 +48,8 @@ public class Player : MonoBehaviour
         {
             rb.AddForce(transform.up * 40000 * JumpHeight * Time.deltaTime);
         }
-        */
 
+        /*
         //GroundControl
         RaycastHit hit = new RaycastHit();
         if (Physics.Raycast(transform.position, -transform.up, out hit, 20))
@@ -66,61 +65,21 @@ public class Player : MonoBehaviour
             {
                 OnGround = false;
             }
-        }
+        }*/
+
 
         //GRAVITY and ROTATION
 
         Vector3 gravDirection = (transform.position - Planet.transform.position).normalized;
 
+        // if player is not stand on ground, force it to the ground
         if (OnGround == false)
         {
             rb.AddForce(gravDirection * -gravity);
         }
 
-        //
 
         Quaternion toRotation = Quaternion.FromToRotation(transform.up, Groundnormal) * transform.rotation;
         transform.rotation = toRotation;
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Obstacle"))
-        {
-            GameManager.Instance.GameOver();
-        }
-    }
-
-
-
-
-
-
-
-
-            /*
-            //CHANGE PLANET
-
-            private void OnTriggerEnter(Collider collision)
-            {
-                if (collision.transform != Planet.transform)
-                {
-
-                    Planet = collision.transform.gameObject;
-
-                    Vector3 gravDirection = (transform.position - Planet.transform.position).normalized;
-
-                    Quaternion toRotation = Quaternion.FromToRotation(transform.up, gravDirection) * transform.rotation;
-                    transform.rotation = toRotation;
-
-                    rb.velocity = Vector3.zero;
-                    rb.AddForce(gravDirection * gravity);
-
-
-                    PlayerPlaceholder.GetComponent<TutorialPlayerPlaceholder>().NewPlanet(Planet);
-
-                }
-            }
-            */
-
-        }
+}

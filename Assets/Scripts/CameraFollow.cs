@@ -11,14 +11,12 @@ public class CameraFollow : MonoBehaviour
     float minFov = 35;
     float maxFov = 100;
 
-    public Transform ourTarget;
-    public float smoothSpeed = 0.125f;
-
+    public float smoothSpeed = 0.5f;
 
     // Update is called once per frame
     void LateUpdate()
     {
-        
+
         if (Input.GetMouseButton(1))
         {
 
