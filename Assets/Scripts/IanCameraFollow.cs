@@ -11,8 +11,8 @@ public class IanCameraFollow : MonoBehaviour
     public float CameraRotateSpeed = 3.5f;
 
     private float sensitivity = 17f;
-    float minFov = 35;
-    float maxFov = 100;
+    float minFov = 40;
+    float maxFov = 110;
 
     private Vector3 Groundnormal;
 

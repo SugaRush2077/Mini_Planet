@@ -6,7 +6,7 @@ public class BrackeysCameraFollow : MonoBehaviour
     public float smoothSpeed = 0.125f;
     public Vector3 offset;
     private Vector3 Groundnormal;
-
+    /*
     private void FixedUpdate()
     {
         Vector3 desiredPosition = target.transform.position + target.Groundnormal * 20f;
@@ -19,5 +19,5 @@ public class BrackeysCameraFollow : MonoBehaviour
             Groundnormal = hit.normal;
         }
         transform.LookAt(target.transform, Groundnormal);
-    }
+    }*/
 }

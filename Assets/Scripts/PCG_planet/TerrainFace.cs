@@ -70,10 +70,7 @@ public class TerrainFace
             Debug.Log("NULL");
             
         }
-
-
     }
-
 
     public void UpdateUVs(ColorGenerator colorGenerator)
     {

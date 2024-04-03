@@ -74,10 +74,10 @@ public class NoiseSettings
         filterType = new FilterType();
     }
 
-    public void RandomizeSettings()
+    public void RandomizeSettings(bool useDefaultRandom)
     {
-        bool usingDefault = true;
-        if (usingDefault)
+        //bool usingDefault = true;
+        if (useDefaultRandom)
         {
             // default   
             if (filterType == FilterType.Simple)

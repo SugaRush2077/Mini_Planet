@@ -6,7 +6,9 @@ using UnityEngine;
 public class ShapeSettings : ScriptableObject
 {
     public float planetRadius = 10f;
+    public bool DefaultRandomize = true;
     public NoiseLayer[] noiseLayers;
+    
     const int NumOfNoiseLayer = 3;
 
     [System.Serializable]
@@ -47,7 +49,7 @@ public class ShapeSettings : ScriptableObject
                 noiseLayers[i].noiseSettings.filterType = NoiseSettings.FilterType.Ridgid;
             }
                 
-            noiseLayers[i].noiseSettings.RandomizeSettings();
+            noiseLayers[i].noiseSettings.RandomizeSettings(DefaultRandomize);
         }
     }
 

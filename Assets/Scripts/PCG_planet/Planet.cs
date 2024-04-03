@@ -98,10 +98,8 @@ public class Planet : MonoBehaviour
                 meshFilters[i] = meshObj.AddComponent<MeshFilter>();
                 meshFilters[i].sharedMesh = new Mesh();
                 meshFilters[i].AddComponent<MeshCollider>();
-                //meshFilters[i].AddComponent<MeshCollider>();
             }
             meshFilters[i].GetComponent<MeshCollider>().sharedMesh = meshFilters[i].sharedMesh;
-            //meshFilters[i].GetComponent<MeshCollider>().convex = true;
             meshFilters[i].GetComponent<MeshRenderer>().sharedMaterial = colorSettings.planetMaterial;
             terrainFaces[i] = new TerrainFace(shapeGenerator, meshFilters[i].sharedMesh, resolution, directions[i]);
             
@@ -111,6 +109,8 @@ public class Planet : MonoBehaviour
         }
         
     }
+
+
 
     public void GeneratePlanet()
     {
@@ -140,17 +140,13 @@ public class Planet : MonoBehaviour
     void GenerateMesh()
     {
         Debug.Log("Generating Mesh...");
-        /*
-        foreach (TerrainFace face in terrainFaces)
-        {
-            face.ConstructMesh();
-        }
-        */
+        
         for (int i = 0; i < 6; i++)
         {
             if (meshFilters[i].gameObject.activeSelf)
             {
                 terrainFaces[i].ConstructMesh();
+                meshFilters[i].GetComponent<MeshCollider>().sharedMesh = meshFilters[i].sharedMesh;
             }
         }
 

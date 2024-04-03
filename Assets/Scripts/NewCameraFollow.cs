@@ -13,7 +13,7 @@ public class NewCameraFollow : MonoBehaviour
         _offset = transform.position - target.transform.position;
         transform.LookAt(target.transform);
     }
-
+    /*
     private void LateUpdate()
     {
         _offset = target.Groundnormal * offsetValue;
@@ -25,7 +25,7 @@ public class NewCameraFollow : MonoBehaviour
         //transform.rotation = toRotation;
 
         //transform.LookAt(target.transform);
-    }
+    }*/
 
     
 }
