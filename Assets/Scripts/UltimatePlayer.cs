@@ -14,7 +14,8 @@ public class UltimatePlayer : MonoBehaviour
     bool OnGround = false;
 
     float distanceToGround;
-    Vector3 Groundnormal;
+    public Vector3 Groundnormal;
+    public Vector3 Forward = new Vector3(1, 0, 0);
 
     private Rigidbody rb;
 
@@ -42,7 +43,7 @@ public class UltimatePlayer : MonoBehaviour
         {
             transform.Rotate(0, -150 * Time.deltaTime, 0);
         }
-
+        //Debug.Log(transform.up);
         //Jump
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -57,17 +58,17 @@ public class UltimatePlayer : MonoBehaviour
             distanceToGround = hit.distance;
             Groundnormal = hit.normal;
 
-            if (distanceToGround <= 0.2f)
+            if (distanceToGround <= 2f)
             {
+                //Debug.Log("OnGround");
                 OnGround = true;
+                
             }
             else
             {
                 OnGround = false;
             }
         }
-
-
         //GRAVITY and ROTATION
 
         Vector3 gravDirection = (transform.position - Planet.transform.position).normalized;

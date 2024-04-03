@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class ShapeSettings : ScriptableObject
 {
-    public float planetRadius = 1f;
+    public float planetRadius = 10f;
     public NoiseLayer[] noiseLayers;
     const int NumOfNoiseLayer = 3;
 
@@ -22,10 +22,11 @@ public class ShapeSettings : ScriptableObject
 
     public ShapeSettings()
     {
+        
         noiseLayers = new NoiseLayer[NumOfNoiseLayer];
     }
 
-    public void GenerateNoiseLayer()
+    public void RandomGenerateNoiseLayer()
     {
         //noiseLayers = new NoiseLayer[3];
         for(int i = 0; i < noiseLayers.Length; i++)

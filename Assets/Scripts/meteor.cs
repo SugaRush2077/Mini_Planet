@@ -11,24 +11,24 @@ public class Meteor : MonoBehaviour
 
     private Vector3 towardPlanetCenter;
     private Vector3 landingPoint;
-    private Quaternion landingOrientation;
-    private Vector3 flyingDirection;
-    //private float destroy_time = 10f;
+    private Quaternion craterOrientation;
+    private Vector3 flyingToward;
     
     private float moveSpeed = 30.0f;
-    //private bool isCollide = false;
     
     // Start is called before the first frame update
     void Start()
     {
         //P_center = targetPlanet.transform.position;
         towardPlanetCenter = Vector3.zero;
-        flyingDirection = transform.position - towardPlanetCenter;
+        flyingToward = towardPlanetCenter - transform.position;
+        Debug.Log("flying toward: " + flyingToward);
         calculateLandPoint();
 
         //m_rotation = m_rotation.normalized;
-        flyingDirection = flyingDirection.normalized;
-        transform.rotation = landingOrientation;
+         // for speed
+        transform.rotation = Quaternion.LookRotation(-(flyingToward));
+        flyingToward = flyingToward.normalized;
     }
 
     private void DestroyCrater()
@@ -38,16 +38,20 @@ public class Meteor : MonoBehaviour
 
     private void calculateLandPoint()
     {
+        //Groundnormal = (transform.position - center).normalized;
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, -flyingDirection, out hit))
+        if(Physics.Raycast(transform.position, flyingToward, out hit))
         {
             Debug.Log("hit: " + hit.point);
             landingPoint = hit.point;
-            landingOrientation = Quaternion.LookRotation(hit.normal);
+            craterOrientation = Quaternion.LookRotation(hit.normal);
             
             //Quaternion.Normalize(ori);
         }
+        
+        
     }
+    /*
     private void Shoot()
     {
         flyingDirection = transform.position - towardPlanetCenter;
@@ -56,20 +60,14 @@ public class Meteor : MonoBehaviour
         //m_rotation = m_rotation.normalized;
         flyingDirection = flyingDirection.normalized;
         transform.rotation = landingOrientation;
-    }
-
-    public void setTargetCenter(Vector3 vtr)
-    {
-        //P_center = vtr;
-        //Shoot();
-    }
+    }*/
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Planet") || other.CompareTag("PCG_Planet") || other.CompareTag("PlanetSurface"))
         {
             Debug.Log("Hit Planet!");
-            Instantiate(crater, landingPoint, landingOrientation);
+            Instantiate(crater, landingPoint, craterOrientation);
             Explode();
 
         }
@@ -84,6 +82,6 @@ public class Meteor : MonoBehaviour
     }
     void FixedUpdate()
     {
-        transform.position -= flyingDirection * moveSpeed * Time.deltaTime;
+        transform.position += flyingToward * moveSpeed * Time.deltaTime;
     }
 }

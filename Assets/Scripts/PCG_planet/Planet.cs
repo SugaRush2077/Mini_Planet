@@ -9,8 +9,12 @@ public class Planet : MonoBehaviour
     public int resolution = 10;
     public bool autoUpdate = true;
     public bool usePCG = false;
+    public bool GenerateOnce = false;
     public enum FaceRenderMask { All, Top, Bottom, Left, Right, Front, Back };
     public FaceRenderMask faceRenderMask;
+
+    [HideInInspector]
+    public float currentRadius;
 
     public ShapeSettings shapeSettings;
     public ColorSettings colorSettings;
@@ -31,30 +35,29 @@ public class Planet : MonoBehaviour
     ColorSettings defaultColorSettings;
 
 
-    /*
-    private void OnValidate()
-    {
-        GeneratePlanet();
-    }
-    */
     private void Start()
     {
         if(usePCG)
         {
             InvokeRepeating(nameof(RandomGeneratePlanet), .5f, 2);
         }
+        else if(GenerateOnce)
+        {
+            GeneratePlanet();
+        }
+        
         
     }
 
     // Procedural Generate Planet
-    private void RandomGeneratePlanet()
+    public void RandomGeneratePlanet()
     {
-        shapeSettings.planetRadius = 10f;
-        shapeSettings.GenerateNoiseLayer();
+        shapeSettings.planetRadius = 40f;
+        currentRadius = shapeSettings.planetRadius;
+        Debug.Log(currentRadius);
+        shapeSettings.RandomGenerateNoiseLayer();
         
         //colorSettings.GenerateColorSetting();
-
-
 
         Initialize();
         GenerateMesh();

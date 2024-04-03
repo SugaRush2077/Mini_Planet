@@ -76,39 +76,59 @@ public class NoiseSettings
 
     public void RandomizeSettings()
     {
-        /*
-        float k = Random.value;
-        if(k > .5f)
+        bool usingDefault = false;
+        if (usingDefault)
         {
-            filterType = FilterType.Simple;
+            // default   
+            if (filterType == FilterType.Simple)
+            {
+                simpleNoiseSettings.strength = Random.Range(.01f, .15f);
+                simpleNoiseSettings.numLayers = 3;
+                simpleNoiseSettings.baseRoughness = Random.Range(2f, 3f);
+                simpleNoiseSettings.roughness = Random.Range(2f, 4f);
+                simpleNoiseSettings.persistence = Random.Range(.1f, .5f);
+                simpleNoiseSettings.center = new Vector3(0, 0, 0);
+                simpleNoiseSettings.minValue = Random.Range(.5f, 1f);
+                //Debug.Log("RandomSimple");
+            }
+            else
+            {
+                ridgidNoiseSettings.strength = Random.Range(.2f, 1f);
+                ridgidNoiseSettings.numLayers = 4;
+                ridgidNoiseSettings.baseRoughness = Random.Range(.2f, 3f);
+                ridgidNoiseSettings.roughness = Random.Range(.5f, 3f);
+                ridgidNoiseSettings.persistence = Random.Range(0, 1f);
+                ridgidNoiseSettings.center = new Vector3(5, 5, 5);
+                ridgidNoiseSettings.minValue = Random.Range(0, .5f);
+                ridgidNoiseSettings.weightMultiplier = Random.Range(.5f, .8f);
+                //Debug.Log("RandomRidgid");
+            }
         }
-        else
+        else // Personalize
         {
-            filterType = FilterType.Ridgid;
-        }*/
-        
-        if (filterType == FilterType.Simple)
-        {
-            simpleNoiseSettings.strength = Random.Range(.01f, .15f);
-            simpleNoiseSettings.numLayers = 3;
-            simpleNoiseSettings.baseRoughness = Random.Range(2f, 3f);
-            simpleNoiseSettings.roughness = Random.Range(2f, 4f);
-            simpleNoiseSettings.persistence = Random.Range(.1f, .5f);
-            simpleNoiseSettings.center = new Vector3(0,0,0);
-            simpleNoiseSettings.minValue = Random.Range(.5f, 1f);
-            //Debug.Log("RandomSimple");
-        }
-        else
-        {
-            ridgidNoiseSettings.strength = Random.Range(.2f, 1f);
-            ridgidNoiseSettings.numLayers = 4;
-            ridgidNoiseSettings.baseRoughness = Random.Range(.2f, 3f);
-            ridgidNoiseSettings.roughness = Random.Range(.5f, 3f);
-            ridgidNoiseSettings.persistence = Random.Range(0, 1f);
-            ridgidNoiseSettings.center = new Vector3(5, 5, 5);
-            ridgidNoiseSettings.minValue = Random.Range(0, .5f);
-            ridgidNoiseSettings.weightMultiplier = Random.Range(.5f, .8f);
-            //Debug.Log("RandomRidgid");
+            if (filterType == FilterType.Simple)
+            {
+                simpleNoiseSettings.strength = Random.Range(.01f, .4f);
+                simpleNoiseSettings.numLayers = 4;
+                simpleNoiseSettings.baseRoughness = Random.Range(1f, 3f);
+                simpleNoiseSettings.roughness = Random.Range(1f, 4f);
+                simpleNoiseSettings.persistence = Random.Range(.1f, .5f);
+                simpleNoiseSettings.center = new Vector3(0, 0, 0);
+                simpleNoiseSettings.minValue = Random.Range(.1f, 1.5f);
+                //Debug.Log("RandomSimple");
+            }
+            else
+            {
+                ridgidNoiseSettings.strength = Random.Range(.2f, 1f);
+                ridgidNoiseSettings.numLayers = 4;
+                ridgidNoiseSettings.baseRoughness = Random.Range(.2f, 3f);
+                ridgidNoiseSettings.roughness = Random.Range(.5f, 3f);
+                ridgidNoiseSettings.persistence = Random.Range(0, 1f);
+                ridgidNoiseSettings.center = new Vector3(5, 5, 5);
+                ridgidNoiseSettings.minValue = Random.Range(0, .5f);
+                ridgidNoiseSettings.weightMultiplier = Random.Range(.5f, .8f);
+                //Debug.Log("RandomRidgid");
+            }
         }
         
     }
