@@ -76,7 +76,7 @@ public class NoiseSettings
 
     public void RandomizeSettings()
     {
-        bool usingDefault = false;
+        bool usingDefault = true;
         if (usingDefault)
         {
             // default   

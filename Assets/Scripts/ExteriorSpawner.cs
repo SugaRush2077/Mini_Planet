@@ -21,12 +21,16 @@ public class ExteriorSpawner : MonoBehaviour
         
         spawnRadius = landingPlanet.currentRadius * 2;
         spawnCenter = landingPlanet.transform.position;
-        Debug.Log(spawnRadius);
+        //Debug.Log(spawnRadius);
+        Launch();
+    }
+
+    public void Launch()
+    {
         if (Generate)
         {
-            InvokeRepeating(nameof(Spawn), 1f, (1 / SpawnPerSec));
+            InvokeRepeating(nameof(Spawn), 5f, (1 / SpawnPerSec));
         }
-        
     }
 
     void Spawn()

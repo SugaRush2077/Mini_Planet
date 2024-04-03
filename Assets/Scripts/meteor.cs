@@ -22,7 +22,7 @@ public class Meteor : MonoBehaviour
         //P_center = targetPlanet.transform.position;
         towardPlanetCenter = Vector3.zero;
         flyingToward = towardPlanetCenter - transform.position;
-        Debug.Log("flying toward: " + flyingToward);
+        //Debug.Log("flying toward: " + flyingToward);
         calculateLandPoint();
 
         //m_rotation = m_rotation.normalized;
@@ -42,7 +42,7 @@ public class Meteor : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(transform.position, flyingToward, out hit))
         {
-            Debug.Log("hit: " + hit.point);
+            //Debug.Log("hit: " + hit.point);
             landingPoint = hit.point;
             craterOrientation = Quaternion.LookRotation(hit.normal);
             
@@ -66,7 +66,7 @@ public class Meteor : MonoBehaviour
     {
         if(other.CompareTag("Planet") || other.CompareTag("PCG_Planet") || other.CompareTag("PlanetSurface"))
         {
-            Debug.Log("Hit Planet!");
+            //Debug.Log("Hit Planet!");
             Instantiate(crater, landingPoint, craterOrientation);
             Explode();
 

@@ -37,31 +37,34 @@ public class Planet : MonoBehaviour
 
     private void Start()
     {
+        RandomGeneratePlanet();
+        /*
         if(usePCG)
         {
             InvokeRepeating(nameof(RandomGeneratePlanet), .5f, 2);
         }
         else if(GenerateOnce)
         {
-            GeneratePlanet();
-        }
-        
-        
+            //GeneratePlanet();
+            RandomGeneratePlanet();
+        }*/
+
+
     }
 
     // Procedural Generate Planet
     public void RandomGeneratePlanet()
     {
+        
         shapeSettings.planetRadius = 40f;
         currentRadius = shapeSettings.planetRadius;
         Debug.Log(currentRadius);
-        shapeSettings.RandomGenerateNoiseLayer();
-        
-        //colorSettings.GenerateColorSetting();
 
-        Initialize();
-        GenerateMesh();
-        GenerateColor();
+        
+        shapeSettings.RandomGenerateNoiseLayer();
+
+        //colorSettings.GenerateColorSetting();
+        GeneratePlanet();
         Debug.Log("Generate New Planet!");
     }
 
@@ -69,6 +72,7 @@ public class Planet : MonoBehaviour
 
     private void Initialize()
     {
+        Debug.Log("Initializing Planet...");
         gameObject.tag = "PCG_Planet";
         shapeGenerator.UpdateSettings(shapeSettings);
         colorGenerator.UpdateSettings(colorSettings);
@@ -135,6 +139,7 @@ public class Planet : MonoBehaviour
 
     void GenerateMesh()
     {
+        Debug.Log("Generating Mesh...");
         /*
         foreach (TerrainFace face in terrainFaces)
         {
@@ -154,6 +159,7 @@ public class Planet : MonoBehaviour
 
     void GenerateColor()
     {
+        Debug.Log("Generating Color...");
         /*
         foreach (MeshFilter m in meshFilters)
         {
