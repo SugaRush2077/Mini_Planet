@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance {  get; private set; }
-    private Player player;
+    private Planet planet;
+    private UltimatePlayer player;
     private ExteriorSpawner exterior_spawner;
     private InteriorSpawner interior_spawner;
     
@@ -34,22 +35,31 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        player = FindAnyObjectByType<Player>();
+        player = FindAnyObjectByType<UltimatePlayer>();
         exterior_spawner = FindAnyObjectByType<ExteriorSpawner>();
         interior_spawner = FindAnyObjectByType<InteriorSpawner>();
+        planet = FindAnyObjectByType<Planet>();
+
+        //planet.gameObject.SetActive(false);
+        //player.gameObject.SetActive(false);
+        exterior_spawner.gameObject.SetActive(false);
+        interior_spawner.gameObject.SetActive(false);
     }
 
     public void NewGame()
     {
         enabled = true;
         ClearObject();
+        //planet.gameObject.SetActive(true);
         player.gameObject.SetActive(true);
+        //player.setStartPos(planet.currentRadius);
         exterior_spawner.gameObject.SetActive(true);
         interior_spawner.gameObject.SetActive(true);
     }
 
     public void GameOver()
     {
+        //planet.gameObject.SetActive(false);
         player.gameObject.SetActive(false);
         exterior_spawner.gameObject.SetActive(false);
         interior_spawner.gameObject.SetActive(false);
@@ -60,7 +70,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            GameOver();
+        }
     }
     void Initialize()
     {

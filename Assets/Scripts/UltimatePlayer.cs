@@ -23,12 +23,14 @@ public class UltimatePlayer : MonoBehaviour
 
     Vector3 Groundnormal = Vector3.zero;
     Vector3 absNormalUp;
+    Vector3 startPos = Vector3.zero;
     private Rigidbody rb;
     
 
     
     void Start()
     {
+        //transform.position = startPos;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         speed = DefaultMovingSpeed;
@@ -111,6 +113,11 @@ public class UltimatePlayer : MonoBehaviour
         addGravity();
 
     }
+    public void setStartPos(float r)
+    {
+        startPos.y += (r + 10);
+    }
+
     void calculateAbsNormalUp()
     {
         absNormalUp = (transform.position - Planet.transform.position).normalized;

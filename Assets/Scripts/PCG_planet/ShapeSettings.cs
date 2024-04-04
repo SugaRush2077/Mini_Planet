@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class ShapeSettings : ScriptableObject
 {
+    [HideInInspector]
     public float planetRadius = 10f;
     public bool DefaultRandomize = true;
     public NoiseLayer[] noiseLayers;
