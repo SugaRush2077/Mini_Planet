@@ -6,7 +6,7 @@ public class NewCameraFollow : MonoBehaviour
     public UltimatePlayer target;
     private float smoothTime;
     public Vector3 _currentVelocity;
-    private float offsetValue = 30f;
+    //private float offsetValue = 30f;
 
     private void Awake()
     {

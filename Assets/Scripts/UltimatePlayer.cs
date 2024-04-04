@@ -2,46 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class UltimatePlayer : MonoBehaviour
 {
     public GameObject Planet;
     //public GameObject PlayerPlaceholder;
-
-    public float speed = 4;
-    public float JumpHeight = 1.5f;
+    private float DefaultMovingSpeed = 5f;
+    private float DefaultFlyingSpeed = 11f;
+    private float speed;
+    private float flyMomentum = 20f;
+    //private float landingMomentum = 7f;
     private float rotateDegree = 90f;
 
     float gravityMagnitude = 100;
     bool OnGround = false;
 
     float distanceToGround;
-    bool firstTouch = false;
-    //public Vector3 Groundnormal;
-    //public Vector3 Forward = new Vector3(1, 0, 0);
+    bool successLanding = false;
+    bool isFlying = false;
 
-    private Rigidbody rb;
+    Vector3 Groundnormal = Vector3.zero;
     Vector3 absNormalUp;
+    private Rigidbody rb;
+    
 
     
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        speed = DefaultMovingSpeed;
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void Update()
     {
-        if (!firstTouch && OnGround)
+        if (successLanding)
         {
-            rb.freezeRotation = true;
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            firstTouch = true;
-        }
-
-        if (firstTouch)
-        { 
             //MOVEMENT
             float x = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
             float z = Input.GetAxis("Vertical") * Time.deltaTime * speed;
@@ -57,54 +53,131 @@ public class UltimatePlayer : MonoBehaviour
                 transform.Rotate(0, -rotateDegree * Time.deltaTime, 0);
             }
             //Debug.Log(transform.up);
-            
-            
-        }
-        absNormalUp = (transform.position - Planet.transform.position).normalized;
-        //Debug.Log("Normal Up vec: " + absNormalUp);
-        // Detect Ground Direction and adjust player belly to the ground 
 
-        //Debug.Log("Current pos: " + transform.position);
-        //Debug.Log("up vec: " + transform.up);
+            //Fly
+            if (Input.GetKey(KeyCode.Space))
+            {
+                //Debug.Log("Fly");
+                if (getFlying())
+                {
+                    float y = flyMomentum * Time.deltaTime;
+                    transform.Translate(0, y, 0);
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                if (!getFlying())
+                {
+                    setIsFlying(true);
+                    Debug.Log("Switch to fly!");
+                }
+                else
+                {
+                    setIsFlying(false);
+                    Debug.Log("Switch to move!");
+                }
+                
+
+            }
+            /*
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                setIsFlying(true);
+                Debug.Log("pushed");
+            }
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                setIsFlying(false);
+                Debug.Log("Up");
+            }*/
+        }
+    }
+
+    // Update is called once per fixed frame
+    void FixedUpdate()
+    {
+        if (!successLanding && OnGround)    // When landing, freeze and start the game
+        {
+            rb.freezeRotation = true;
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            successLanding = true;
+        }
+
+        isOnGround();
+        calculateAbsNormalUp();
+        AlignTopVec();
+        addGravity();
+
+    }
+    void calculateAbsNormalUp()
+    {
+        absNormalUp = (transform.position - Planet.transform.position).normalized;
+    }
+
+    void setIsFlying(bool isFly)
+    {
+        isFlying = isFly;
+        if(isFlying)
+        {
+            speed = DefaultFlyingSpeed;
+        }
+        else
+        {
+            speed = DefaultMovingSpeed;
+        }
+    }
+
+    void setIsOnGround(bool isGround)
+    {
+        OnGround = isGround;
+        
+    }
+    bool getOnGround() { return OnGround; }
+    bool getFlying() { return isFlying; }
+
+    void AlignTopVec() // Detect Ground Direction and adjust player's belly snip to ground
+    {
+        Vector3 toDir;
+        if(getFlying())
+        {
+            //Debug.Log("AlignAbs");
+            toDir = absNormalUp;
+        }
+        else
+        {
+            //Debug.Log("AlignGround");
+            toDir = Groundnormal;
+        }
+        transform.rotation = Quaternion.FromToRotation(transform.up, toDir) * transform.rotation;
+    }
+
+    void addGravity() // if player is not stand on ground, force it to the ground (Add Gravity)
+    {
+        if (!getOnGround())
+        {
+            rb.AddForce(-absNormalUp * gravityMagnitude);
+        }
+    }
+
+    private void isOnGround()
+    {
         RaycastHit hit = new RaycastHit();
-        Vector3 Groundnormal = Vector3.zero;
         if (Physics.Raycast(transform.position, -transform.up, out hit, 1000))
         {
-            
             distanceToGround = hit.distance;
             Groundnormal = hit.normal;
 
-            if (distanceToGround <= 2f)
+            if (distanceToGround <= 1f)
             {
-                //Debug.Log("OnGround");
-                OnGround = true;
+                setIsOnGround(true);
             }
             else
             {
-                //Debug.Log("OffGround");
-                OnGround = false;
+                setIsOnGround(false);
             }
         }
-        //GRAVITY and ROTATION
-        Vector3 gravDirection = -absNormalUp;
-
-        // if player is not stand on ground, force it to the ground (Add Gravity)
-        if (OnGround == false)
-        {
-            rb.AddForce(gravDirection * gravityMagnitude);
-        }
-
-        Quaternion toRotation = Quaternion.FromToRotation(transform.up, Groundnormal) * transform.rotation;
-        transform.rotation = toRotation;
     }
-
-    private void Update()
-    {
-        //Jump
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("Jump");
-            rb.AddForce(absNormalUp * 40000 * JumpHeight * Time.deltaTime);
-        }
-    }
+    
 }
