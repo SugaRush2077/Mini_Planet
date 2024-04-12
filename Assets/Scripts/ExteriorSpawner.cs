@@ -10,6 +10,7 @@ public class ExteriorSpawner : MonoBehaviour
 
     public bool Generate = true;
     public float SpawnPerSec;
+    public int LaunchTime;
     private float range = 3f;
     private Vector3 spawnCenter;
     private float spawnRadius;
@@ -29,7 +30,7 @@ public class ExteriorSpawner : MonoBehaviour
     {
         if (Generate)
         {
-            InvokeRepeating(nameof(Spawn), 5f, (1 / SpawnPerSec));
+            InvokeRepeating(nameof(Spawn), LaunchTime, (1 / SpawnPerSec));
         }
     }
 

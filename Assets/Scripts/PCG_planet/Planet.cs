@@ -61,7 +61,9 @@ public class Planet : MonoBehaviour
 
         shapeSettings.RandomGenerateNoiseLayer();
 
-        //colorSettings.GenerateColorSetting();
+        //colorSettings.changeBiomeColor();
+        //colorSettings.useColorPalette();
+        colorSettings.changeOceanColor();
         GeneratePlanet();
         Debug.Log("Generate New Planet!");
     }
