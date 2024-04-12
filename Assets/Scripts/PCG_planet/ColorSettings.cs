@@ -11,6 +11,7 @@ public class ColorSettings : ScriptableObject
     public Material planetMaterial;
     public BiomeColorSettings biomeColorSettings;
     public Gradient oceanColor;
+    
 
     [System.Serializable]
     public class BiomeColorSettings
@@ -98,19 +99,22 @@ public class ColorSettings : ScriptableObject
         oceanColor.SetKeys(gck, gak);
     }
     
+    public void setColorAsPalette()
+    {
+
+    }
 
     void ShuffleColor(Color[] arr)
     {
 
     }
 
-    public void changeColorByPalette()
+    public void changeColorByPalette(Palette desirePalette)
     {
-        Color[] randColorArr = {Color.red, Color.blue, Color.gray, Color.green, Color.yellow};
-        int NumOfBiome = 2;
-        int NumOfOcean = randColorArr.Length - NumOfBiome;
+        //Color[] randColorArr = {Color.red, Color.blue, Color.gray, Color.green, Color.yellow};
         
-
+        int NumOfBiome = 2;
+        int NumOfOcean = desirePalette.colorArray.Length - NumOfBiome;
 
         // Biome
         biomeColorSettings.biomes = new Biome[NumOfBiome];
@@ -124,7 +128,7 @@ public class ColorSettings : ScriptableObject
             GradientColorKey[] biome_gck = new GradientColorKey[1];
             GradientAlphaKey[] biome_gak = new GradientAlphaKey[1];
             float biome_randomTime = -1;
-            biome_gck[0].color = RandomColor();
+            biome_gck[0].color = desirePalette.colorArray[i];
             biome_gck[0].time = Random.Range(biome_randomTime, 1);
             
             biomeColorSettings.biomes[i].gradient.SetKeys(biome_gck, biome_gak);
@@ -137,12 +141,11 @@ public class ColorSettings : ScriptableObject
         float randomTime = -1;
         for (int i = 0; i < NumOfOcean; i++)
         {
-            gck[i].color = RandomColor();
+            gck[i].color = desirePalette.colorArray[i + 2];
             gck[i].time = Random.Range(randomTime, 1);
             randomTime = gck[i].time;
         }
         oceanColor.SetKeys(gck, gak);
-
     }
     
     /*

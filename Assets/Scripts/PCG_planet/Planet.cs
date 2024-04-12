@@ -34,9 +34,11 @@ public class Planet : MonoBehaviour
     ShapeSettings defaultShapeSettings;
     ColorSettings defaultColorSettings;
 
-
+    //LoadPalette loadPalette;
+    
     private void Start()
     {
+        //loadPalette = GetComponent<LoadPalette>();
         RandomGeneratePlanet();
         /*
         if(usePCG)
@@ -61,8 +63,9 @@ public class Planet : MonoBehaviour
 
         shapeSettings.RandomGenerateNoiseLayer();
 
-        //colorSettings.changeBiomeColor();
-        //colorSettings.useColorPalette();
+        colorSettings.changeBiomeColor();
+        //int randomPalette = Random.Range(0, loadPalette.paletteArray.Length);
+        //colorSettings.changeColorByPalette(loadPalette.paletteArray[0]);
         colorSettings.changeOceanColor();
         GeneratePlanet();
         Debug.Log("Generate New Planet!");
