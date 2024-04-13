@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
     private UltimatePlayer player;
     private ExteriorSpawner exterior_spawner;
     private InteriorSpawner interior_spawner;
-    
+    private PaletteManager PM;
+
     //private float survivor_time = 0f;
 
     private void Awake()
@@ -39,9 +40,11 @@ public class GameManager : MonoBehaviour
         exterior_spawner = FindAnyObjectByType<ExteriorSpawner>();
         interior_spawner = FindAnyObjectByType<InteriorSpawner>();
         planet = FindAnyObjectByType<Planet>();
+        PM = FindAnyObjectByType<PaletteManager>();
 
         //planet.gameObject.SetActive(false);
         //player.gameObject.SetActive(false);
+        PM.gameObject.SetActive(true);
         exterior_spawner.gameObject.SetActive(false);
         interior_spawner.gameObject.SetActive(false);
     }

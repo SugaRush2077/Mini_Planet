@@ -1,3 +1,0 @@
-Marine,5,8ecae6,219ebc,023047,ffb703,fb8500,
-IceCream,5,ffd6ff,e7c6ff,c8b6ff,b8c0ff,bbd0ff,
-SunSet,10,03071e,370617,6a040f,9d0208,d00000,dc2f02,e85d04,f48c06,faa307,ffba08,

@@ -17,9 +17,6 @@ public class Palette : ScriptableObject
         this.name = str;
         this.colorAmount = num;
     }
-    
-
-    
 
     public void initialize()
     {

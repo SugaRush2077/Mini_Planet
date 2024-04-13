@@ -34,10 +34,24 @@ public class Planet : MonoBehaviour
     ShapeSettings defaultShapeSettings;
     ColorSettings defaultColorSettings;
 
+    PaletteManager PM;
     //LoadPalette loadPalette;
-    
+    private void Awake()
+    {
+        
+    }
+
     private void Start()
     {
+        PM = FindAnyObjectByType<PaletteManager>();
+        if (PM != null)
+        {
+            Debug.Log("Found Palette!");
+        }
+        else
+        {
+            Debug.Log("Didn't found palette!");
+        }
         //loadPalette = GetComponent<LoadPalette>();
         RandomGeneratePlanet();
         /*
@@ -60,15 +74,25 @@ public class Planet : MonoBehaviour
         shapeSettings.planetRadius = Random.Range(20, 41);
         currentRadius = shapeSettings.planetRadius;
         Debug.Log("Planet radius: " + currentRadius);
-
         shapeSettings.RandomGenerateNoiseLayer();
 
-        colorSettings.changeBiomeColor();
-        //int randomPalette = Random.Range(0, loadPalette.paletteArray.Length);
-        //colorSettings.changeColorByPalette(loadPalette.paletteArray[0]);
-        colorSettings.changeOceanColor();
+        //RandomPlanetColor();
+        PalettePlanetColor();
+
         GeneratePlanet();
         Debug.Log("Generate New Planet!");
+    }
+    private void RandomPlanetColor()
+    {
+        colorSettings.changeBiomeColor();
+        colorSettings.changeOceanColor();
+    }
+    private void PalettePlanetColor()
+    {
+        int randomPalette = Random.Range(0, PM.num_of_palette);
+        Debug.Log("Current Palette Array Length: " + PM.num_of_palette);
+        colorSettings.changeColorByPalette(PM.paletteArray[randomPalette]);
+        Debug.Log("Use Palette: " + PM.paletteArray[randomPalette].name);
     }
 
     private void Initialize()

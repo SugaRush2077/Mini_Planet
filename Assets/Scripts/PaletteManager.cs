@@ -6,35 +6,39 @@ using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Windows;
 
-public class LoadPalette : MonoBehaviour
+public class PaletteManager : MonoBehaviour
 {
+    public static PaletteManager Instance { get; private set; }
     [HideInInspector]
     public string[] lineArray;
     [HideInInspector]
     //public List<Palette> paletteList = new List<Palette>();
     public Palette[] paletteArray;
-    public string fileName = "test1";
-    /*
-    public struct DataGroup
-    {
-        public string Name;
-        public List<double[]> Values;
-    }*/
+    [HideInInspector]
+    public string fileName = "PaletteDataset";
+    [HideInInspector]
+    public int num_of_palette;
     
-
-    void Start()
+    private void Awake()
     {
-        paletteArray = new Palette[10];
-        LoadPaletteFromTxt();
-        //printPaletteList();
+        LoadFile();
+        AddPalette();
     }
-    void LoadPaletteFromTxt()
+
+    void LoadFile()
     {
+        Debug.Log("Load palette from text...");
         TextAsset txt = Resources.Load(fileName) as TextAsset;
         //Debug.Log(txt);
         // Save each line in lineArray
         lineArray = txt.text.Split('\n');
-        Debug.Log(lineArray.Length);
+        num_of_palette = lineArray.Length;
+        paletteArray = new Palette[num_of_palette];
+    }
+
+    void AddPalette()
+    {
+        //Debug.Log(lineArray.Length);
         // All lines in each cell
         for (int i = 0; i < lineArray.Length; i++)
         {
@@ -50,6 +54,7 @@ public class LoadPalette : MonoBehaviour
             Palette newPalette = ScriptableObject.CreateInstance<Palette>();
             newPalette.name = NewName;
             newPalette.colorAmount = num;
+            //Debug.Log("New Palette will have " + newPalette.colorAmount + " colors");
             newPalette.initialize();
 
             for (int k = 0; k < num; k++)

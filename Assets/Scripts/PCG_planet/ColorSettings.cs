@@ -99,24 +99,15 @@ public class ColorSettings : ScriptableObject
         oceanColor.SetKeys(gck, gak);
     }
     
-    public void setColorAsPalette()
-    {
-
-    }
-
-    void ShuffleColor(Color[] arr)
-    {
-
-    }
-
     public void changeColorByPalette(Palette desirePalette)
     {
         //Color[] randColorArr = {Color.red, Color.blue, Color.gray, Color.green, Color.yellow};
         
         int NumOfBiome = 2;
         int NumOfOcean = desirePalette.colorArray.Length - NumOfBiome;
+        Debug.Log("Selected palette has " + desirePalette.colorArray.Length + " colors!");
 
-        // Biome
+        // Biome ---------------------------------------------------------------
         biomeColorSettings.biomes = new Biome[NumOfBiome];
         // All Biomes
         for (int i = 0; i < biomeColorSettings.biomes.Length; i++)
@@ -124,18 +115,22 @@ public class ColorSettings : ScriptableObject
             // In Each Biome
             biomeColorSettings.biomes[i] = new Biome();
             biomeColorSettings.biomes[i].initializeBiome();
-            //int NumOfGradient = Random.Range(2, 5);
-            GradientColorKey[] biome_gck = new GradientColorKey[1];
-            GradientAlphaKey[] biome_gak = new GradientAlphaKey[1];
+            int NumOfGradient = 1; // Set Gradient for just 1 color!
+            GradientColorKey[] biome_gck = new GradientColorKey[NumOfGradient];
+            GradientAlphaKey[] biome_gak = new GradientAlphaKey[NumOfGradient];
+
             float biome_randomTime = -1;
-            biome_gck[0].color = desirePalette.colorArray[i];
-            biome_gck[0].time = Random.Range(biome_randomTime, 1);
-            
+            for (int j = 0; j < NumOfGradient; j++)
+            {
+                biome_gck[j].color = desirePalette.colorArray[i];
+                biome_gck[j].time = Random.Range(biome_randomTime, 1);
+                biome_randomTime = biome_gck[j].time;
+            }
             biomeColorSettings.biomes[i].gradient.SetKeys(biome_gck, biome_gak);
         }
-        setRestColorNoise();
+        setRestOfColorNoise();
 
-        // Ocean
+        // Ocean ---------------------------------------------------------------
         GradientColorKey[] gck = new GradientColorKey[NumOfOcean];
         GradientAlphaKey[] gak = new GradientAlphaKey[NumOfOcean];
         float randomTime = -1;
@@ -148,51 +143,6 @@ public class ColorSettings : ScriptableObject
         oceanColor.SetKeys(gck, gak);
     }
     
-    /*
-    public void setPaletteArray()
-    {
-        
-        palettesArray = new Palette[1];
-
-        Palette palette = new Palette(name, 5);
-        palette.initializePalette();
-
-        palette.addColorIntoPalette(new HexColor("264653"));
-        palette.addColorIntoPalette(new HexColor("2a9d8f"));
-        palette.addColorIntoPalette(new HexColor("e9c46a"));
-        palette.addColorIntoPalette(new HexColor("f4a261"));
-        palette.addColorIntoPalette(new HexColor("e76f51"));
-        palettesArray[0] = palette;
-
-    }*/
-    /*
-    public void useColorPalette()
-    {
-        Debug.Log("Color generate: Palette");
-
-        setPaletteArray();
-        int numOfColor = palettesArray[0].colorAmount;
-        biomeColorSettings.biomes = new Biome[numOfColor];
-
-        for(int i = 0; i < numOfColor;i++)
-        {
-            biomeColorSettings.biomes[i] = new Biome();
-            biomeColorSettings.biomes[i].initializeBiome();
-
-            GradientColorKey[] gck = new GradientColorKey[1];
-            GradientAlphaKey[] gak = new GradientAlphaKey[1];
-
-            //float randomTime = -1;
-            
-            gck[0].color = palettesArray[0].colorArray[i].myColor;
-            //gck[i].time = Random.Range(randomTime, 1);
-            //randomTime = gck[i].time;
-            
-            biomeColorSettings.biomes[i].gradient.SetKeys(gck, gak);
-        }
-        setRestColorNoise();
-    }*/
-
     public void changeBiomeColor()
     {
         Debug.Log("Color generate: Random");
@@ -202,9 +152,7 @@ public class ColorSettings : ScriptableObject
         // All Biomes
         for(int i = 0; i < biomeColorSettings.biomes.Length; i++)
         {
-
             // In Each Biome
-
             biomeColorSettings.biomes[i] = new Biome();
             biomeColorSettings.biomes[i].initializeBiome();
             int NumOfGradient = Random.Range(2, 5);
@@ -220,12 +168,10 @@ public class ColorSettings : ScriptableObject
             }
             biomeColorSettings.biomes[i].gradient.SetKeys(gck, gak);
         }
-        setRestColorNoise();
-
-
+        setRestOfColorNoise();
     }
 
-    private void setRestColorNoise()
+    private void setRestOfColorNoise()
     {
         biomeColorSettings.noiseOffset = Random.Range(0, 1);
         biomeColorSettings.noiseStrength = Random.Range(0, 3);
