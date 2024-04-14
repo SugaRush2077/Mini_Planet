@@ -58,8 +58,8 @@ public class ColorSettings : ScriptableObject
             public void initializeBiome()
             {
                 this.gradient = new Gradient();
-                //this.tint = RandomTint();
-                this.tint = Color.white;
+                this.tint = RandomTint();
+                //this.tint = Color.white;
                 this.startHeight = Random.value;
                 this.tintPercent = Random.Range(0, 0.5f);
             }
@@ -102,7 +102,8 @@ public class ColorSettings : ScriptableObject
     public void changeColorByPalette(Palette desirePalette)
     {
         //Color[] randColorArr = {Color.red, Color.blue, Color.gray, Color.green, Color.yellow};
-        
+        int[] order = new int[desirePalette.colorAmount];
+        Helper.initializeAndShuffle(order);
         int NumOfBiome = 2;
         int NumOfOcean = desirePalette.colorArray.Length - NumOfBiome;
         Debug.Log("Selected palette has " + desirePalette.colorArray.Length + " colors!");
@@ -115,14 +116,14 @@ public class ColorSettings : ScriptableObject
             // In Each Biome
             biomeColorSettings.biomes[i] = new Biome();
             biomeColorSettings.biomes[i].initializeBiome();
-            int NumOfGradient = 1; // Set Gradient for just 1 color!
+            int NumOfGradient = 5; // Set Gradient for just 1 color!
             GradientColorKey[] biome_gck = new GradientColorKey[NumOfGradient];
             GradientAlphaKey[] biome_gak = new GradientAlphaKey[NumOfGradient];
 
             float biome_randomTime = -1;
             for (int j = 0; j < NumOfGradient; j++)
             {
-                biome_gck[j].color = desirePalette.colorArray[i];
+                biome_gck[j].color = desirePalette.colorArray[order[i]];
                 biome_gck[j].time = Random.Range(biome_randomTime, 1);
                 biome_randomTime = biome_gck[j].time;
             }
@@ -136,7 +137,7 @@ public class ColorSettings : ScriptableObject
         float randomTime = -1;
         for (int i = 0; i < NumOfOcean; i++)
         {
-            gck[i].color = desirePalette.colorArray[i + 2];
+            gck[i].color = desirePalette.colorArray[order[i + NumOfBiome]];
             gck[i].time = Random.Range(randomTime, 1);
             randomTime = gck[i].time;
         }
