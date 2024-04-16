@@ -15,6 +15,8 @@ public class Planet : MonoBehaviour
 
     [HideInInspector]
     public float currentRadius;
+    [HideInInspector]
+    public string currentPaletteName;
 
     public ShapeSettings shapeSettings;
     public ColorSettings colorSettings;
@@ -36,10 +38,9 @@ public class Planet : MonoBehaviour
 
     PaletteManager PM;
     //LoadPalette loadPalette;
-    private void Awake()
-    {
-        
-    }
+
+    public delegate void CCompletedEventHandler();
+    public static event CCompletedEventHandler whenCompletedGeneratePlanet;
 
     private void Start()
     {
@@ -67,7 +68,10 @@ public class Planet : MonoBehaviour
 
 
     }
-
+    private void OnCCompletedGeneratePlanet()
+    {
+        whenCompletedGeneratePlanet?.Invoke();
+    }
     // Procedural Generate Planet
     public void RandomGeneratePlanet()
     {
@@ -81,18 +85,23 @@ public class Planet : MonoBehaviour
 
         GeneratePlanet();
         Debug.Log("Generate New Planet!");
+        OnCCompletedGeneratePlanet();
     }
+
     private void RandomPlanetColor()
     {
         colorSettings.changeBiomeColor();
         colorSettings.changeOceanColor();
+        currentPaletteName = "Random";
     }
+
     private void PalettePlanetColor()
     {
         int randomPalette = Random.Range(0, PM.num_of_palette);
         Debug.Log("Current Palette Array Length: " + PM.num_of_palette);
         colorSettings.changeColorByPalette(PM.paletteArray[randomPalette]);
-        Debug.Log("Use Palette: " + PM.paletteArray[randomPalette].name);
+        Debug.Log("Use Palette: " + PM.paletteArray[randomPalette].paletteName);
+        currentPaletteName = PM.paletteArray[randomPalette].paletteName;
     }
 
     private void Initialize()

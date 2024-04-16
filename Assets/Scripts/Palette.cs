@@ -6,7 +6,7 @@ using static ColorSettings;
 public class Palette : ScriptableObject
 {
     // name, # color, color1, color2, ...., color10
-    public string name;
+    public string paletteName;
     public int colorAmount;
     public Color[] colorArray;
 
@@ -14,7 +14,7 @@ public class Palette : ScriptableObject
     
     public Palette(string str, int num)
     {
-        this.name = str;
+        this.paletteName = str;
         this.colorAmount = num;
     }
 

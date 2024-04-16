@@ -1,0 +1,72 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+public class Timer : MonoBehaviour
+{
+    public float timeRemaining = 0;
+    public bool timeIsRunning = true;
+    public TMP_Text timeText;
+    // Start is called before the first frame update
+    void Start()
+    {
+        timeIsRunning = true;
+        //Planet.whenCompletedGeneratePlanet += OnCCompleted;
+    }
+    
+    private void OnDestroy()
+    {
+        //Planet.whenCompletedGeneratePlanet -= OnCCompleted;
+    }
+
+    private void OnCCompleted()
+    {
+        //timeRemaining = 0;
+    }
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if (timeIsRunning)
+        {
+            if (timeRemaining >= 0)
+            {
+                timeRemaining += Time.deltaTime;
+                
+                DisplayTimeInCenti(timeRemaining);
+            }
+        }
+    }
+
+    void DisplayTimeInCenti(float timeToDisplay)
+    {
+        //timeToDisplay += 1;
+        /*
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+        timeText.text = string.Format("{0:00} : {1:00}", minutes, seconds);*/
+
+
+        // Transform second to centseconds
+        int totalHundredths = Mathf.FloorToInt(timeToDisplay * 100);
+
+        // calculate
+        float minutes = totalHundredths / (60 * 100);
+        float seconds = (totalHundredths / 100) % 60;
+        float centiseconds = totalHundredths % 100;
+
+        // Format
+        timeText.text = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, centiseconds);
+    }
+
+    void DisplayTime(float timeToDisplay)
+    {
+        timeToDisplay += 1;
+        
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+        timeText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
+
+
+    }
+}

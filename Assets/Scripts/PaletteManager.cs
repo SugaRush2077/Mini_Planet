@@ -52,7 +52,7 @@ public class PaletteManager : MonoBehaviour
             string NewName = substring[0];
 
             Palette newPalette = ScriptableObject.CreateInstance<Palette>();
-            newPalette.name = NewName;
+            newPalette.paletteName = NewName;
             newPalette.colorAmount = num;
             //Debug.Log("New Palette will have " + newPalette.colorAmount + " colors");
             newPalette.initialize();

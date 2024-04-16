@@ -59,9 +59,10 @@ public class ColorSettings : ScriptableObject
             {
                 this.gradient = new Gradient();
                 this.tint = RandomTint();
-                //this.tint = Color.white;
+                this.tint = Color.white;
                 this.startHeight = Random.value;
                 this.tintPercent = Random.Range(0, 0.5f);
+                this.tintPercent = 0;
             }
         }
 
