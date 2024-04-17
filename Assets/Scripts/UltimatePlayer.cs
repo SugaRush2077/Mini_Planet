@@ -25,9 +25,10 @@ public class UltimatePlayer : MonoBehaviour
     Vector3 absNormalUp;
     Vector3 startPos = Vector3.zero;
     private Rigidbody rb;
-    
 
-    
+    public delegate void CCompletedEventHandler();
+    public static event CCompletedEventHandler whenPlayerDead;
+
     void Start()
     {
         //transform.position = startPos;
@@ -113,6 +114,12 @@ public class UltimatePlayer : MonoBehaviour
         addGravity();
 
     }
+
+    private void OnCCompletedPlayerDead()
+    {
+        whenPlayerDead?.Invoke();
+    }
+
     public void setStartPos(float r)
     {
         startPos.y += (r + 10);
@@ -186,5 +193,18 @@ public class UltimatePlayer : MonoBehaviour
             }
         }
     }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Obstacle"))
+        {
+            OnCCompletedPlayerDead();
+            GameManager.Instance.GameOver();
+        }
+    }
+
+    private void OnParticleCollision(GameObject other)
+    {
+        Debug.Log("BURN!");
+    }
 }

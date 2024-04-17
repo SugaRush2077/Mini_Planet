@@ -13,9 +13,12 @@ public class GameManager : MonoBehaviour
     //private InteriorSpawner interior_spawner;
 
     private PaletteManager PM;
+    public Canvas[] UI_array;
+    /*
     public Canvas UI_mainMenu;
     public Canvas UI_gameover;
     public Canvas UI_player;
+    public Canvas UI_settings;*/
 
     private SwitchCam camManager;
     //public GameObject playerHold;
@@ -45,8 +48,19 @@ public class GameManager : MonoBehaviour
         //GameMode = 0;
 
         Initialize();
+        LoadMainMenu();
+
+
+    }
+
+    public void LoadMainMenu()
+    {
         GameMode(0);
-        
+    }
+
+    public void OpenSettings()
+    {
+        GameMode(1);
     }
 
     public void NewGame()
@@ -65,12 +79,14 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        GameMode(3);
+        /*
         //planet.gameObject.SetActive(false);
         player.gameObject.SetActive(false);
         exterior_spawner.gameObject.SetActive(false);
         enabled = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        //NewGame();
+        //NewGame();*/
     }
     public void QuitGame()
     {
@@ -101,10 +117,27 @@ public class GameManager : MonoBehaviour
         PM.gameObject.SetActive(true);
         player.gameObject.SetActive(false);
 
+        UI_Display(0);
+        
+    }
 
-        UI_mainMenu.enabled = true;
-        UI_gameover.enabled = false;
-        UI_player.enabled = false;
+    void UI_Display(int k) 
+    {
+        // 0: Main Menu
+        // 1: Settings
+        // 2: In-game
+        // 3: Game Over
+        for (int i = 0; i < UI_array.Length; i++)
+        {
+            if(i == k)
+            {
+                UI_array[i].enabled = true;
+            }
+            else
+            {
+                UI_array[i].enabled = false;
+            }
+        }
     }
 
     void ClearObject()
@@ -128,44 +161,38 @@ public class GameManager : MonoBehaviour
         {
             // 0: Main Menu
             case 0:
+                UI_Display(0);
                 camManager.switchCam("Menu");
-                UI_mainMenu.enabled = true;
-                UI_gameover.enabled = false;
-                UI_player.enabled = false;
                 exterior_spawner.gameObject.SetActive(false);
                 planet.GetComponent<SelfRotate>().enabled = true;
+                ClearObject();
                 break;
-            // 1: Selection
+            // 1: Settings
             case 1:
-                UI_mainMenu.enabled = true;
-                UI_gameover.enabled = false;
-                UI_player.enabled = false;
+                UI_Display(1);
                 break;
             // 2: In Game
             case 2:
-                //playerHold.SetActive(false);
-                UI_mainMenu.enabled = false;
-                UI_gameover.enabled = false;
-                UI_player.enabled = true;
-                //UI_player.GetComponentInChildren
+                UI_Display(2);
                 planet.GetComponent<SelfRotate>().enabled = false;
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 camManager.switchCam("Game");
                 enabled = true;
-                ClearObject();
+                
                 player.gameObject.SetActive(true);
-
                 exterior_spawner.gameObject.SetActive(true);
                 exterior_spawner.GetComponent<ExteriorSpawner>().Launch();
                 break;
             // 3: GameOver Menu
             case 3:
-                UI_mainMenu.enabled = false;
-                UI_gameover.enabled = true;
-                UI_player.enabled = true;
+                UI_Display(3);
                 player.gameObject.SetActive(false);
                 exterior_spawner.gameObject.SetActive(false);
                 enabled = false;
+
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+
                 break;
 
             default:

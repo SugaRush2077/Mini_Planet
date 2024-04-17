@@ -11,26 +11,21 @@ public class Timer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-        
-        //Planet.whenCompletedGeneratePlanet += OnCCompleted;
+        UltimatePlayer.whenPlayerDead += OnCCompleted;
     }
-    
     private void OnDestroy()
     {
-        //Planet.whenCompletedGeneratePlanet -= OnCCompleted;
+        UltimatePlayer.whenPlayerDead -= OnCCompleted;
+    }
+    private void OnCCompleted()
+    {
+        timeIsRunning = false;
     }
 
     private void OnEnable()
     {
         startTimer();
     }
-
-    private void OnCCompleted()
-    {
-        //timeRemaining = 0;
-    }
-    // Update is called once per frame
 
     public void startTimer()
     {
