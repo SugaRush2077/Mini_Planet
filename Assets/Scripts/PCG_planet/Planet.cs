@@ -9,6 +9,7 @@ public class Planet : MonoBehaviour
     public int resolution = 10;
     public bool autoUpdate = true;
     public bool usePCG = false;
+    //public bool isDemo = true;
     //public bool GenerateOnce = false;
     public enum FaceRenderMask { All, Top, Bottom, Left, Right, Front, Back };
     public FaceRenderMask faceRenderMask;

@@ -9,6 +9,7 @@ TagManager:
   - PCG_Planet
   - PlanetSurface
   - Core
+  - GameCamera
   layers:
   - Default
   - TransparentFX

@@ -9,6 +9,7 @@ public class IanCameraFollow : MonoBehaviour
     public float smoothSpeed = 0.1f; //.125f
     public float offset = 20f;
     public float CameraRotateSpeed = 3.5f;
+    public Camera cam;
 
     private float sensitivity = 17f;
     float minFov = 45;
@@ -39,10 +40,11 @@ public class IanCameraFollow : MonoBehaviour
         }
 
         //ZOOM
-        float fov = Camera.main.fieldOfView;
+        
+        float fov = cam.fieldOfView;
         fov += Input.GetAxis("Mouse ScrollWheel") * -sensitivity;
         fov = Mathf.Clamp(fov, minFov, maxFov);
-        Camera.main.fieldOfView = fov;
+        cam.fieldOfView = fov;
 
     }
 }
