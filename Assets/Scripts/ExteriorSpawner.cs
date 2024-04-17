@@ -17,19 +17,25 @@ public class ExteriorSpawner : MonoBehaviour
 
     private int increaseSpawnTimePeriod = 5;
     //private float time = 0;
-    
+
     // Start is called before the first frame update
+    
     void Start()
     {
-        SpawnPerSec = 1;
-        spawnRadius = landingPlanet.currentRadius * 2;
-        spawnCenter = landingPlanet.transform.position;
+        
         //Debug.Log(spawnRadius);
-        Launch();
+        //Launch();
+    }
+    private void OnDisable()
+    {
+        CancelInvoke();
     }
 
     public void Launch()
     {
+        SpawnPerSec = 1;
+        spawnRadius = landingPlanet.currentRadius * 2;
+        spawnCenter = landingPlanet.transform.position;
         if (Generate)
         {
             //InvokeRepeating(nameof(Spawn), LaunchTime, (1 / SpawnPerSec));

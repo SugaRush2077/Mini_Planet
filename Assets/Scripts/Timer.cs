@@ -5,13 +5,14 @@ using UnityEngine.UI;
 using TMPro;
 public class Timer : MonoBehaviour
 {
-    public float timeRemaining = 0;
-    public bool timeIsRunning = true;
+    private float timeRemaining = 0;
+    private bool timeIsRunning = false;
     public TMP_Text timeText;
     // Start is called before the first frame update
     void Start()
     {
-        timeIsRunning = true;
+        
+        
         //Planet.whenCompletedGeneratePlanet += OnCCompleted;
     }
     
@@ -20,11 +21,22 @@ public class Timer : MonoBehaviour
         //Planet.whenCompletedGeneratePlanet -= OnCCompleted;
     }
 
+    private void OnEnable()
+    {
+        startTimer();
+    }
+
     private void OnCCompleted()
     {
         //timeRemaining = 0;
     }
     // Update is called once per frame
+
+    public void startTimer()
+    {
+        timeIsRunning = true;
+        timeRemaining = 0;
+    }
     void FixedUpdate()
     {
         if (timeIsRunning)

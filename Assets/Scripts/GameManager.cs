@@ -9,12 +9,16 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance {  get; private set; }
     private Planet planet;
     private UltimatePlayer player;
-    private ExteriorSpawner exterior_spawner;
+    public ExteriorSpawner exterior_spawner;
     //private InteriorSpawner interior_spawner;
 
     private PaletteManager PM;
-    
+    public Canvas UI_mainMenu;
+    public Canvas UI_gameover;
+    public Canvas UI_player;
 
+    private SwitchCam camManager;
+    //public GameObject playerHold;
 
     private void Awake()
     {
@@ -47,12 +51,16 @@ public class GameManager : MonoBehaviour
 
     public void NewGame()
     {
+        GameMode(2);
+        /*
         enabled = true;
         ClearObject();
         //planet.gameObject.SetActive(true);
         player.gameObject.SetActive(true);
         //player.setStartPos(planet.currentRadius);
         exterior_spawner.gameObject.SetActive(true);
+        */
+
     }
 
     public void GameOver()
@@ -64,6 +72,10 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         //NewGame();
     }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -71,14 +83,28 @@ public class GameManager : MonoBehaviour
         {
             GameOver();
         }
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
     }
     void Initialize()
     {
+        //playerHold.SetActive(true);
         player = FindAnyObjectByType<UltimatePlayer>();
         exterior_spawner = FindAnyObjectByType<ExteriorSpawner>();
         planet = FindAnyObjectByType<Planet>();
-        PM = FindAnyObjectByType<PaletteManager>();
+        PM = GetComponent<PaletteManager>();
+        camManager = GetComponent<SwitchCam>();
+
+        exterior_spawner.gameObject.SetActive(false);
         PM.gameObject.SetActive(true);
+        player.gameObject.SetActive(false);
+
+
+        UI_mainMenu.enabled = true;
+        UI_gameover.enabled = false;
+        UI_player.enabled = false;
     }
 
     void ClearObject()
@@ -102,22 +128,41 @@ public class GameManager : MonoBehaviour
         {
             // 0: Main Menu
             case 0:
+                camManager.switchCam("Menu");
+                UI_mainMenu.enabled = true;
+                UI_gameover.enabled = false;
+                UI_player.enabled = false;
                 exterior_spawner.gameObject.SetActive(false);
+                planet.GetComponent<SelfRotate>().enabled = true;
                 break;
             // 1: Selection
             case 1:
-
+                UI_mainMenu.enabled = true;
+                UI_gameover.enabled = false;
+                UI_player.enabled = false;
                 break;
             // 2: In Game
             case 2:
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                //playerHold.SetActive(false);
+                UI_mainMenu.enabled = false;
+                UI_gameover.enabled = false;
+                UI_player.enabled = true;
+                //UI_player.GetComponentInChildren
+                planet.GetComponent<SelfRotate>().enabled = false;
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                camManager.switchCam("Game");
                 enabled = true;
                 ClearObject();
                 player.gameObject.SetActive(true);
+
                 exterior_spawner.gameObject.SetActive(true);
+                exterior_spawner.GetComponent<ExteriorSpawner>().Launch();
                 break;
             // 3: GameOver Menu
             case 3:
+                UI_mainMenu.enabled = false;
+                UI_gameover.enabled = true;
+                UI_player.enabled = true;
                 player.gameObject.SetActive(false);
                 exterior_spawner.gameObject.SetActive(false);
                 enabled = false;
