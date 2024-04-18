@@ -21,20 +21,28 @@ public class UltimatePlayer : MonoBehaviour
     bool successLanding = false;
     bool isFlying = false;
 
-    Vector3 Groundnormal = Vector3.zero;
+    Vector3 GroundCenterNormal = Vector3.zero;
     Vector3 absNormalUp;
-    Vector3 startPos = Vector3.zero;
+    Vector3 startPos = new Vector3(0, 80, 0);
     private Rigidbody rb;
 
     public delegate void CCompletedEventHandler();
     public static event CCompletedEventHandler whenPlayerDead;
 
-    void Start()
+    void Awake()
     {
-        //transform.position = startPos;
+        initialize();
+    }
+    public void initialize()
+    {
+        transform.position = startPos;
+        transform.rotation = Quaternion.identity;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         speed = DefaultMovingSpeed;
+        OnGround = false;
+        successLanding = false;
+        isFlying = false;
     }
 
     private void Update()
@@ -162,7 +170,7 @@ public class UltimatePlayer : MonoBehaviour
         else
         {
             //Debug.Log("AlignGround");
-            toDir = Groundnormal;
+            toDir = GroundCenterNormal;
         }
         transform.rotation = Quaternion.FromToRotation(transform.up, toDir) * transform.rotation;
     }
@@ -181,7 +189,7 @@ public class UltimatePlayer : MonoBehaviour
         if (Physics.Raycast(transform.position, -transform.up, out hit, 1000))
         {
             distanceToGround = hit.distance;
-            Groundnormal = hit.normal;
+            GroundCenterNormal = hit.normal;
 
             if (distanceToGround <= 1f)
             {

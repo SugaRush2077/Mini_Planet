@@ -17,18 +17,18 @@ public class PlanetEditor : Editor
             base.OnInspectorGUI();
             if (check.changed)
             {
-                planet.GeneratePlanet();
+                planet.RandomGeneratePlanet("Random");
             }
         }
 
         if(GUILayout.Button("Generate Planet"))
         {
-            planet.GeneratePlanet();
+            planet.RandomGeneratePlanet("Random");
         }
 
         if (GUILayout.Button("Random Generate Planet"))
         {
-            planet.RandomGeneratePlanet();
+            planet.RandomGeneratePlanet("Random");
         }
 
         DrawSettingEditor(planet.shapeSettings, planet.OnShapeSettingsUpdated, ref planet.shapeSettingFoldout, ref shapeEditor);

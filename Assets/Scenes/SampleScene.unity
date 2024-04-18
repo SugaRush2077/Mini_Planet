@@ -845,7 +845,7 @@ GameObject:
   - component: {fileID: 407554015}
   - component: {fileID: 407554014}
   m_Layer: 5
-  m_Name: PC_Button
+  m_Name: Palette_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -914,7 +914,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 407554015}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1963328787}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: setCurrentPlanetTypeToPalette
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &407554015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3420,7 +3432,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Romdom
+  m_text: Random
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
@@ -3510,7 +3522,7 @@ GameObject:
   - component: {fileID: 1077148048}
   - component: {fileID: 1077148047}
   m_Layer: 5
-  m_Name: EL_Button
+  m_Name: Earth_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3579,7 +3591,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1077148048}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1963328787}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: setCurrentPlanetTypeToEarth
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1077148048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5326,7 +5350,7 @@ GameObject:
   - component: {fileID: 1656692933}
   - component: {fileID: 1656692932}
   m_Layer: 5
-  m_Name: CR_Button
+  m_Name: Random_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5395,7 +5419,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1656692933}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1963328787}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: setCurrentPlanetTypeToRandom
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1656692933
 MonoBehaviour:
   m_ObjectHideFlags: 0

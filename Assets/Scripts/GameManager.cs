@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static Cinemachine.CinemachineTriggerAction.ActionSettings;
@@ -19,8 +20,9 @@ public class GameManager : MonoBehaviour
     public Canvas UI_gameover;
     public Canvas UI_player;
     public Canvas UI_settings;*/
-
+    string CurrentPlanetType = "Random";
     private SwitchCam camManager;
+    private bool isColorChanged = false;
     //public GameObject playerHold;
 
     private void Awake()
@@ -140,6 +142,32 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void setCurrentPlanetTypeToRandom()
+    {
+        CurrentPlanetType = "Random";
+        planet.RandomGeneratePlanet(CurrentPlanetType);
+        isColorChanged = true;
+    }
+
+    public void setCurrentPlanetTypeToPalette()
+    {
+        CurrentPlanetType = "Palette";
+        planet.RandomGeneratePlanet(CurrentPlanetType);
+        isColorChanged = true;
+    }
+
+    public void setCurrentPlanetTypeToEarth()
+    {
+        CurrentPlanetType = "Earth";
+        planet.RandomGeneratePlanet(CurrentPlanetType);
+        isColorChanged = true;
+    }
+
+    public string getCurrentPlanetType()
+    {
+        return CurrentPlanetType;
+    }
+
     void ClearObject()
     {
         Crater[] obstacles = FindObjectsOfType<Crater>();
@@ -155,6 +183,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    
+
     void GameMode(int mode)
     {
         switch (mode)
@@ -162,6 +192,11 @@ public class GameManager : MonoBehaviour
             // 0: Main Menu
             case 0:
                 UI_Display(0);
+                if(!isColorChanged)
+                {
+                    planet.RandomGeneratePlanet(CurrentPlanetType);
+                }
+                
                 camManager.switchCam("Menu");
                 exterior_spawner.gameObject.SetActive(false);
                 planet.GetComponent<SelfRotate>().enabled = true;
@@ -170,28 +205,31 @@ public class GameManager : MonoBehaviour
             // 1: Settings
             case 1:
                 UI_Display(1);
+                isColorChanged = true;
                 break;
             // 2: In Game
             case 2:
                 UI_Display(2);
                 planet.GetComponent<SelfRotate>().enabled = false;
-                //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                UI_array[2].GetComponentInChildren<Timer>().startTimer();
+                //planet.RandomGeneratePlanet();
                 camManager.switchCam("Game");
                 enabled = true;
                 
+                player.initialize();
                 player.gameObject.SetActive(true);
+                
                 exterior_spawner.gameObject.SetActive(true);
                 exterior_spawner.GetComponent<ExteriorSpawner>().Launch();
                 break;
             // 3: GameOver Menu
             case 3:
                 UI_Display(3);
+
                 player.gameObject.SetActive(false);
                 exterior_spawner.gameObject.SetActive(false);
                 enabled = false;
-
-                //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
+                isColorChanged = false;
 
                 break;
 

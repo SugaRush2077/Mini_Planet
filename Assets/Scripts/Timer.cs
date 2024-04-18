@@ -20,6 +20,8 @@ public class Timer : MonoBehaviour
     private void OnCCompleted()
     {
         timeIsRunning = false;
+        timeRemaining = 0;
+        DisplayTimeInCenti(timeRemaining);
     }
 
     private void OnEnable()
@@ -27,10 +29,19 @@ public class Timer : MonoBehaviour
         startTimer();
     }
 
+    private void OnDisable()
+    {
+        timeIsRunning = false;
+        timeRemaining = 0;
+        DisplayTimeInCenti(timeRemaining);
+    }
+    
+
     public void startTimer()
     {
         timeIsRunning = true;
         timeRemaining = 0;
+        DisplayTimeInCenti(timeRemaining);
     }
     void FixedUpdate()
     {

@@ -55,7 +55,7 @@ public class Planet : MonoBehaviour
             Debug.Log("Didn't found palette!");
         }
         //loadPalette = GetComponent<LoadPalette>();
-        RandomGeneratePlanet();
+        RandomGeneratePlanet("Random");
         /*
         if(usePCG)
         {
@@ -74,19 +74,28 @@ public class Planet : MonoBehaviour
         whenCompletedGeneratePlanet?.Invoke();
     }
     // Procedural Generate Planet
-    public void RandomGeneratePlanet()
+    public void RandomGeneratePlanet(string type)
     {
         shapeSettings.planetRadius = Random.Range(20, 41);
         currentRadius = shapeSettings.planetRadius;
         Debug.Log("Planet radius: " + currentRadius);
         shapeSettings.RandomGenerateNoiseLayer();
 
-        //RandomPlanetColor();
-        PalettePlanetColor();
-
+        if(type == "Random")
+        {
+            RandomPlanetColor();
+        }
+        else if(type == "Palette")
+        {
+            PalettePlanetColor();
+        }
+        else
+        {
+            Debug.Log("Invalid Type, Random Generate Instead!");
+            RandomPlanetColor();
+        }
         GeneratePlanet();
-        Debug.Log("Generate New Planet!");
-        OnCCompletedGeneratePlanet();
+        
     }
 
     private void RandomPlanetColor()
@@ -145,11 +154,13 @@ public class Planet : MonoBehaviour
         
     }
 
-    public void GeneratePlanet()
+    private void GeneratePlanet()
     {
         Initialize();
         GenerateMesh();
         GenerateColor();
+        Debug.Log("Generate New Planet!");
+        OnCCompletedGeneratePlanet();
     }
 
     public void OnShapeSettingsUpdated()
