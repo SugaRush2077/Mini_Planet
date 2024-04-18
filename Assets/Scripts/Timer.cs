@@ -8,6 +8,7 @@ public class Timer : MonoBehaviour
     private float timeRemaining = 0;
     private bool timeIsRunning = false;
     public TMP_Text timeText;
+    public TMP_Text FinalTimeText;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,9 +20,9 @@ public class Timer : MonoBehaviour
     }
     private void OnCCompleted()
     {
+        DisplayTimeInCenti(timeRemaining);
         timeIsRunning = false;
         timeRemaining = 0;
-        DisplayTimeInCenti(timeRemaining);
     }
 
     private void OnEnable()
@@ -31,11 +32,16 @@ public class Timer : MonoBehaviour
 
     private void OnDisable()
     {
+        DisplayTimeInCenti(timeRemaining);
         timeIsRunning = false;
         timeRemaining = 0;
-        DisplayTimeInCenti(timeRemaining);
+        Debug.Log("Timer Disable");
     }
-    
+    public void stopTimer()
+    {
+        timeIsRunning = false;
+        //DisplayTimeInCenti(timeRemaining);
+    }
 
     public void startTimer()
     {
@@ -75,6 +81,7 @@ public class Timer : MonoBehaviour
 
         // Format
         timeText.text = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, centiseconds);
+        FinalTimeText.text = string.Format("Time: {0:00}:{1:00}:{2:00}", minutes, seconds, centiseconds);
     }
 
     void DisplayTime(float timeToDisplay)

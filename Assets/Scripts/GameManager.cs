@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     string CurrentPlanetType = "Random";
     private SwitchCam camManager;
     private bool isColorChanged = false;
+    SkyboxManager skybox;
     //public GameObject playerHold;
 
     private void Awake()
@@ -48,11 +49,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //GameMode = 0;
-
+        skybox = GetComponent<SkyboxManager>();
         Initialize();
         LoadMainMenu();
-
-
     }
 
     public void LoadMainMenu()
@@ -108,7 +107,7 @@ public class GameManager : MonoBehaviour
     }
     void Initialize()
     {
-        //playerHold.SetActive(true);
+        skybox.randomSkybox();
         player = FindAnyObjectByType<UltimatePlayer>();
         exterior_spawner = FindAnyObjectByType<ExteriorSpawner>();
         planet = FindAnyObjectByType<Planet>();
@@ -225,7 +224,7 @@ public class GameManager : MonoBehaviour
             // 3: GameOver Menu
             case 3:
                 UI_Display(3);
-
+                UI_array[2].GetComponentInChildren<Timer>().stopTimer();
                 player.gameObject.SetActive(false);
                 exterior_spawner.gameObject.SetActive(false);
                 enabled = false;
