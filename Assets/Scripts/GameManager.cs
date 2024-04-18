@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using static Cinemachine.CinemachineTriggerAction.ActionSettings;
+
+
+
 
 public class GameManager : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
     private bool isColorChanged = false;
     SkyboxManager skybox;
     //public GameObject playerHold;
+    public CameraShake cameraShake;
 
     private void Awake()
     {
@@ -200,6 +202,7 @@ public class GameManager : MonoBehaviour
                 exterior_spawner.gameObject.SetActive(false);
                 planet.GetComponent<SelfRotate>().enabled = true;
                 ClearObject();
+                //cameraShake.ShakeCam();
                 break;
             // 1: Settings
             case 1:

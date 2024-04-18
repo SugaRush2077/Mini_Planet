@@ -79,23 +79,36 @@ public class Planet : MonoBehaviour
         shapeSettings.planetRadius = Random.Range(20, 41);
         currentRadius = shapeSettings.planetRadius;
         Debug.Log("Planet radius: " + currentRadius);
-        shapeSettings.RandomGenerateNoiseLayer();
+        
 
         if(type == "Random")
         {
+            shapeSettings.RandomGenerateNoiseLayer(type);
             RandomPlanetColor();
         }
         else if(type == "Palette")
         {
+            shapeSettings.RandomGenerateNoiseLayer(type);
             PalettePlanetColor();
+        }
+        else if (type == "Earth")
+        {
+            EarthPlanetColor();
         }
         else
         {
             Debug.Log("Invalid Type, Random Generate Instead!");
+            shapeSettings.RandomGenerateNoiseLayer(type);
             RandomPlanetColor();
         }
         GeneratePlanet();
-        
+    }
+
+    private void EarthPlanetColor()
+    {
+        colorSettings.earthBiomeColor();
+        colorSettings.earthOceanColor();
+        currentPaletteName = "Earth";
     }
 
     private void RandomPlanetColor()
@@ -108,9 +121,9 @@ public class Planet : MonoBehaviour
     private void PalettePlanetColor()
     {
         int randomPalette = Random.Range(0, PM.num_of_palette);
-        Debug.Log("Current Palette Array Length: " + PM.num_of_palette);
+        //Debug.Log("Current Palette Array Length: " + PM.num_of_palette);
         colorSettings.changeColorByPalette(PM.paletteArray[randomPalette]);
-        Debug.Log("Use Palette: " + PM.paletteArray[randomPalette].paletteName);
+        //Debug.Log("Use Palette: " + PM.paletteArray[randomPalette].paletteName);
         currentPaletteName = PM.paletteArray[randomPalette].paletteName;
     }
 

@@ -126,10 +126,10 @@ public class NoiseSettings
 
 
 
-    public void RandomizeSettings(bool useDefaultRandom)
+    public void RandomizeSettings(string type)
     {
         //bool usingDefault = true;
-        if (useDefaultRandom)
+        if (type == "Random")
         {
             // default   
             if (filterType == FilterType.Simple)
@@ -156,6 +156,10 @@ public class NoiseSettings
                 ridgidNoiseSettings.weightMultiplier = Random.Range(.2f, .9f);
                 //Debug.Log("RandomRidgid");
             }
+        }
+        else if (type == "Earth")
+        {
+
         }
         else // Personalize
         {

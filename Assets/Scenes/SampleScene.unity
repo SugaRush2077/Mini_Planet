@@ -1933,6 +1933,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &710512469
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 710512470}
+  m_Layer: 0
+  m_Name: MenuCamHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &710512470
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710512469}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 25, z: -80}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1524493871}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &738805542
 GameObject:
   m_ObjectHideFlags: 0
@@ -5112,6 +5144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1524493871}
   - component: {fileID: 1524493870}
+  - component: {fileID: 1524493872}
   m_Layer: 0
   m_Name: MenuCamera
   m_TagString: MainCamera
@@ -5179,12 +5212,24 @@ Transform:
   m_GameObject: {fileID: 1524493868}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 25, z: -80}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 710512470}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1524493872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524493868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 917fd38ca25555a4d8e49749fc73fbfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1539461881
 GameObject:
   m_ObjectHideFlags: 0
@@ -6071,6 +6116,7 @@ MonoBehaviour:
   - {fileID: 1752410872}
   - {fileID: 959184809}
   - {fileID: 869700}
+  cameraShake: {fileID: 1524493872}
 --- !u!114 &1963328788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6355,6 +6401,6 @@ SceneRoots:
   - {fileID: 1963328786}
   - {fileID: 912087541}
   - {fileID: 1138965038}
-  - {fileID: 1524493871}
+  - {fileID: 710512470}
   - {fileID: 937290913}
   - {fileID: 624369500}

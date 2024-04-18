@@ -29,7 +29,7 @@ public class ShapeSettings : ScriptableObject
         noiseLayers = new NoiseLayer[NumOfNoiseLayer];
     }
 
-    public void RandomGenerateNoiseLayer()
+    public void RandomGenerateNoiseLayer(string type)
     {
         //noiseLayers = new NoiseLayer[3];
         for(int i = 0; i < noiseLayers.Length; i++)
@@ -50,7 +50,11 @@ public class ShapeSettings : ScriptableObject
                 noiseLayers[i].noiseSettings.filterType = NoiseSettings.FilterType.Ridgid;
             }
                 
-            noiseLayers[i].noiseSettings.RandomizeSettings(DefaultRandomize);
+            
+            noiseLayers[i].noiseSettings.RandomizeSettings(type);
+            
+            
+            
         }
     }
 
