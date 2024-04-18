@@ -83,12 +83,12 @@ public class Planet : MonoBehaviour
 
         if(type == "Random")
         {
-            shapeSettings.RandomGenerateNoiseLayer(type);
+            //shapeSettings.RandomGenerateNoiseLayer(type);
             RandomPlanetColor();
         }
         else if(type == "Palette")
         {
-            shapeSettings.RandomGenerateNoiseLayer(type);
+            //shapeSettings.RandomGenerateNoiseLayer(type);
             PalettePlanetColor();
         }
         else if (type == "Earth")
@@ -98,9 +98,10 @@ public class Planet : MonoBehaviour
         else
         {
             Debug.Log("Invalid Type, Random Generate Instead!");
-            shapeSettings.RandomGenerateNoiseLayer(type);
+            //shapeSettings.RandomGenerateNoiseLayer(type);
             RandomPlanetColor();
         }
+        shapeSettings.RandomGenerateNoiseLayer(type);
         GeneratePlanet();
     }
 

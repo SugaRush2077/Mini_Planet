@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f10c34fd32df23c4289374475ecbca39, type: 3}
   m_Name: Shape
   m_EditorClassIdentifier: 
-  planetRadius: 35
+  planetRadius: 36
   DefaultRandomize: 1
   noiseLayers:
   - enabled: 1
@@ -20,13 +20,13 @@ MonoBehaviour:
     noiseSettings:
       filterType: 0
       simpleNoiseSettings:
-        strength: 0.18880194
+        strength: 0.3054218
         numLayers: 3
-        baseRoughness: 4.6959643
-        roughness: 0.038588643
-        persistence: -0.17042299
-        center: {x: -219, y: 270, z: 118}
-        minValue: 0.30818093
+        baseRoughness: 2.986847
+        roughness: 2.9537652
+        persistence: 0.19898926
+        center: {x: -192, y: -284, z: -341}
+        minValue: 0.7930589
       ridgidNoiseSettings:
         strength: 1.5373557
         numLayers: 4
@@ -41,22 +41,22 @@ MonoBehaviour:
     noiseSettings:
       filterType: 0
       simpleNoiseSettings:
-        strength: 0.30185565
+        strength: 0.39112929
         numLayers: 3
-        baseRoughness: 5.385514
-        roughness: 1.2175434
-        persistence: -0.109530166
-        center: {x: -345, y: -202, z: 186}
-        minValue: 0.59343195
+        baseRoughness: 2.2786942
+        roughness: 0.55535674
+        persistence: 0.052311756
+        center: {x: -21, y: -212, z: -292}
+        minValue: 0.7598812
       ridgidNoiseSettings:
-        strength: 0.01
+        strength: 0.5
         numLayers: 2
-        baseRoughness: 1
-        roughness: 0
-        persistence: -0.2
+        baseRoughness: 1.5
+        roughness: 5
+        persistence: 0.2
         center: {x: 5, y: 5, z: 5}
-        minValue: 0.2
-        weightMultiplier: 1
+        minValue: 0.9
+        weightMultiplier: 1.5
   - enabled: 1
     useFirstLayerAsMask: 1
     noiseSettings:
@@ -70,11 +70,11 @@ MonoBehaviour:
         center: {x: 10, y: 10, z: 10}
         minValue: 1.5718095
       ridgidNoiseSettings:
-        strength: 0.2900494
+        strength: 0.16770765
         numLayers: 4
-        baseRoughness: 1.8986745
-        roughness: 0.4354166
-        persistence: -0.018215865
-        center: {x: -348, y: 94, z: 72}
-        minValue: 0.4429347
-        weightMultiplier: 0.8446989
+        baseRoughness: 1.4739842
+        roughness: 1.6038162
+        persistence: 0.32796305
+        center: {x: 344, y: -305, z: 171}
+        minValue: 0.28085756
+        weightMultiplier: 0.80618453

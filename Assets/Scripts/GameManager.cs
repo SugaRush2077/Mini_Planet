@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public Canvas UI_settings;*/
     string CurrentPlanetType = "Random";
     private SwitchCam camManager;
-    private bool isColorChanged = false;
+    private bool keepCurrentPlanet = false;
     SkyboxManager skybox;
     //public GameObject playerHold;
     public CameraShake cameraShake;
@@ -91,6 +91,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         //NewGame();*/
     }
+    public void LoadTutorialMenu()
+    {
+        GameMode(4);
+    }
+
     public void QuitGame()
     {
         Application.Quit();
@@ -147,21 +152,21 @@ public class GameManager : MonoBehaviour
     {
         CurrentPlanetType = "Random";
         planet.RandomGeneratePlanet(CurrentPlanetType);
-        isColorChanged = true;
+        keepCurrentPlanet = true;
     }
 
     public void setCurrentPlanetTypeToPalette()
     {
         CurrentPlanetType = "Palette";
         planet.RandomGeneratePlanet(CurrentPlanetType);
-        isColorChanged = true;
+        keepCurrentPlanet = true;
     }
 
     public void setCurrentPlanetTypeToEarth()
     {
         CurrentPlanetType = "Earth";
         planet.RandomGeneratePlanet(CurrentPlanetType);
-        isColorChanged = true;
+        keepCurrentPlanet = true;
     }
 
     public string getCurrentPlanetType()
@@ -193,7 +198,7 @@ public class GameManager : MonoBehaviour
             // 0: Main Menu
             case 0:
                 UI_Display(0);
-                if(!isColorChanged)
+                if(!keepCurrentPlanet)
                 {
                     planet.RandomGeneratePlanet(CurrentPlanetType);
                 }
@@ -207,7 +212,7 @@ public class GameManager : MonoBehaviour
             // 1: Settings
             case 1:
                 UI_Display(1);
-                isColorChanged = true;
+                keepCurrentPlanet = true;
                 camManager.switchCam("Color");
                 break;
             // 2: In Game
@@ -232,8 +237,14 @@ public class GameManager : MonoBehaviour
                 player.gameObject.SetActive(false);
                 exterior_spawner.gameObject.SetActive(false);
                 enabled = false;
-                isColorChanged = false;
+                keepCurrentPlanet = false;
 
+                break;
+            // 4: Tutorial Menu
+            case 4:
+                UI_Display(4);
+                keepCurrentPlanet = true;
+                camManager.switchCam("Tutorial");
                 break;
 
             default:

@@ -50,11 +50,7 @@ public class ShapeSettings : ScriptableObject
                 noiseLayers[i].noiseSettings.filterType = NoiseSettings.FilterType.Ridgid;
             }
                 
-            
             noiseLayers[i].noiseSettings.RandomizeSettings(type);
-            
-            
-            
         }
     }
 

@@ -12,10 +12,12 @@ public class SwitchCam : MonoBehaviour
 
     private Vector3 defaultColorPos = new Vector3(0, 0, -105f);
     private Vector3 defaultMenuPos = new Vector3(0, 25f, -80f);
+    private Vector3 defaultTutorialPos = new Vector3(0, 20f, -80f);
     private Vector3 originPos;
     private Vector3 targetPos;
+    private int defaultMenuSize = 20;
+    private int defaultTutorialSize = 10;
 
-    
     private bool isTransition = false;
     [SerializeField]
     public float CameraPanTime;
@@ -39,6 +41,11 @@ public class SwitchCam : MonoBehaviour
         {
             GameCam.enabled = true;
         }
+        else if (s == "Tutorial")
+        {
+            MenuCam.enabled = true;
+            setToTutorial();
+        }
         else
         {
             Debug.Log("Wrong Camera Index!");
@@ -55,7 +62,7 @@ public class SwitchCam : MonoBehaviour
     void setToMenu()
     {
         MenuCam.orthographic = true;
-        MenuCam.orthographicSize = 20;
+        MenuCam.orthographicSize = defaultMenuSize;
         targetPos = defaultMenuPos;
         startLerp();
     }
@@ -65,6 +72,15 @@ public class SwitchCam : MonoBehaviour
         MenuCam.orthographic = false;
         MenuCam.fieldOfView = 60;
         targetPos = defaultColorPos;
+        startLerp();
+    }
+
+    void setToTutorial()
+    {
+        MenuCam.orthographic = true;
+        MenuCam.orthographicSize = defaultTutorialSize;
+        targetPos = defaultTutorialPos;
+        
         startLerp();
     }
 
@@ -81,7 +97,20 @@ public class SwitchCam : MonoBehaviour
             //LerpTimer = LerpTimer / CameraPanTime;
             //MenuCam.transform.position = Vector3.Lerp(originPos, targetPos, LerpTimer / CameraPanTime);
 
-            if (MenuCam.transform.position == targetPos )
+
+            // From Menu to Tutorial
+            if (originPos == defaultMenuPos && targetPos == defaultTutorialPos)
+            {
+                MenuCam.orthographicSize = Mathf.SmoothStep(defaultMenuSize, defaultTutorialSize, t);
+            }
+            // From Tutorial to Menu
+            else if (originPos == defaultTutorialPos && targetPos == defaultMenuPos)
+            {
+                MenuCam.orthographicSize = Mathf.SmoothStep(defaultTutorialSize, defaultMenuSize, t);
+            }
+
+
+            if (MenuCam.transform.position == targetPos)
             {
                 isTransition = false;
             }

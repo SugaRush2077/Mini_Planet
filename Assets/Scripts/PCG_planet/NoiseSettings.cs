@@ -129,7 +129,7 @@ public class NoiseSettings
     public void RandomizeSettings(string type)
     {
         //bool usingDefault = true;
-        if (type == "Random")
+        if (type == "Random" || type =="Palette")
         {
             // default   
             if (filterType == FilterType.Simple)
@@ -159,7 +159,27 @@ public class NoiseSettings
         }
         else if (type == "Earth")
         {
-
+            if (filterType == FilterType.Simple)
+            {
+                simpleNoiseSettings.strength = Random.Range(.1f, .2f);
+                simpleNoiseSettings.numLayers = 4;
+                simpleNoiseSettings.baseRoughness = Random.Range(1f, 1.8f);
+                simpleNoiseSettings.roughness = Random.Range(4f, 10f);
+                simpleNoiseSettings.persistence = Random.Range(0, .1f);
+                simpleNoiseSettings.center = randomVect3();
+                simpleNoiseSettings.minValue = Random.Range(.5f, .8f);
+            }
+            else
+            {
+                ridgidNoiseSettings.strength = Random.Range(.3f, .5f);
+                ridgidNoiseSettings.numLayers = 4;
+                ridgidNoiseSettings.baseRoughness = Random.Range(.5f, 2f);
+                ridgidNoiseSettings.roughness = Random.Range(1f, 5f);
+                ridgidNoiseSettings.persistence = Random.Range(-.1f, .2f);
+                ridgidNoiseSettings.center = randomVect3();
+                ridgidNoiseSettings.minValue = Random.Range(.7f, .9f);
+                ridgidNoiseSettings.weightMultiplier = Random.Range(.5f, 1.5f);
+            }
         }
         else // Personalize
         {

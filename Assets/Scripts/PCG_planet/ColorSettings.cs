@@ -190,24 +190,26 @@ public class ColorSettings : ScriptableObject
             // In Each Biome
             biomeColorSettings.biomes[i] = new Biome();
             biomeColorSettings.biomes[i].initializeBiome();
-            int NumOfGradient = 7;
+            int NumOfGradient = 8;
             GradientColorKey[] gck = new GradientColorKey[NumOfGradient];
             GradientAlphaKey[] gak = new GradientAlphaKey[NumOfGradient];
 
-            gck[0].color = new Color(168f / 255f, 159f / 255f, 109f / 255f);
-            gck[0].time = .1f;
-            gck[1].color = new Color(121f / 255f, 143f / 255f, 111f / 255f);
-            gck[1].time = .3f;
-            gck[2].color = new Color(59f / 255f, 88f / 255f, 66f / 255f);
-            gck[2].time = .5f;
-            gck[3].color = new Color(169f / 255f, 144f / 255f, 65f / 255f);
-            gck[3].time = .6f;
-            gck[4].color = new Color(97f / 255f, 104f / 255f, 82f / 255f);
-            gck[4].time = .7f;
-            gck[5].color = new Color(185f / 255f, 186f / 255f, 186f / 255f);
-            gck[5].time = .9f;
-            gck[6].color = new Color(236f / 255f, 236f / 255f, 235f / 255f);
-            gck[6].time = 1f;
+            gck[0].color = new Color(250f / 255f, 249f / 255f, 89f / 255f);
+            gck[0].time = 0f;
+            gck[1].color = new Color(91f / 255f, 202f / 255f, 43f / 255f);
+            gck[1].time = .04f;
+            gck[2].color = new Color(29f / 255f, 123f / 255f, 7f / 255f);
+            gck[2].time = .33f;
+            gck[3].color = new Color(196f / 255f, 123f / 255f, 26f / 255f);
+            gck[3].time = .4f;
+            gck[4].color = new Color(149f / 255f, 53f / 255f, 8f / 255f);
+            gck[4].time = .6f;
+            gck[5].color = new Color(130f / 255f, 107f / 255f, 77f / 255f);
+            gck[5].time = .65f;
+            gck[6].color = new Color(162f / 255f, 162f / 255f, 162f / 255f);
+            gck[6].time = .8f;
+            gck[7].color = new Color(255f / 255f, 255f / 255f, 255f / 255f);
+            gck[7].time = 1f;
 
             biomeColorSettings.biomes[i].gradient.SetKeys(gck, gak);
         }
@@ -221,11 +223,11 @@ public class ColorSettings : ScriptableObject
         GradientColorKey[] gck = new GradientColorKey[NumOfGradient];
         GradientAlphaKey[] gak = new GradientAlphaKey[NumOfGradient];
 
-        gck[0].color = new Color(15f / 255f, 24f / 255f, 47f / 255f);
-        gck[0].time = .2f;
-        gck[1].color = new Color(26f / 255f, 40f / 255f, 90f / 255f);
-        gck[1].time = .8f;
-        gck[2].color = new Color(105f / 255f, 113f / 255f, 140f / 255f);
+        gck[0].color = new Color(12f / 255f, 0f / 255f, 149f / 255f);
+        gck[0].time = 0f;
+        gck[1].color = new Color(43f / 255f, 52f / 255f, 237f / 255f);
+        gck[1].time = .5f;
+        gck[2].color = new Color(7f / 255f, 191f / 255f, 236f / 255f);
         gck[2].time = 1f;
 
         oceanColor.SetKeys(gck, gak);
