@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
         {
             GameOver();
         }
-        if (Input.GetKey("escape"))
+        if (Input.GetKeyDown("escape"))
         {
             Application.Quit();
         }
@@ -205,6 +205,7 @@ public class GameManager : MonoBehaviour
             case 1:
                 UI_Display(1);
                 isColorChanged = true;
+                camManager.switchCam("Color");
                 break;
             // 2: In Game
             case 2:
