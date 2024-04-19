@@ -174,7 +174,7 @@ public class GameManager : MonoBehaviour
         return CurrentPlanetType;
     }
 
-    void ClearObject()
+    void ClearObstacle()
     {
         Crater[] obstacles = FindObjectsOfType<Crater>();
         foreach (var obstacle in obstacles)
@@ -206,7 +206,7 @@ public class GameManager : MonoBehaviour
                 camManager.switchCam("Menu");
                 exterior_spawner.gameObject.SetActive(false);
                 planet.GetComponent<SelfRotate>().enabled = true;
-                ClearObject();
+                ClearObstacle();
                 //cameraShake.ShakeCam();
                 break;
             // 1: Settings
@@ -218,6 +218,7 @@ public class GameManager : MonoBehaviour
             // 2: In Game
             case 2:
                 UI_Display(2);
+                ClearObstacle();
                 planet.GetComponent<SelfRotate>().enabled = false;
                 UI_array[2].GetComponentInChildren<Timer>().startTimer();
                 //planet.RandomGeneratePlanet();

@@ -6,7 +6,7 @@ using UnityEngine;
 public class Planet : MonoBehaviour
 {
     [Range(2, 256)]
-    public int resolution = 10;
+    public int resolution;
     public bool autoUpdate = true;
     public bool usePCG = false;
     //public bool isDemo = true;
