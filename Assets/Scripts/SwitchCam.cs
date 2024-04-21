@@ -13,6 +13,8 @@ public class SwitchCam : MonoBehaviour
     private Vector3 defaultColorPos = new Vector3(0, 0, -105f);
     private Vector3 defaultMenuPos = new Vector3(0, 25f, -80f);
     private Vector3 defaultTutorialPos = new Vector3(0, 20f, -80f);
+    private Vector3 defaultSoundPos = new Vector3(0, -20f, -80f);
+
     private Vector3 originPos;
     private Vector3 targetPos;
     private int defaultMenuSize = 20;
@@ -45,6 +47,11 @@ public class SwitchCam : MonoBehaviour
         {
             MenuCam.enabled = true;
             setToTutorial();
+        }
+        else if (s == "Sound")
+        {
+            MenuCam.enabled = true;
+            setToSound();
         }
         else
         {
@@ -81,6 +88,15 @@ public class SwitchCam : MonoBehaviour
         MenuCam.orthographicSize = defaultTutorialSize;
         targetPos = defaultTutorialPos;
         
+        startLerp();
+    }
+
+    void setToSound()
+    {
+        MenuCam.orthographic = true;
+        MenuCam.orthographicSize = defaultMenuSize;
+        targetPos = defaultSoundPos;
+
         startLerp();
     }
 

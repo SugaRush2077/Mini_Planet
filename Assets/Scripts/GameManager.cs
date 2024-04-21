@@ -95,6 +95,10 @@ public class GameManager : MonoBehaviour
     {
         GameMode(4);
     }
+    public void LoadSoundSettings()
+    {
+        GameMode(5);
+    }
 
     public void QuitGame()
     {
@@ -135,6 +139,8 @@ public class GameManager : MonoBehaviour
         // 1: Settings
         // 2: In-game
         // 3: Game Over
+        // 4: Tutorial
+        // 5: Sound
         for (int i = 0; i < UI_array.Length; i++)
         {
             if(i == k)
@@ -246,6 +252,13 @@ public class GameManager : MonoBehaviour
                 UI_Display(4);
                 keepCurrentPlanet = true;
                 camManager.switchCam("Tutorial");
+                break;
+
+            // 5: Sound Settings Menu
+            case 5:
+                UI_Display(5);
+                keepCurrentPlanet = true;
+                camManager.switchCam("Sound");
                 break;
 
             default:
