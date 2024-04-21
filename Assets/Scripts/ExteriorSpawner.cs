@@ -14,12 +14,12 @@ public class ExteriorSpawner : MonoBehaviour
     private float range = 2f;
     private Vector3 spawnCenter;
     private float spawnRadius;
-
+    private bool isIncrease = false;
     //private int increaseSpawnTimePeriod = 5;
     //private float time = 0;
 
     // Start is called before the first frame update
-    
+
     void Start()
     {
         
@@ -33,14 +33,18 @@ public class ExteriorSpawner : MonoBehaviour
 
     public void Launch()
     {
-        SpawnPerSec = 1;
+        SpawnPerSec = 1f;
         spawnRadius = landingPlanet.currentRadius * 2;
         spawnCenter = landingPlanet.transform.position;
         if (Generate)
         {
             //InvokeRepeating(nameof(Spawn), LaunchTime, (1 / SpawnPerSec));
             Invoke(nameof(Spawn), LaunchTime);
-            Invoke(nameof(updateSpawnAmount), LaunchTime);
+            if(isIncrease)
+            {
+                Invoke(nameof(updateSpawnAmount), LaunchTime);
+            }
+            
         }
     }
     
@@ -49,7 +53,18 @@ public class ExteriorSpawner : MonoBehaviour
         Vector3 spawnPoint = spawnCenter + (Random.onUnitSphere * spawnRadius) * range;
         //Debug.Log(spawnPoint);
         Instantiate(meteor, spawnPoint, Quaternion.identity);
-        Invoke(nameof(Spawn), (1 / SpawnPerSec));
+        float nextMeteor = 1; ;
+        float frequency = Random.value;
+        if(frequency < 0.7f) 
+        {
+            nextMeteor = Random.Range((1 / SpawnPerSec), 3);
+        }
+        else
+        {
+            nextMeteor = Random.Range(3, 5);
+        }
+        
+        Invoke(nameof(Spawn), nextMeteor);
         Debug.Log("Current SpawnPerSec: " + SpawnPerSec);
     }
 

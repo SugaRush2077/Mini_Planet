@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
         
     }
 
-    void UI_Display(int k) 
+    void UI_Display(int mode) 
     {
         // 0: Main Menu
         // 1: Color
@@ -145,9 +145,8 @@ public class GameManager : MonoBehaviour
         // 5: Sound
         for (int i = 0; i < UI_array.Length; i++)
         {
-            if(i == k)
+            if(i == mode)
             {
-                
                 UI_array[i].enabled = true;
             }
             else
@@ -155,9 +154,9 @@ public class GameManager : MonoBehaviour
                 UI_array[i].enabled = false;
             }
 
-            if(i == 0 || i == 1 || i == 4 || i == 5)
+            if(mode == 0 || mode == 1 || mode == 4 || mode == 5)
             {
-                SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .5f);
+                //SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .2f);
             }
         }
     }
@@ -211,6 +210,7 @@ public class GameManager : MonoBehaviour
         {
             // 0: Main Menu
             case 0:
+                SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .2f);
                 UI_Display(0);
                 if(!keepCurrentPlanet)
                 {
@@ -223,8 +223,9 @@ public class GameManager : MonoBehaviour
                 ClearObstacle();
                 //cameraShake.ShakeCam();
                 break;
-            // 1: Settings
+            // 1: Colors
             case 1:
+                SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .2f);
                 UI_Display(1);
                 keepCurrentPlanet = true;
                 camManager.switchCam("Color");
@@ -257,6 +258,7 @@ public class GameManager : MonoBehaviour
                 break;
             // 4: Tutorial Menu
             case 4:
+                SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .2f);
                 UI_Display(4);
                 keepCurrentPlanet = true;
                 camManager.switchCam("Tutorial");
@@ -264,6 +266,7 @@ public class GameManager : MonoBehaviour
 
             // 5: Sound Settings Menu
             case 5:
+                SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .2f);
                 UI_Display(5);
                 keepCurrentPlanet = true;
                 camManager.switchCam("Sound");
