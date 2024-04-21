@@ -6,8 +6,8 @@ using UnityEngine;
 public class CameraShake : MonoBehaviour
 {
     private Vector3 originalPos;
-    float duration = 10f;
-    float magnitude = 4f;
+    //float duration = 10f;
+    //float magnitude = 4f;
     private bool isLoop = true;
 
     private Vector3 pos1 = new Vector3(.26f, .3f, -80);

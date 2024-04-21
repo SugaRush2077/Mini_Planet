@@ -15,7 +15,7 @@ public class ExteriorSpawner : MonoBehaviour
     private Vector3 spawnCenter;
     private float spawnRadius;
 
-    private int increaseSpawnTimePeriod = 5;
+    //private int increaseSpawnTimePeriod = 5;
     //private float time = 0;
 
     // Start is called before the first frame update

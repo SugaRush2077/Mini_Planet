@@ -4929,7 +4929,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7997da1bb8cebe47a82ea8036abb9cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Flying_audioClip: {fileID: 8300000, guid: afac45e7ef0142149adf5e407a18e36e, type: 3}
   crater: {fileID: 974781282163733114, guid: 140d61cd9f2975046b1a71eaa0519d41, type: 3}
+  explosionEffect: {fileID: 0}
+  explosionScale: 1
 --- !u!135 &3536437582928625068
 SphereCollider:
   m_ObjectHideFlags: 0

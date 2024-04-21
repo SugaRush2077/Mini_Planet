@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Meteor : MonoBehaviour
 {
+    //public AudioSource Flying_audio;
     //public GameObject targetPlanet;
     public GameObject crater;
     public GameObject explosionEffect;
@@ -29,6 +30,8 @@ public class Meteor : MonoBehaviour
          // for speed
         transform.rotation = Quaternion.LookRotation(-(flyingToward));
         flyingToward = flyingToward.normalized;
+        //Flying_audio.Play();
+        //SoundFXManager.instance.PlaySoundFXClip(Flying_audioClip, transform, 1f);
     }
 
     private void DestroyCrater()

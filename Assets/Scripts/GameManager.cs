@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     //public GameObject playerHold;
     public CameraShake cameraShake;
 
+    public AudioClip[] audioClips;
+
     private void Awake()
     {
         if (Instance == null)
@@ -136,7 +138,7 @@ public class GameManager : MonoBehaviour
     void UI_Display(int k) 
     {
         // 0: Main Menu
-        // 1: Settings
+        // 1: Color
         // 2: In-game
         // 3: Game Over
         // 4: Tutorial
@@ -145,11 +147,17 @@ public class GameManager : MonoBehaviour
         {
             if(i == k)
             {
+                
                 UI_array[i].enabled = true;
             }
             else
             {
                 UI_array[i].enabled = false;
+            }
+
+            if(i == 0 || i == 1 || i == 4 || i == 5)
+            {
+                SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .5f);
             }
         }
     }
