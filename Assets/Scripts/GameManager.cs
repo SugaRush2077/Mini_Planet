@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     private SwitchCam camManager;
     private bool keepCurrentPlanet = false;
     SkyboxManager skybox;
+    MusicSelector musicSelector;
     //public GameObject playerHold;
     public CameraShake cameraShake;
 
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //GameMode = 0;
+        musicSelector = FindAnyObjectByType<MusicSelector>();
         skybox = GetComponent<SkyboxManager>();
         Initialize();
         LoadMainMenu();
@@ -71,6 +73,7 @@ public class GameManager : MonoBehaviour
 
     public void NewGame()
     {
+        musicSelector.switchToGameMusic();
         SoundFXManager.instance.PlaySoundFXClip(landing_audio, transform, 1f);
         GameMode(2);
         /*
@@ -97,6 +100,7 @@ public class GameManager : MonoBehaviour
     }
     public void LoadTutorialMenu()
     {
+
         GameMode(4);
     }
     public void LoadSoundSettings()
@@ -204,15 +208,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    
-
     void GameMode(int mode)
     {
         switch (mode)
         {
             // 0: Main Menu
             case 0:
-                SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .2f);
+                SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .25f);
                 UI_Display(0);
                 if(!keepCurrentPlanet)
                 {
@@ -227,7 +229,7 @@ public class GameManager : MonoBehaviour
                 break;
             // 1: Colors
             case 1:
-                SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .2f);
+                SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .25f);
                 UI_Display(1);
                 keepCurrentPlanet = true;
                 camManager.switchCam("Color");
@@ -260,7 +262,7 @@ public class GameManager : MonoBehaviour
                 break;
             // 4: Tutorial Menu
             case 4:
-                SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .2f);
+                SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .25f);
                 UI_Display(4);
                 keepCurrentPlanet = true;
                 camManager.switchCam("Tutorial");
@@ -268,7 +270,7 @@ public class GameManager : MonoBehaviour
 
             // 5: Sound Settings Menu
             case 5:
-                SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .2f);
+                SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .25f);
                 UI_Display(5);
                 keepCurrentPlanet = true;
                 camManager.switchCam("Sound");

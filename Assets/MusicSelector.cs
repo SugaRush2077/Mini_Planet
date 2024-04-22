@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class MusicSelector : MonoBehaviour
 {
-    public AudioClip[] musicList;
+    public AudioClip[] MenuMusicList;
+    public AudioClip[] GameMusicList;
     AudioSource audio;
+    bool isInGame = false;
 
     private void Awake()
     {
@@ -13,22 +15,49 @@ public class MusicSelector : MonoBehaviour
     }
     void Start()
     {
-        randomMusic();
+        randomMenuMusic();
     }
 
     void Update()
     {
         if(!audio.isPlaying)
         {
-            randomMusic();
+            if(isInGame)
+            {
+                randomGameMusic();
+            }
+            else
+            {
+                randomMenuMusic();
+            }
         }
     }
-
-    void randomMusic()
+    public void switchToMenuMusic()
     {
-        int rand = Random.Range(0, musicList.Length);
-        audio.clip = musicList[rand];
+        isInGame = false;
+        audio.Stop();
+        randomMenuMusic();
+    }
+
+    public void switchToGameMusic()
+    {
+        isInGame = true;
+        audio.Stop();
+        randomGameMusic();
+    }
+
+    void randomMenuMusic()
+    {
+        int rand = Random.Range(0, MenuMusicList.Length);
+        audio.clip = MenuMusicList[rand];
         audio.Play();
         
+    }
+    void randomGameMusic()
+    {
+        int rand = Random.Range(0, GameMusicList.Length);
+        audio.clip = GameMusicList[rand];
+        audio.Play();
+
     }
 }
