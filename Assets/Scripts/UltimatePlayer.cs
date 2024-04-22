@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 
 public class UltimatePlayer : MonoBehaviour
@@ -8,7 +9,7 @@ public class UltimatePlayer : MonoBehaviour
     public GameObject Planet;
     //public GameObject PlayerPlaceholder;
     private float DefaultMovingSpeed = 5f;
-    private float DefaultFlyingSpeed = 11f;
+    private float DefaultBoostSpeed = 11f;
     private float speed;
     private float flyMomentum = 20f;
     //private float landingMomentum = 7f;
@@ -20,6 +21,7 @@ public class UltimatePlayer : MonoBehaviour
     float distanceToGround;
     bool successLanding = false;
     bool isFlying = false;
+    bool isBoosting = false;
 
     Vector3 GroundCenterNormal = Vector3.zero;
     Vector3 absNormalUp;
@@ -30,6 +32,8 @@ public class UltimatePlayer : MonoBehaviour
     public static event CCompletedEventHandler whenPlayerDead;
 
     public AudioClip explosion_audio;
+    private Light light;
+    
 
     void Awake()
     {
@@ -45,7 +49,11 @@ public class UltimatePlayer : MonoBehaviour
         OnGround = false;
         successLanding = false;
         isFlying = false;
+        isBoosting = false;
+        light = GetComponent<Light>();
+        light.color = Color.red;
     }
+    
 
     private void Update()
     {
@@ -57,17 +65,22 @@ public class UltimatePlayer : MonoBehaviour
             transform.Translate(x, 0, z);
 
             //Local Rotation
-            if (Input.GetKey(KeyCode.E))
+            if (!isBoosting)
             {
-                transform.Rotate(0, rotateDegree * Time.deltaTime, 0);
+                if (Input.GetKey(KeyCode.E))
+                {
+                    transform.Rotate(0, rotateDegree * Time.deltaTime, 0);
+                }
+                if (Input.GetKey(KeyCode.Q))
+                {
+                    transform.Rotate(0, -rotateDegree * Time.deltaTime, 0);
+                }
             }
-            if (Input.GetKey(KeyCode.Q))
-            {
-                transform.Rotate(0, -rotateDegree * Time.deltaTime, 0);
-            }
+
             //Debug.Log(transform.up);
 
             //Fly
+            /*
             if (Input.GetKey(KeyCode.Space))
             {
                 //Debug.Log("Fly");
@@ -76,23 +89,45 @@ public class UltimatePlayer : MonoBehaviour
                     float y = flyMomentum * Time.deltaTime;
                     transform.Translate(0, y, 0);
                 }
-            }
+            }*/
 
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if (Input.GetMouseButtonDown(0))
             {
-                if (!getFlying())
+                if (isBoosting)
                 {
-                    setIsFlying(true);
-                    Debug.Log("Switch to fly!");
+                    // turn off boosting
+                    speed = DefaultMovingSpeed;
+                    light.color = Color.red;
+                    Debug.Log("Normal Move!");
+                    isBoosting = false;
                 }
                 else
                 {
-                    setIsFlying(false);
-                    Debug.Log("Switch to move!");
+                    // turn on boosting
+                    speed = DefaultBoostSpeed;
+                    light.color = Color.blue;
+                    Debug.Log("Boosting!");
+                    isBoosting = true;
                 }
-                
-
             }
+            /*
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+                {
+                    
+                    if (!getFlying())
+                    {
+                        setIsFlying(true);
+                        Debug.Log("Switch to fly!");
+                    }
+                    else
+                    {
+                        setIsFlying(false);
+                        Debug.Log("Switch to move!");
+                    }
+                    
+
+                }
+            */
             /*
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -117,6 +152,8 @@ public class UltimatePlayer : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
             successLanding = true;
         }
+
+        
 
         isOnGround();
         calculateAbsNormalUp();
@@ -143,14 +180,15 @@ public class UltimatePlayer : MonoBehaviour
     void setIsFlying(bool isFly)
     {
         isFlying = isFly;
+        /*
         if(isFlying)
         {
-            speed = DefaultFlyingSpeed;
+            speed = DefaultBoostSpeed;
         }
         else
         {
             speed = DefaultMovingSpeed;
-        }
+        }*/
     }
 
     void setIsOnGround(bool isGround)
@@ -164,7 +202,7 @@ public class UltimatePlayer : MonoBehaviour
     void AlignTopVec() // Detect Ground Direction and adjust player's belly snip to ground
     {
         Vector3 toDir;
-        if(getFlying())
+        if(getOnGround())
         {
             //Debug.Log("AlignAbs");
             toDir = absNormalUp;
@@ -174,6 +212,7 @@ public class UltimatePlayer : MonoBehaviour
             //Debug.Log("AlignGround");
             toDir = GroundCenterNormal;
         }
+        toDir = GroundCenterNormal;
         transform.rotation = Quaternion.FromToRotation(transform.up, toDir) * transform.rotation;
     }
 
@@ -209,7 +248,7 @@ public class UltimatePlayer : MonoBehaviour
         if (other.CompareTag("Obstacle"))
         {
             OnCCompletedPlayerDead();
-            SoundFXManager.instance.PlaySoundFXClip(explosion_audio, transform, 1f);
+            SoundFXManager.instance.PlaySoundFXClip(explosion_audio, transform, .8f);
             GameManager.Instance.GameOver();
         }
     }
