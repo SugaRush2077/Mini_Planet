@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
 
     public AudioClip[] audioClips;
     public AudioClip landing_audio;
+    public AudioClip buttonSound;
+    public AudioClip generatorSound;
 
     private void Awake()
     {
@@ -119,7 +121,7 @@ public class GameManager : MonoBehaviour
         {
             GameOver();
         }
-        if (Input.GetKeyDown("escape"))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
         }
@@ -165,6 +167,16 @@ public class GameManager : MonoBehaviour
                 //SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .2f);
             }
         }
+    }
+
+    public void playButtonSound()
+    {
+        SoundFXManager.instance.PlaySoundFXClip(buttonSound, transform, 1f);
+    }
+
+    public void playGeneratorSound()
+    {
+        SoundFXManager.instance.PlaySoundFXClip(generatorSound, transform, 1f);
     }
 
     public void setCurrentPlanetTypeToRandom()

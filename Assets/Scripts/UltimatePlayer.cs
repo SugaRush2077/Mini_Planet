@@ -29,6 +29,8 @@ public class UltimatePlayer : MonoBehaviour
     public delegate void CCompletedEventHandler();
     public static event CCompletedEventHandler whenPlayerDead;
 
+    public AudioClip explosion_audio;
+
     void Awake()
     {
         initialize();
@@ -207,6 +209,7 @@ public class UltimatePlayer : MonoBehaviour
         if (other.CompareTag("Obstacle"))
         {
             OnCCompletedPlayerDead();
+            SoundFXManager.instance.PlaySoundFXClip(explosion_audio, transform, 1f);
             GameManager.Instance.GameOver();
         }
     }
