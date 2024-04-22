@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public CameraShake cameraShake;
 
     public AudioClip[] audioClips;
+    public AudioClip landing_audio;
 
     private void Awake()
     {
@@ -70,6 +71,7 @@ public class GameManager : MonoBehaviour
 
     public void NewGame()
     {
+        SoundFXManager.instance.PlaySoundFXClip(landing_audio, transform, 1f);
         GameMode(2);
         /*
         enabled = true;

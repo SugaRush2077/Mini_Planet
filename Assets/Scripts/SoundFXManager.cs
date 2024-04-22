@@ -8,6 +8,7 @@ public class SoundFXManager : MonoBehaviour
     [SerializeField] private AudioSource soundFXObject;
 
     public AudioSource buttonSound;
+    //public AudioSource landingSound;
 
     public void playButtonClickSound()
     {
@@ -16,6 +17,8 @@ public class SoundFXManager : MonoBehaviour
             buttonSound.Play();
         }
     }
+
+    
 
 
     private void Awake()
