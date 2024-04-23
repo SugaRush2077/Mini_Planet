@@ -248,7 +248,7 @@ public class UltimatePlayer : MonoBehaviour
         if (other.CompareTag("Obstacle"))
         {
             OnCCompletedPlayerDead();
-            SoundFXManager.instance.PlaySoundFXClip(explosion_audio, transform, .8f);
+            SoundFXManager.instance.PlaySoundFXClip(explosion_audio, transform, .7f);
             GameManager.Instance.GameOver();
         }
     }

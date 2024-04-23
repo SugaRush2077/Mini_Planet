@@ -14,7 +14,7 @@ public class ExteriorSpawner : MonoBehaviour
     private float range = 2f;
     private Vector3 spawnCenter;
     private float spawnRadius;
-    private bool isIncrease = false;
+    private bool isIncrease = true;
     //private int increaseSpawnTimePeriod = 5;
     //private float time = 0;
 
