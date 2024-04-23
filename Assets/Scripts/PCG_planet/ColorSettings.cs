@@ -58,11 +58,19 @@ public class ColorSettings : ScriptableObject
             public void initializeBiome()
             {
                 this.gradient = new Gradient();
-                this.tint = RandomTint();
-                this.tint = Color.white;
+                float f = Random.value;
+                if(f < .2f)
+                {
+                    this.tint = RandomTint();
+                    this.tintPercent = Random.Range(.01f, 0.5f);
+                }
+                else
+                {
+                    this.tint = Color.white;
+                    this.tintPercent = 0;
+                }
                 this.startHeight = Random.value;
-                this.tintPercent = Random.Range(0, 0.5f);
-                this.tintPercent = 0;
+                
             }
             /*
             public void NoTint()
@@ -111,7 +119,8 @@ public class ColorSettings : ScriptableObject
         //Color[] randColorArr = {Color.red, Color.blue, Color.gray, Color.green, Color.yellow};
         int[] order = new int[desirePalette.colorAmount];
         Helper.initializeAndShuffle(order);
-        int NumOfBiome = 2;
+        int n = (desirePalette.colorArray.Length / 2);
+        int NumOfBiome = Random.Range(n-1, n+1);
         int NumOfOcean = desirePalette.colorArray.Length - NumOfBiome;
         Debug.Log("Selected palette has " + desirePalette.colorArray.Length + " colors!");
 
