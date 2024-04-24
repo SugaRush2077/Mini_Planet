@@ -5,29 +5,23 @@ using UnityEngine;
 public class ExteriorSpawner : MonoBehaviour
 {
     public Planet landingPlanet;
-    //public Planet centerPlanet;
     public Meteor meteor;
-
-    public bool Generate = true;
-    public float SpawnPerSec;
-    private int LaunchTime = 5;
-    private float range = 2f;
-    private Vector3 spawnCenter;
-    private float spawnRadius;
-    private bool isIncrease = true;
     public UltimatePlayer player;
     private Vector3 playerPos;
-    private float attackInterval;
-    private int dangerIndex;
-    //private float myTime;
+
+    private Vector3 spawnCenter;
+    private float range = 2f;
+    private float spawnRadius;
+
+    private bool isIncrease = true;
+    public bool Generate = true;
+    private int LaunchTime = 5;
 
     const float escalatePeriod = 10f; // every n seconds update the index
-    private int acceleration;
+    private float SpawnPerSec;
+    private float attackInterval;
+    private int dangerIndex;
     private float attackToPlayerRatio;
-    //private int increaseSpawnTimePeriod = 5;
-    //private float time = 0;
-
-    // Start is called before the first frame update
 
     void Start()
     {
@@ -41,9 +35,7 @@ public class ExteriorSpawner : MonoBehaviour
 
     private void Initialize()
     {
-        //myTime = 0;
         dangerIndex = 0;
-        acceleration = 1;
         SpawnPerSec = 1f;
         attackToPlayerRatio = .5f;
         attackInterval = .5f;
@@ -77,10 +69,9 @@ public class ExteriorSpawner : MonoBehaviour
 
     void Spawn()
     {
-        //Vector3 spawnPoint = spawnCenter + (Random.onUnitSphere * spawnRadius) * range;
-
         Vector3 spawnPoint;
         Meteor mtr;
+
         // Select spawn location
         float rand = Random.value;
         if(rand <= attackToPlayerRatio)
@@ -112,22 +103,12 @@ public class ExteriorSpawner : MonoBehaviour
         }
         else
         {
-            nextMeteor = Random.Range(1, 4);
+            nextMeteor = Random.Range(1, 3);
         }
         
         Invoke(nameof(Spawn), nextMeteor);
         Debug.Log("Current SpawnPerSec: " + SpawnPerSec);
     }
-    /*
-    void IncreaseAcceleration()
-    {
-        if (acceleration < 100)
-        {
-            acceleration += 1;
-        }
-
-        Invoke(nameof(IncreaseAcceleration), escalatePeriod / 10);
-    }*/
 
     void Escalate()
     {
@@ -152,16 +133,4 @@ public class ExteriorSpawner : MonoBehaviour
 
         Invoke(nameof(Escalate), escalatePeriod);
     }
-
-    /*
-    void updateSpawnAmount()
-    {
-        if (SpawnPerSec < 10)
-        {
-            SpawnPerSec++;
-        }
-        
-        Invoke(nameof(updateSpawnAmount), 5);
-    }*/
-
 }

@@ -7,18 +7,16 @@ using UnityEngine.PlayerLoop;
 public class UltimatePlayer : MonoBehaviour
 {
     public GameObject Planet;
-    //public GameObject PlayerPlaceholder;
+
     private float DefaultMovingSpeed = 7f;
     private float DefaultBoostSpeed = 16f; // 11f
     private float speed;
-    //private float flyMomentum = 20f;
-    //private float landingMomentum = 7f;
     private float rotateDegree = 90f;
 
     float gravityMagnitude = 100;
-    bool OnGround = false;
 
     float distanceToGround;
+    bool OnGround = false;
     bool successLanding = false;
     bool isFlying = false;
     bool isBoosting = false;
@@ -27,11 +25,11 @@ public class UltimatePlayer : MonoBehaviour
     Vector3 GroundCenterNormal = Vector3.zero;
     Vector3 absNormalUp;
     Vector3 startPos = new Vector3(0, 80, 0);
-    private Rigidbody rb;
 
     public delegate void CCompletedEventHandler();
     public static event CCompletedEventHandler whenPlayerDead;
 
+    private Rigidbody rb;
     public AudioClip explosion_audio;
     private Light light;
     
@@ -80,18 +78,6 @@ public class UltimatePlayer : MonoBehaviour
 
             //Debug.Log(transform.up);
 
-            //Fly
-            /*
-            if (Input.GetKey(KeyCode.Space))
-            {
-                //Debug.Log("Fly");
-                if (getFlying())
-                {
-                    float y = flyMomentum * Time.deltaTime;
-                    transform.Translate(0, y, 0);
-                }
-            }*/
-
             if (Input.GetMouseButtonDown(0))
             {
                 if (isBoosting)
@@ -111,35 +97,6 @@ public class UltimatePlayer : MonoBehaviour
                     isBoosting = true;
                 }
             }
-            /*
-            if (Input.GetKeyDown(KeyCode.LeftShift))
-                {
-                    
-                    if (!getFlying())
-                    {
-                        setIsFlying(true);
-                        Debug.Log("Switch to fly!");
-                    }
-                    else
-                    {
-                        setIsFlying(false);
-                        Debug.Log("Switch to move!");
-                    }
-                    
-
-                }
-            */
-            /*
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                setIsFlying(true);
-                Debug.Log("pushed");
-            }
-            if (Input.GetKeyUp(KeyCode.Space))
-            {
-                setIsFlying(false);
-                Debug.Log("Up");
-            }*/
         }
     }
 
@@ -178,15 +135,6 @@ public class UltimatePlayer : MonoBehaviour
     void setIsFlying(bool isFly)
     {
         isFlying = isFly;
-        /*
-        if(isFlying)
-        {
-            speed = DefaultBoostSpeed;
-        }
-        else
-        {
-            speed = DefaultMovingSpeed;
-        }*/
     }
 
     void setIsOnGround(bool isGround)
@@ -226,9 +174,7 @@ public class UltimatePlayer : MonoBehaviour
             {
                 rb.AddForce(-absNormalUp * gravityMagnitude);
             }
-            
         }
-        
     }
 
     private void isOnGround()
@@ -269,19 +215,5 @@ public class UltimatePlayer : MonoBehaviour
             GameManager.Instance.GameOver();
         }
     }
-/*
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Obstacle"))
-        {
-            OnCCompletedPlayerDead();
-            SoundFXManager.instance.PlaySoundFXClip(explosion_audio, transform, .7f);
-            GameManager.Instance.GameOver();
-        }
-    }*/
-    /*
-    private void OnParticleCollision(GameObject other)
-    {
-        Debug.Log("BURN!");
-    }*/
+
 }

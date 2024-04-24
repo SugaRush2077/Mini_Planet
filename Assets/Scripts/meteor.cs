@@ -17,6 +17,7 @@ public class Meteor : MonoBehaviour
     private Vector3 flyingToward;
     private int currentDangerIndex;
     private float predictRadius = 2f;
+    private float ATAthreshold = 0.95f; // Advanced Tracking Algorithm Threshold
 
     public LayerMask myLayerMask;
     private float moveSpeed = 30.0f;
@@ -56,17 +57,16 @@ public class Meteor : MonoBehaviour
         //float rand = Random.value;
         if(playerIsTarget)
         {
-
             flyingToward = playerPos - transform.position;
             Debug.Log("Original player pos:" + flyingToward);
 
             // Advanced Tracking Algorithm
-            if (6 <= currentDangerIndex && currentDangerIndex < 12)
+            if (6 <= currentDangerIndex && currentDangerIndex < 12 && (Random.value < ATAthreshold))
             {
                 flyingToward += (Random.onUnitSphere * predictRadius);
             }
             // Top-notch Tracking Algorithm
-            else if (12 <= currentDangerIndex && currentDangerIndex <= 20)
+            else if (12 <= currentDangerIndex && (Random.value < ATAthreshold))
             {
                 float rand = Random.value;
                 if(rand < 0.5f) // Predict forward
