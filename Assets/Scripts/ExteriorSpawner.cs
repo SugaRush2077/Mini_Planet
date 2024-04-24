@@ -10,11 +10,15 @@ public class ExteriorSpawner : MonoBehaviour
 
     public bool Generate = true;
     public float SpawnPerSec;
-    public int LaunchTime;
+    private int LaunchTime = 5;
     private float range = 2f;
     private Vector3 spawnCenter;
     private float spawnRadius;
     private bool isIncrease = true;
+    public UltimatePlayer player;
+    private Vector3 playerPos;
+
+    private float attackRatio = .5f;
     //private int increaseSpawnTimePeriod = 5;
     //private float time = 0;
 
@@ -22,7 +26,6 @@ public class ExteriorSpawner : MonoBehaviour
 
     void Start()
     {
-        
         //Debug.Log(spawnRadius);
         //Launch();
     }
@@ -47,13 +50,40 @@ public class ExteriorSpawner : MonoBehaviour
             
         }
     }
-    
+
+    private void FixedUpdate()
+    {
+        playerPos = player.transform.position;
+    }
+
     void Spawn()
     {
-        Vector3 spawnPoint = spawnCenter + (Random.onUnitSphere * spawnRadius) * range;
-        //Debug.Log(spawnPoint);
-        Instantiate(meteor, spawnPoint, Quaternion.identity);
-        float nextMeteor = 1; ;
+        //Vector3 spawnPoint = spawnCenter + (Random.onUnitSphere * spawnRadius) * range;
+
+        Vector3 spawnPoint;
+        Meteor mtr;
+        // Select spawn location
+        float rand = Random.value;
+        if(rand <= attackRatio)
+        {
+            spawnPoint = spawnCenter + playerPos * range * 2f;
+        }
+        else
+        {
+            spawnPoint = spawnCenter + (Random.onUnitSphere * spawnRadius) * range;
+        }
+        mtr = Instantiate(meteor, spawnPoint, Quaternion.identity);
+        mtr.setPlayerLocation(playerPos);
+        if(rand <= attackRatio)
+        {
+            mtr.selectPlayerAsTarget(true);
+        }
+        else
+        {
+            mtr.selectPlayerAsTarget(false);
+        }
+
+        float nextMeteor = 1;
         float frequency = Random.value;
         if(frequency < 0.7f) 
         {

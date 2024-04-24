@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3436453323444123337}
   m_Layer: 0
   m_Name: Meteor
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,6 +66,9 @@ MonoBehaviour:
   crater: {fileID: 974781282163733114, guid: 140d61cd9f2975046b1a71eaa0519d41, type: 3}
   explosionEffect: {fileID: 1000011797152326, guid: 60bcda38b0de1cb4e873524c67292007, type: 3}
   explosionScale: 1
+  myLayerMask:
+    serializedVersion: 2
+    m_Bits: 87
 --- !u!54 &3988516128403075264
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -113,7 +116,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
-  m_Center: {x: -0.00056978315, y: -0.0017463146, z: 0.0018806546}
+  m_Center: {x: -0.00056978315, y: -0.0017463146, z: 0.04}
 --- !u!82 &3436453323444123337
 AudioSource:
   m_ObjectHideFlags: 0

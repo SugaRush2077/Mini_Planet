@@ -6,7 +6,7 @@ public class IanCameraFollow : MonoBehaviour
 {
     public UltimatePlayer target;
     public Vector3 center = new Vector3(0,0,0);
-    public float smoothSpeed = 0.1f; //.125f
+    public float smoothSpeed = 10f; //.125f
     public float offset = 20f;
     public float CameraRotateSpeed = 3.5f;
     public Camera cam;
@@ -23,12 +23,13 @@ public class IanCameraFollow : MonoBehaviour
         //Debug.Log(Groundnormal);
         
         Vector3 desiredPosition = target.transform.position + Groundnormal * offset;
-        //Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-        transform.position = desiredPosition;
-        
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        //transform.position = desiredPosition;
+        transform.position = smoothedPosition;
+
 
         // Rotate Camera
-        
+
         if (Input.GetMouseButton(1))
         {
             transform.RotateAround(target.transform.position, transform.up, Input.GetAxis("Mouse X") * CameraRotateSpeed);

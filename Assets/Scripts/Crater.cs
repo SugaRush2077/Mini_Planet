@@ -5,7 +5,7 @@ using UnityEngine;
 public class Crater : MonoBehaviour
 {
     //public AudioSource explosion_audio;
-    public int destroy_time = 5;
+    public int destroy_time;
     // Start is called before the first frame update
     void Start()
     {

@@ -5233,7 +5233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 356543624}
   center: {x: 0, y: 0, z: 0}
-  smoothSpeed: 0.125
+  smoothSpeed: 10
   offset: 10
   CameraRotateSpeed: 3.5
   cam: {fileID: 963194227}
@@ -7343,7 +7343,7 @@ MonoBehaviour:
   meteor: {fileID: 9175925407030382098, guid: 03a2809eef6f4534ca5e75c8e113a298, type: 3}
   Generate: 1
   SpawnPerSec: 10
-  LaunchTime: 10
+  player: {fileID: 356543624}
 --- !u!4 &1333565520
 Transform:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class UltimatePlayer : MonoBehaviour
     public GameObject Planet;
     //public GameObject PlayerPlaceholder;
     private float DefaultMovingSpeed = 5f;
-    private float DefaultBoostSpeed = 11f;
+    private float DefaultBoostSpeed = 20f; // 11f
     private float speed;
     private float flyMomentum = 20f;
     //private float landingMomentum = 7f;
@@ -22,6 +22,7 @@ public class UltimatePlayer : MonoBehaviour
     bool successLanding = false;
     bool isFlying = false;
     bool isBoosting = false;
+    bool isGoingOutside = false;
 
     Vector3 GroundCenterNormal = Vector3.zero;
     Vector3 absNormalUp;
@@ -52,8 +53,8 @@ public class UltimatePlayer : MonoBehaviour
         isBoosting = false;
         light = GetComponent<Light>();
         light.color = Color.red;
+        isGoingOutside = false;
     }
-    
 
     private void Update()
     {
@@ -153,13 +154,10 @@ public class UltimatePlayer : MonoBehaviour
             successLanding = true;
         }
 
-        
-
         isOnGround();
         calculateAbsNormalUp();
         AlignTopVec();
         addGravity();
-
     }
 
     private void OnCCompletedPlayerDead()
@@ -220,14 +218,23 @@ public class UltimatePlayer : MonoBehaviour
     {
         if (!getOnGround())
         {
-            rb.AddForce(-absNormalUp * gravityMagnitude);
+            if (isGoingOutside)
+            {
+                rb.AddForce(-absNormalUp * gravityMagnitude * 10);
+            }
+            else
+            {
+                rb.AddForce(-absNormalUp * gravityMagnitude);
+            }
+            
         }
+        
     }
 
     private void isOnGround()
     {
         RaycastHit hit = new RaycastHit();
-        if (Physics.Raycast(transform.position, -transform.up, out hit, 1000))
+        if (Physics.Raycast(transform.position, -transform.up, out hit, 20000))
         {
             distanceToGround = hit.distance;
             GroundCenterNormal = hit.normal;
@@ -235,16 +242,22 @@ public class UltimatePlayer : MonoBehaviour
             if (distanceToGround <= 1f)
             {
                 setIsOnGround(true);
+                isGoingOutside = true;
             }
             else
             {
                 setIsOnGround(false);
+                if(distanceToGround > 100f)
+                {
+                    isGoingOutside = true;
+                }
             }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        
         if (other.CompareTag("Obstacle"))
         {
             OnCCompletedPlayerDead();
@@ -252,9 +265,19 @@ public class UltimatePlayer : MonoBehaviour
             GameManager.Instance.GameOver();
         }
     }
-
+/*
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Obstacle"))
+        {
+            OnCCompletedPlayerDead();
+            SoundFXManager.instance.PlaySoundFXClip(explosion_audio, transform, .7f);
+            GameManager.Instance.GameOver();
+        }
+    }*/
+    /*
     private void OnParticleCollision(GameObject other)
     {
         Debug.Log("BURN!");
-    }
+    }*/
 }
