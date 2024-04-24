@@ -16,6 +16,11 @@ public class Crater : MonoBehaviour
         //SoundFXManager.instance.PlaySoundFXClip(explosion_audioClip, transform, 1f);
     }
 
+    public void setScale(float scale)
+    {
+        transform.localScale = new Vector3(scale, scale, scale);
+    }
+
     private void DestroyCrater()
     {
         Destroy(gameObject);

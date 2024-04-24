@@ -8,10 +8,10 @@ public class UltimatePlayer : MonoBehaviour
 {
     public GameObject Planet;
     //public GameObject PlayerPlaceholder;
-    private float DefaultMovingSpeed = 5f;
-    private float DefaultBoostSpeed = 20f; // 11f
+    private float DefaultMovingSpeed = 7f;
+    private float DefaultBoostSpeed = 16f; // 11f
     private float speed;
-    private float flyMomentum = 20f;
+    //private float flyMomentum = 20f;
     //private float landingMomentum = 7f;
     private float rotateDegree = 90f;
 
@@ -252,6 +252,10 @@ public class UltimatePlayer : MonoBehaviour
                     isGoingOutside = true;
                 }
             }
+        }
+        else
+        {
+            setIsOnGround(false);
         }
     }
 

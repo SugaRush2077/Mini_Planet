@@ -6,7 +6,7 @@ public class Meteor : MonoBehaviour
 {
     //public AudioSource Flying_audio;
     //public GameObject targetPlanet;
-    public GameObject crater;
+    public Crater crater;
     public GameObject explosionEffect;
     public float explosionScale = 1.0f;
 
@@ -28,15 +28,29 @@ public class Meteor : MonoBehaviour
         //selectPlayerAsTarget();
     }
 
+
+    public void randomize(int accelerate)
+    {
+        moveSpeed += accelerate;
+        moveSpeed = Random.Range(moveSpeed - 5, moveSpeed + 10);
+        transform.localScale = getRandomScale();
+    }
+
+    Vector3 getRandomScale()
+    {
+        float r = Random.Range(1, 4);
+        return new Vector3(r, r, r);
+    }
+
     public void setPlayerLocation(Vector3 pos)
     {
         playerPos = pos;
     }
 
-    public void selectPlayerAsTarget(bool b)
+    public void selectPlayerAsTarget(bool playerIsTarget)
     {
         //float rand = Random.value;
-        if(b)
+        if(playerIsTarget)
         {
             flyingToward = playerPos - transform.position;
         }
@@ -100,9 +114,9 @@ public class Meteor : MonoBehaviour
             Debug.Log("Meteor hit on: " + hitPoint);
             Quaternion normalOrientation = Quaternion.Euler(transform.position - hitPoint);
             Instantiate(crater, hitPoint, normalOrientation);*/
-            
-            
-            Instantiate(crater, landingPoint, craterOrientation);
+            Crater ctr;
+            ctr = Instantiate(crater, landingPoint, craterOrientation);
+            ctr.setScale(transform.localScale.x);
             
             Explode();
 

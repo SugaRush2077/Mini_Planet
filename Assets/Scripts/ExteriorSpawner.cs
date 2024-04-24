@@ -17,8 +17,12 @@ public class ExteriorSpawner : MonoBehaviour
     private bool isIncrease = true;
     public UltimatePlayer player;
     private Vector3 playerPos;
+    private float attackInterval;
+    //private float myTime;
 
-    private float attackRatio = .5f;
+    const float escalatePeriod = 10f; // every n seconds update the index
+    private int acceleration;
+    private float attackToPlayerRatio;
     //private int increaseSpawnTimePeriod = 5;
     //private float time = 0;
 
@@ -34,18 +38,30 @@ public class ExteriorSpawner : MonoBehaviour
         CancelInvoke();
     }
 
-    public void Launch()
+    private void Initialize()
     {
+        //myTime = 0;
+        acceleration = 1;
         SpawnPerSec = 1f;
+        attackToPlayerRatio = .5f;
+        attackInterval = .5f;
+
         spawnRadius = landingPlanet.currentRadius * 2;
         spawnCenter = landingPlanet.transform.position;
+    }
+
+    public void Launch()
+    {
+        Initialize();
         if (Generate)
         {
             //InvokeRepeating(nameof(Spawn), LaunchTime, (1 / SpawnPerSec));
             Invoke(nameof(Spawn), LaunchTime);
             if(isIncrease)
             {
-                Invoke(nameof(updateSpawnAmount), LaunchTime);
+                //Invoke(nameof(updateSpawnAmount), LaunchTime);
+                Invoke(nameof(Escalate), LaunchTime);
+                Invoke(nameof(IncreaseAcceleration), LaunchTime);
             }
             
         }
@@ -54,6 +70,7 @@ public class ExteriorSpawner : MonoBehaviour
     private void FixedUpdate()
     {
         playerPos = player.transform.position;
+        //myTime += Time.deltaTime;
     }
 
     void Spawn()
@@ -64,7 +81,7 @@ public class ExteriorSpawner : MonoBehaviour
         Meteor mtr;
         // Select spawn location
         float rand = Random.value;
-        if(rand <= attackRatio)
+        if(rand <= attackToPlayerRatio)
         {
             spawnPoint = spawnCenter + playerPos * range * 2f;
         }
@@ -73,8 +90,10 @@ public class ExteriorSpawner : MonoBehaviour
             spawnPoint = spawnCenter + (Random.onUnitSphere * spawnRadius) * range;
         }
         mtr = Instantiate(meteor, spawnPoint, Quaternion.identity);
+        mtr.randomize(acceleration);
+
         mtr.setPlayerLocation(playerPos);
-        if(rand <= attackRatio)
+        if(rand <= attackToPlayerRatio)
         {
             mtr.selectPlayerAsTarget(true);
         }
@@ -83,21 +102,52 @@ public class ExteriorSpawner : MonoBehaviour
             mtr.selectPlayerAsTarget(false);
         }
 
+        // Decide when to launch next meteor
         float nextMeteor = 1;
         float frequency = Random.value;
-        if(frequency < 0.7f) 
+        if(frequency < attackInterval) 
         {
-            nextMeteor = Random.Range((1 / SpawnPerSec), 3);
+            nextMeteor = Random.Range((1 / SpawnPerSec), 1);
         }
         else
         {
-            nextMeteor = Random.Range(3, 5);
+            nextMeteor = Random.Range(1, 4);
         }
         
         Invoke(nameof(Spawn), nextMeteor);
         Debug.Log("Current SpawnPerSec: " + SpawnPerSec);
     }
+    void IncreaseAcceleration()
+    {
+        if (acceleration < 100)
+        {
+            acceleration += 1;
+        }
 
+        Invoke(nameof(IncreaseAcceleration), escalatePeriod / 10);
+    }
+
+    void Escalate()
+    {
+        if(attackInterval < .9f)
+        {
+            attackInterval += .05f;
+        }
+
+        if(SpawnPerSec < 10)
+        {
+            SpawnPerSec++;
+        }
+
+        if (attackToPlayerRatio < .9f)
+        {
+            attackToPlayerRatio += .05f;
+        }
+
+        Invoke(nameof(Escalate), escalatePeriod);
+    }
+
+    /*
     void updateSpawnAmount()
     {
         if (SpawnPerSec < 10)
@@ -106,6 +156,6 @@ public class ExteriorSpawner : MonoBehaviour
         }
         
         Invoke(nameof(updateSpawnAmount), 5);
-    }
+    }*/
 
 }
