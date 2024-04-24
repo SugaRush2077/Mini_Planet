@@ -18,6 +18,7 @@ public class ExteriorSpawner : MonoBehaviour
     public UltimatePlayer player;
     private Vector3 playerPos;
     private float attackInterval;
+    private int dangerIndex;
     //private float myTime;
 
     const float escalatePeriod = 10f; // every n seconds update the index
@@ -41,6 +42,7 @@ public class ExteriorSpawner : MonoBehaviour
     private void Initialize()
     {
         //myTime = 0;
+        dangerIndex = 0;
         acceleration = 1;
         SpawnPerSec = 1f;
         attackToPlayerRatio = .5f;
@@ -61,7 +63,7 @@ public class ExteriorSpawner : MonoBehaviour
             {
                 //Invoke(nameof(updateSpawnAmount), LaunchTime);
                 Invoke(nameof(Escalate), LaunchTime);
-                Invoke(nameof(IncreaseAcceleration), LaunchTime);
+                //Invoke(nameof(IncreaseAcceleration), LaunchTime);
             }
             
         }
@@ -90,9 +92,8 @@ public class ExteriorSpawner : MonoBehaviour
             spawnPoint = spawnCenter + (Random.onUnitSphere * spawnRadius) * range;
         }
         mtr = Instantiate(meteor, spawnPoint, Quaternion.identity);
-        mtr.randomize(acceleration);
-
-        mtr.setPlayerLocation(playerPos);
+        mtr.getInfo(playerPos, dangerIndex);
+        //mtr.randomize(acceleration);
         if(rand <= attackToPlayerRatio)
         {
             mtr.selectPlayerAsTarget(true);
@@ -117,6 +118,7 @@ public class ExteriorSpawner : MonoBehaviour
         Invoke(nameof(Spawn), nextMeteor);
         Debug.Log("Current SpawnPerSec: " + SpawnPerSec);
     }
+    /*
     void IncreaseAcceleration()
     {
         if (acceleration < 100)
@@ -125,16 +127,20 @@ public class ExteriorSpawner : MonoBehaviour
         }
 
         Invoke(nameof(IncreaseAcceleration), escalatePeriod / 10);
-    }
+    }*/
 
     void Escalate()
     {
+        if(dangerIndex < 20)
+        {
+            dangerIndex++;
+        }
         if(attackInterval < .9f)
         {
             attackInterval += .05f;
         }
 
-        if(SpawnPerSec < 10)
+        if(SpawnPerSec < 8)
         {
             SpawnPerSec++;
         }

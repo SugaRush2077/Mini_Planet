@@ -15,6 +15,8 @@ public class Meteor : MonoBehaviour
     private Quaternion craterOrientation;
     private Vector3 playerPos;
     private Vector3 flyingToward;
+    private int currentDangerIndex;
+    private float predictRadius = 2f;
 
     public LayerMask myLayerMask;
     private float moveSpeed = 30.0f;
@@ -29,10 +31,10 @@ public class Meteor : MonoBehaviour
     }
 
 
-    public void randomize(int accelerate)
+    private void randomize(int accelerate)
     {
         moveSpeed += accelerate;
-        moveSpeed = Random.Range(moveSpeed - 5, moveSpeed + 10);
+        moveSpeed = Random.Range(moveSpeed - 5, moveSpeed + 5);
         transform.localScale = getRandomScale();
     }
 
@@ -42,9 +44,11 @@ public class Meteor : MonoBehaviour
         return new Vector3(r, r, r);
     }
 
-    public void setPlayerLocation(Vector3 pos)
+    public void getInfo(Vector3 pos, int index)
     {
         playerPos = pos;
+        currentDangerIndex = index;
+        randomize(currentDangerIndex);
     }
 
     public void selectPlayerAsTarget(bool playerIsTarget)
@@ -52,13 +56,43 @@ public class Meteor : MonoBehaviour
         //float rand = Random.value;
         if(playerIsTarget)
         {
+
             flyingToward = playerPos - transform.position;
+            Debug.Log("Original player pos:" + flyingToward);
+
+            // Advanced Tracking Algorithm
+            if (6 <= currentDangerIndex && currentDangerIndex < 12)
+            {
+                flyingToward += (Random.onUnitSphere * predictRadius);
+            }
+            // Top-notch Tracking Algorithm
+            else if (12 <= currentDangerIndex && currentDangerIndex <= 20)
+            {
+                float rand = Random.value;
+                if(rand < 0.5f) // Predict forward
+                {
+                    flyingToward += (Vector3.forward * predictRadius);
+                }
+                else if(rand < 0.7f) // Predict left
+                {
+                    flyingToward += (Vector3.left * predictRadius);
+                }
+                else if (rand < 0.9f) // Predict right
+                {
+                    flyingToward += (Vector3.right * predictRadius);
+                }
+                else // Predict backward
+                {
+                    flyingToward += (Vector3.back * predictRadius);
+                }
+            }
+
+            Debug.Log("Predicted player pos:" + flyingToward);
         }
         else // flying toward player
         {
             flyingToward = towardPlanetCenter - transform.position;
         }
-
 
         //flyingToward = towardPlanetCenter - transform.position;
         //Debug.Log("flying toward: " + flyingToward);
@@ -69,17 +103,12 @@ public class Meteor : MonoBehaviour
         
     }
 
-    private void DestroyCrater()
-    {
-        Destroy(gameObject);
-    }
-
     private void calculateLandPoint()
     {
         //Groundnormal = (transform.position - center).normalized;
         Ray ray = new Ray(transform.position, flyingToward);
         RaycastHit hit;
-        if(Physics.Raycast(ray, out hit, 10000, myLayerMask))
+        if(Physics.Raycast(ray, out hit, 20000, myLayerMask))
         {
             
             //Debug.Log("hit: " + hit.point);
@@ -89,16 +118,6 @@ public class Meteor : MonoBehaviour
             //Quaternion.Normalize(ori);
         }
     }
-    /*
-    private void Shoot()
-    {
-        flyingDirection = transform.position - towardPlanetCenter;
-        calculateLandPoint();
-
-        //m_rotation = m_rotation.normalized;
-        flyingDirection = flyingDirection.normalized;
-        transform.rotation = landingOrientation;
-    }*/
 
     private void OnTriggerEnter(Collider other)
     {
