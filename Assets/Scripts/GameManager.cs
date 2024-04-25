@@ -16,11 +16,7 @@ public class GameManager : MonoBehaviour
 
     private PaletteManager PM;
     public Canvas[] UI_array;
-    /*
-    public Canvas UI_mainMenu;
-    public Canvas UI_gameover;
-    public Canvas UI_player;
-    public Canvas UI_settings;*/
+    private bool isInGame = false;
     string CurrentPlanetType = "Random";
     private SwitchCam camManager;
     private bool keepCurrentPlanet = false;
@@ -117,13 +113,16 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            GameOver();
-        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            if(isInGame)
+            {
+                GameOver();
+            }
+            else
+            {
+                Application.Quit();
+            }
         }
     }
     void Initialize()
@@ -248,6 +247,7 @@ public class GameManager : MonoBehaviour
                 break;
             // 2: In Game
             case 2:
+                isInGame = true;
                 UI_Display(2);
                 ClearObstacle();
                 planet.GetComponent<SelfRotate>().enabled = false;
@@ -264,6 +264,7 @@ public class GameManager : MonoBehaviour
                 break;
             // 3: GameOver Menu
             case 3:
+                isInGame = false;
                 UI_Display(3);
                 UI_array[2].GetComponentInChildren<Timer>().stopTimer();
                 player.gameObject.SetActive(false);

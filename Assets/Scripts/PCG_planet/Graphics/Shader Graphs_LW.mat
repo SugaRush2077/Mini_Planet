@@ -73,5 +73,5 @@ Material:
     - _QueueOffset: 0
     - _Smoothness: 0
     m_Colors:
-    - _elevationMinMax: {r: -0.5798625, g: 0.24041198, b: 0, a: 0}
+    - _elevationMinMax: {r: -0.4102078, g: 0.35310972, b: 0, a: 0}
   m_BuildTextureStacks: []

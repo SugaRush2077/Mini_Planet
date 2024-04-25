@@ -107,15 +107,13 @@ public class Planet : MonoBehaviour
 
     private void EarthPlanetColor()
     {
-        colorSettings.earthBiomeColor();
-        colorSettings.earthOceanColor();
+        colorSettings.changeColorByEarth();
         currentPaletteName = "Earth";
     }
 
     private void RandomPlanetColor()
     {
-        colorSettings.changeBiomeColor();
-        colorSettings.changeOceanColor();
+        colorSettings.changeColorByRandom();
         currentPaletteName = "Random";
     }
 

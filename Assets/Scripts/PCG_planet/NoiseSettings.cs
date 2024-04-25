@@ -86,7 +86,6 @@ public class NoiseSettings
 
     void setParameter()
     {
-
         float rand_strength = Random.Range(.1f, 1f);
         float rand_baseRough;
         float rand_minValue;
@@ -124,89 +123,162 @@ public class NoiseSettings
         simpleNoiseSettings.minValue = rand_minValue;
     }
 
+    void ImaginarySetting()
+    {
+        // original parameter
+        if (filterType == FilterType.Simple)
+        {
+            simpleNoiseSettings.strength = Random.Range(.1f, .3f);
+            simpleNoiseSettings.numLayers = 3;
+            simpleNoiseSettings.baseRoughness = Random.Range(.7f, 5f);
+            simpleNoiseSettings.roughness = Random.Range(.01f, 3f);
+            simpleNoiseSettings.persistence = Random.Range(-.2f, .2f);
+            simpleNoiseSettings.center = randomVect3();
+            //simpleNoiseSettings.minValue = Random.Range(.6f, .9f);
+            //Debug.Log("RandomSimple");
+            setParameter();
+        }
+        else
+        {
+            ridgidNoiseSettings.strength = Random.Range(.1f, .3f);
+            ridgidNoiseSettings.numLayers = 4;
+            ridgidNoiseSettings.baseRoughness = Random.Range(1f, 2f);
+            ridgidNoiseSettings.roughness = Random.Range(.01f, 2f);
+            ridgidNoiseSettings.persistence = Random.Range(-.2f, .7f);
+            ridgidNoiseSettings.center = randomVect3();
+            ridgidNoiseSettings.minValue = Random.Range(.2f, .9f);
+            ridgidNoiseSettings.weightMultiplier = Random.Range(.2f, .9f);
+            //Debug.Log("RandomRidgid");
+        }
+    }
 
+    void RealisticSetting()
+    {
+        if (filterType == FilterType.Simple)
+        {
+            simpleNoiseSettings.strength = Random.Range(.05f, .3f);
+            simpleNoiseSettings.numLayers = 4;
+            simpleNoiseSettings.baseRoughness = Random.Range(1.5f, 3f);
+            simpleNoiseSettings.roughness = Random.Range(2f, 4f);
+            simpleNoiseSettings.persistence = Random.Range(.2f, .5f);
+            simpleNoiseSettings.center = randomVect3();
+            simpleNoiseSettings.minValue = Random.Range(.6f, 1.3f);
+            //Debug.Log("RandomSimple");
+        }
+        else
+        {
+            ridgidNoiseSettings.strength = Random.Range(1f, 2.5f);
+            ridgidNoiseSettings.numLayers = 4;
+            ridgidNoiseSettings.baseRoughness = Random.Range(1f, 4f);
+            ridgidNoiseSettings.roughness = Random.Range(1f, 4f);
+            ridgidNoiseSettings.persistence = Random.Range(0.3f, 1f);
+            ridgidNoiseSettings.center = randomVect3();
+            ridgidNoiseSettings.minValue = Random.Range(-.5f, 1.5f);
+            ridgidNoiseSettings.weightMultiplier = Random.Range(.5f, 1.5f);
+            //Debug.Log("RandomRidgid");
+        }
+    }
+
+    void EarthLikeSetting()
+    {
+        if (filterType == FilterType.Simple)
+        {
+            simpleNoiseSettings.strength = Random.Range(.1f, .2f);
+            simpleNoiseSettings.numLayers = 4;
+            simpleNoiseSettings.baseRoughness = Random.Range(1f, 1.8f);
+            simpleNoiseSettings.roughness = Random.Range(4f, 10f);
+            simpleNoiseSettings.persistence = Random.Range(.05f, .13f);
+            simpleNoiseSettings.center = randomVect3();
+            simpleNoiseSettings.minValue = Random.Range(.5f, .8f);
+        }
+        else
+        {
+            ridgidNoiseSettings.strength = Random.Range(.3f, .5f);
+            ridgidNoiseSettings.numLayers = 4;
+            ridgidNoiseSettings.baseRoughness = Random.Range(.5f, 2f);
+            ridgidNoiseSettings.roughness = Random.Range(1f, 5f);
+            ridgidNoiseSettings.persistence = Random.Range(-.1f, .2f);
+            ridgidNoiseSettings.center = randomVect3();
+            ridgidNoiseSettings.minValue = Random.Range(.7f, .9f);
+            ridgidNoiseSettings.weightMultiplier = Random.Range(.5f, 1.5f);
+        }
+    }
+
+    void testSetting()
+    {
+        if (filterType == FilterType.Simple)
+        {
+            simpleNoiseSettings.strength = Random.Range(.05f, .4f);
+            simpleNoiseSettings.numLayers = 4;
+            simpleNoiseSettings.baseRoughness = Random.Range(1f, 2.5f);
+            simpleNoiseSettings.roughness = Random.Range(2f, 3f);
+            simpleNoiseSettings.persistence = Random.Range(.3f, .5f);
+            simpleNoiseSettings.center = randomVect3();
+            simpleNoiseSettings.minValue = Random.Range(.9f, 1.1f);
+        }
+        else
+        {
+            ridgidNoiseSettings.strength = Random.Range(.1f, 1f);
+            ridgidNoiseSettings.numLayers = 4;
+            ridgidNoiseSettings.baseRoughness = Random.Range(.1f, 3f);
+            ridgidNoiseSettings.roughness = Random.Range(1f, 3f);
+            ridgidNoiseSettings.persistence = Random.Range(-1f, .8f);
+            ridgidNoiseSettings.center = randomVect3();
+            ridgidNoiseSettings.minValue = Random.Range(-1f, 1.5f);
+            ridgidNoiseSettings.weightMultiplier = Random.Range(1f, 10f);
+        }
+    }
 
     public void RandomizeSettings(string type)
     {
-        //bool usingDefault = true;
-        if (type == "Random" || type =="Palette")
+        testSetting();
+        /*
+        float rand = Random.value;
+        if (type == "Palette")
         {
-            // default   
-            if (filterType == FilterType.Simple)
+            if(rand < 0.25f)
             {
-                //simpleNoiseSettings.strength = Random.Range(.1f, .5f);
-                simpleNoiseSettings.numLayers = 3;
-                //simpleNoiseSettings.baseRoughness = Random.Range(.7f, 5f);
-                simpleNoiseSettings.roughness = Random.Range(.01f, 3f);
-                simpleNoiseSettings.persistence = Random.Range(-.2f, .2f);
-                simpleNoiseSettings.center = randomVect3();
-                //simpleNoiseSettings.minValue = Random.Range(.6f, .9f);
-                //Debug.Log("RandomSimple");
-                setParameter();
+                EarthLikeSetting();
+            }
+            else if (rand < 0.5f)
+            {
+                RealisticSetting();
             }
             else
             {
-                ridgidNoiseSettings.strength = Random.Range(.1f, .3f);
-                ridgidNoiseSettings.numLayers = 4;
-                ridgidNoiseSettings.baseRoughness = Random.Range(1f, 2f);
-                ridgidNoiseSettings.roughness = Random.Range(.01f, 2f);
-                ridgidNoiseSettings.persistence = Random.Range(-.2f, .7f);
-                ridgidNoiseSettings.center = randomVect3();
-                ridgidNoiseSettings.minValue = Random.Range(.2f, .9f);
-                ridgidNoiseSettings.weightMultiplier = Random.Range(.2f, .9f);
-                //Debug.Log("RandomRidgid");
+                ImaginarySetting();
             }
         }
         else if (type == "Earth")
         {
-            if (filterType == FilterType.Simple)
+            if (rand < 0.25f)
             {
-                simpleNoiseSettings.strength = Random.Range(.1f, .2f);
-                simpleNoiseSettings.numLayers = 4;
-                simpleNoiseSettings.baseRoughness = Random.Range(1f, 1.8f);
-                simpleNoiseSettings.roughness = Random.Range(4f, 10f);
-                simpleNoiseSettings.persistence = Random.Range(0, .1f);
-                simpleNoiseSettings.center = randomVect3();
-                simpleNoiseSettings.minValue = Random.Range(.5f, .8f);
+                ImaginarySetting();
+            }
+            else if (rand < 0.5f)
+            {
+                RealisticSetting();
             }
             else
             {
-                ridgidNoiseSettings.strength = Random.Range(.3f, .5f);
-                ridgidNoiseSettings.numLayers = 4;
-                ridgidNoiseSettings.baseRoughness = Random.Range(.5f, 2f);
-                ridgidNoiseSettings.roughness = Random.Range(1f, 5f);
-                ridgidNoiseSettings.persistence = Random.Range(-.1f, .2f);
-                ridgidNoiseSettings.center = randomVect3();
-                ridgidNoiseSettings.minValue = Random.Range(.7f, .9f);
-                ridgidNoiseSettings.weightMultiplier = Random.Range(.5f, 1.5f);
+                EarthLikeSetting();
+                
             }
         }
-        else // Personalize
+        else // type == "Random"
         {
-            if (filterType == FilterType.Simple)
+            if (rand < 0.25f)
             {
-                simpleNoiseSettings.strength = Random.Range(.01f, .4f);
-                simpleNoiseSettings.numLayers = 4;
-                simpleNoiseSettings.baseRoughness = Random.Range(1f, 3f);
-                simpleNoiseSettings.roughness = Random.Range(1f, 4f);
-                simpleNoiseSettings.persistence = Random.Range(.1f, .5f);
-                simpleNoiseSettings.center = randomVect3();
-                simpleNoiseSettings.minValue = Random.Range(.1f, 1.5f);
-                //Debug.Log("RandomSimple");
+                EarthLikeSetting();
+            }
+            else if (rand < 0.5f)
+            {
+                ImaginarySetting();
             }
             else
             {
-                ridgidNoiseSettings.strength = Random.Range(.2f, 1f);
-                ridgidNoiseSettings.numLayers = 4;
-                ridgidNoiseSettings.baseRoughness = Random.Range(.2f, 3f);
-                ridgidNoiseSettings.roughness = Random.Range(.5f, 3f);
-                ridgidNoiseSettings.persistence = Random.Range(0, 1f);
-                ridgidNoiseSettings.center = randomVect3();
-                ridgidNoiseSettings.minValue = Random.Range(0, .5f);
-                ridgidNoiseSettings.weightMultiplier = Random.Range(.5f, .8f);
-                //Debug.Log("RandomRidgid");
+                RealisticSetting();
             }
-        }
-        
+        }*/
     }
 }

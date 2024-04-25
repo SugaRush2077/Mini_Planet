@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static ColorSettings;
 
-public class Palette : ScriptableObject
+public class Palette
 {
     // name, # color, color1, color2, ...., color10
     public string paletteName;
@@ -16,6 +16,7 @@ public class Palette : ScriptableObject
     {
         this.paletteName = str;
         this.colorAmount = num;
+        initialize();
     }
 
     public void initialize()
@@ -28,7 +29,7 @@ public class Palette : ScriptableObject
         }
     }
     
-    public void addColorIntoPalette(Color newColor)
+    public void addColorInToPalette(Color newColor)
     {
         for (int i = 0; i < colorArray.Length; i++)
         {

@@ -50,11 +50,9 @@ public class PaletteManager : MonoBehaviour
             Int32.TryParse(substring[1], out num);
             string NewName = substring[0];
 
-            Palette newPalette = ScriptableObject.CreateInstance<Palette>();
-            newPalette.paletteName = NewName;
-            newPalette.colorAmount = num;
+            Palette newPalette = new Palette(NewName, num);
             //Debug.Log("New Palette will have " + newPalette.colorAmount + " colors");
-            newPalette.initialize();
+            
 
             for (int k = 0; k < num; k++)
             {
