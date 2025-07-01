@@ -133,9 +133,13 @@ public class Meteor : MonoBehaviour
             Debug.Log("Meteor hit on: " + hitPoint);
             Quaternion normalOrientation = Quaternion.Euler(transform.position - hitPoint);
             Instantiate(crater, hitPoint, normalOrientation);*/
-            Crater ctr;
-            ctr = Instantiate(crater, landingPoint, craterOrientation);
-            ctr.setScale(transform.localScale.x);
+            GameObject craterObj = ObjectPooler.Instance.SpawnFromPool("Crater", landingPoint, craterOrientation);
+            if (craterObj != null)
+            {
+                Crater ctr = craterObj.GetComponent<Crater>();
+                ctr.setScale(transform.localScale.x);
+                ctr.Activate(); // 啟動銷毀計時器
+            }
             
             Explode();
 
@@ -147,9 +151,9 @@ public class Meteor : MonoBehaviour
     void Explode()
     {
         Instantiate(explosionEffect, transform.position, transform.rotation);
-        //GameObject explode = Instantiate(explosionEffect, transform.position, transform.rotation);
-        //explode.transform.localScale = new Vector3(explosionScale, explosionScale, explosionScale);
-        Destroy(gameObject);
+        
+        // 將物件返回物件池
+        ObjectPooler.Instance.ReturnToPool("Meteor", this.gameObject);
     }
     void FixedUpdate()
     {

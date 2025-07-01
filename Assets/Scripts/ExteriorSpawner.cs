@@ -5,7 +5,7 @@ using UnityEngine;
 public class ExteriorSpawner : MonoBehaviour
 {
     public Planet landingPlanet;
-    public Meteor meteor;
+    // public Meteor meteor; // 不再需要直接引用預製件
     public UltimatePlayer player;
     private Vector3 playerPos;
 
@@ -70,7 +70,6 @@ public class ExteriorSpawner : MonoBehaviour
     void Spawn()
     {
         Vector3 spawnPoint;
-        Meteor mtr;
 
         // Select spawn location
         float rand = Random.value;
@@ -82,16 +81,22 @@ public class ExteriorSpawner : MonoBehaviour
         {
             spawnPoint = spawnCenter + (Random.onUnitSphere * spawnRadius) * range;
         }
-        mtr = Instantiate(meteor, spawnPoint, Quaternion.identity);
-        mtr.getInfo(playerPos, dangerIndex);
-        //mtr.randomize(acceleration);
-        if(rand <= attackToPlayerRatio)
+
+        // 從物件池生成隕石，而不是實例化
+        GameObject meteorObj = ObjectPooler.Instance.SpawnFromPool("Meteor", spawnPoint, Quaternion.identity);
+        if (meteorObj != null)
         {
-            mtr.selectPlayerAsTarget(true);
-        }
-        else
-        {
-            mtr.selectPlayerAsTarget(false);
+            Meteor mtr = meteorObj.GetComponent<Meteor>();
+            mtr.getInfo(playerPos, dangerIndex);
+            //mtr.randomize(acceleration);
+            if (rand <= attackToPlayerRatio)
+            {
+                mtr.selectPlayerAsTarget(true);
+            }
+            else
+            {
+                mtr.selectPlayerAsTarget(false);
+            }
         }
 
         // Decide when to launch next meteor

@@ -10,7 +10,7 @@ public class CreatePlanet : MonoBehaviour
     void Start()
     {
         objToSpawn = new GameObject();
-        objToSpawn.transform.parent = objToSpawn.transform;
+        objToSpawn.transform.parent = this.transform; // 或者 null
         objToSpawn.transform.position = new Vector3(20, 0, 0);
         objToSpawn.name = "PCG_testPlanet";
         objToSpawn.AddComponent<Planet>();

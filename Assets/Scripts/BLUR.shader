@@ -57,17 +57,18 @@ Shader "Custom/BLUR" {
              
                 half4 frag( v2f i ) : COLOR {
                  
-                    half4 sum = half4(0,0,0,0);
-                    #define GRABPIXEL(weight,kernelx) tex2Dproj( _GrabTexture, UNITY_PROJ_COORD(float4(i.uvgrab.x + _GrabTexture_TexelSize.x * kernelx*_Size, i.uvgrab.y, i.uvgrab.z, i.uvgrab.w))) * weight
-                    sum += GRABPIXEL(0.05, -4.0);
-                    sum += GRABPIXEL(0.09, -3.0);
-                    sum += GRABPIXEL(0.12, -2.0);
-                    sum += GRABPIXEL(0.15, -1.0);
-                    sum += GRABPIXEL(0.18,  0.0);
-                    sum += GRABPIXEL(0.15, +1.0);
-                    sum += GRABPIXEL(0.12, +2.0);
-                    sum += GRABPIXEL(0.09, +3.0);
-                    sum += GRABPIXEL(0.05, +4.0);
+                    // Gaussian weights for 9 samples
+                    float weights[5] = { 0.18, 0.15, 0.12, 0.09, 0.05 };
+
+                    half4 sum = tex2Dproj( _GrabTexture, UNITY_PROJ_COORD(i.uvgrab)) * weights[0];
+
+                    for (int j = 1; j < 5; j++) {
+                        float kernelx = (float)j * _Size;
+                        float2 offset = float2(_GrabTexture_TexelSize.x * kernelx, 0);
+                        
+                        sum += tex2Dproj( _GrabTexture, UNITY_PROJ_COORD(float4(i.uvgrab.xy + offset, i.uvgrab.z, i.uvgrab.w))) * weights[j];
+                        sum += tex2Dproj( _GrabTexture, UNITY_PROJ_COORD(float4(i.uvgrab.xy - offset, i.uvgrab.z, i.uvgrab.w))) * weights[j];
+                    }
                  
                     return sum;
                 }
@@ -116,17 +117,18 @@ Shader "Custom/BLUR" {
                 half4 frag( v2f i ) : COLOR {
                  
                     half4 sum = half4(0,0,0,0);
-                    #define GRABPIXEL(weight,kernely) tex2Dproj( _GrabTexture, UNITY_PROJ_COORD(float4(i.uvgrab.x, i.uvgrab.y + _GrabTexture_TexelSize.y * kernely*_Size, i.uvgrab.z, i.uvgrab.w))) * weight
-                 
-                    sum += GRABPIXEL(0.05, -4.0);
-                    sum += GRABPIXEL(0.09, -3.0);
-                    sum += GRABPIXEL(0.12, -2.0);
-                    sum += GRABPIXEL(0.15, -1.0);
-                    sum += GRABPIXEL(0.18,  0.0);
-                    sum += GRABPIXEL(0.15, +1.0);
-                    sum += GRABPIXEL(0.12, +2.0);
-                    sum += GRABPIXEL(0.09, +3.0);
-                    sum += GRABPIXEL(0.05, +4.0);
+                    // Gaussian weights for 9 samples
+                    float weights[5] = { 0.18, 0.15, 0.12, 0.09, 0.05 };
+
+                    sum = tex2Dproj( _GrabTexture, UNITY_PROJ_COORD(i.uvgrab)) * weights[0];
+
+                    for (int j = 1; j < 5; j++) {
+                        float kernely = (float)j * _Size;
+                        float2 offset = float2(0, _GrabTexture_TexelSize.y * kernely);
+                        
+                        sum += tex2Dproj( _GrabTexture, UNITY_PROJ_COORD(float4(i.uvgrab.xy + offset, i.uvgrab.z, i.uvgrab.w))) * weights[j];
+                        sum += tex2Dproj( _GrabTexture, UNITY_PROJ_COORD(float4(i.uvgrab.xy - offset, i.uvgrab.z, i.uvgrab.w))) * weights[j];
+                    }
                  
                     return sum;
                 }

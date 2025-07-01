@@ -17,6 +17,15 @@ public class IanCameraFollow : MonoBehaviour
 
     private Vector3 Groundnormal;
 
+    private void Awake()
+    {
+        // 如果 cam 未在 Inspector 中指定，則嘗試獲取主攝影機
+        if (cam == null)
+        {
+            cam = Camera.main;
+        }
+    }
+
     private void LateUpdate()
     {
         Groundnormal = (transform.position - center).normalized;

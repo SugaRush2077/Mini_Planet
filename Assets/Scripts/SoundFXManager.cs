@@ -5,7 +5,7 @@ using UnityEngine;
 public class SoundFXManager : MonoBehaviour
 {
     public static SoundFXManager instance;
-    [SerializeField] private AudioSource soundFXObject;
+    // [SerializeField] private AudioSource soundFXObject; // 不再需要，將在 ObjectPooler 中配置
 
     public AudioSource buttonSound;
     //public AudioSource landingSound;
@@ -31,47 +31,34 @@ public class SoundFXManager : MonoBehaviour
 
     public void PlaySoundFXClip(AudioClip audioClip, Transform spawnTransform, float volume)
     {
-        // spawn in gameObject
-        AudioSource audioSource = Instantiate(soundFXObject, spawnTransform.position, Quaternion.identity);
-
-        // assign the audioClip
-        audioSource.clip = audioClip;
-
-        // assign volume
-        audioSource.volume = volume;
-
-        // play sound
-        audioSource.Play();
-
-        // get lenght of sound FX clip
-        float clipLength = audioSource.clip.length;
-
-        // destroy the clip after tit is done playing
-        Destroy(audioSource.gameObject, clipLength);
+        // 從物件池生成音效物件
+        GameObject audioObject = ObjectPooler.Instance.SpawnFromPool("SoundFX", spawnTransform.position, Quaternion.identity);
+        if (audioObject != null)
+        {
+            PooledAudioSource pooledAudio = audioObject.GetComponent<PooledAudioSource>();
+            if (pooledAudio != null)
+            {
+                pooledAudio.Play(audioClip, volume, "SoundFX");
+            }
+        }
     }
 
     public void PlayRandomSoundFXClip(AudioClip[] audioClipArray, Transform spawnTransform, float volume)
     {
         // assign a random index
         int rand = Random.Range(0, audioClipArray.Length);
+        AudioClip clipToPlay = audioClipArray[rand];
 
-        // spawn in gameObject
-        AudioSource audioSource = Instantiate(soundFXObject, spawnTransform.position, Quaternion.identity);
-
-        // assign the audioClip
-        audioSource.clip = audioClipArray[rand];
-
-        // assign volume
-        audioSource.volume = volume;
-
-        // play sound
-        audioSource.Play();
-
-        // get lenght of sound FX clip
-        float clipLength = audioSource.clip.length;
-
-        // destroy the clip after tit is done playing
-        Destroy(audioSource.gameObject, clipLength);
+        // 從物件池生成音效物件
+        GameObject audioObject = ObjectPooler.Instance.SpawnFromPool("SoundFX", spawnTransform.position, Quaternion.identity);
+        if (audioObject != null)
+        {
+            PooledAudioSource pooledAudio = audioObject.GetComponent<PooledAudioSource>();
+            if (pooledAudio != null)
+            {
+                pooledAudio.Play(clipToPlay, volume, "SoundFX");
+            }
+        }
     }
 
 

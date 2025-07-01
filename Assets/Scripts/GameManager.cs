@@ -4,7 +4,15 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-
+public enum GameState
+{
+    MainMenu,
+    Settings,
+    InGame,
+    GameOver,
+    Tutorial,
+    SoundSettings
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -61,19 +69,19 @@ public class GameManager : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        GameMode(0);
+        SetGameState(GameState.MainMenu);
     }
 
     public void OpenSettings()
     {
-        GameMode(1);
+        SetGameState(GameState.Settings);
     }
 
     public void NewGame()
     {
         musicSelector.switchToGameMusic();
         SoundFXManager.instance.PlaySoundFXClip(landing_audio, transform, 1f);
-        GameMode(2);
+        SetGameState(GameState.InGame);
         /*
         enabled = true;
         ClearObject();
@@ -87,7 +95,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        GameMode(3);
+        SetGameState(GameState.GameOver);
         /*
         //planet.gameObject.SetActive(false);
         player.gameObject.SetActive(false);
@@ -99,11 +107,11 @@ public class GameManager : MonoBehaviour
     public void LoadTutorialMenu()
     {
 
-        GameMode(4);
+        SetGameState(GameState.Tutorial);
     }
     public void LoadSoundSettings()
     {
-        GameMode(5);
+        SetGameState(GameState.SoundSettings);
     }
 
     public void QuitGame()
@@ -209,22 +217,30 @@ public class GameManager : MonoBehaviour
         Crater[] obstacles = FindObjectsOfType<Crater>();
         foreach (var obstacle in obstacles)
         {
-            Destroy(obstacle.gameObject);
+            if (obstacle.gameObject.activeInHierarchy)
+            {
+                ObjectPooler.Instance.ReturnToPool("Crater", obstacle.gameObject);
+            }
         }
 
         Meteor[] mtrs = FindObjectsOfType<Meteor>();
         foreach (var mtr in mtrs)
         {
-            Destroy(mtr.gameObject);
+            // 不要銷毀池化物件，這會導致 MissingReferenceException
+            // 正確的做法是將它歸還給物件池
+            if (mtr.gameObject.activeInHierarchy)
+            {
+                ObjectPooler.Instance.ReturnToPool("Meteor", mtr.gameObject);
+            }
         }
     }
 
-    void GameMode(int mode)
+    void SetGameState(GameState state)
     {
-        switch (mode)
+        switch (state)
         {
             // 0: Main Menu
-            case 0:
+            case GameState.MainMenu:
                 SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .25f);
                 UI_Display(0);
                 if(!keepCurrentPlanet)
@@ -239,14 +255,14 @@ public class GameManager : MonoBehaviour
                 //cameraShake.ShakeCam();
                 break;
             // 1: Colors
-            case 1:
+            case GameState.Settings:
                 SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .25f);
                 UI_Display(1);
                 keepCurrentPlanet = true;
                 camManager.switchCam("Color");
                 break;
             // 2: In Game
-            case 2:
+            case GameState.InGame:
                 isInGame = true;
                 UI_Display(2);
                 ClearObstacle();
@@ -263,7 +279,7 @@ public class GameManager : MonoBehaviour
                 exterior_spawner.GetComponent<ExteriorSpawner>().Launch();
                 break;
             // 3: GameOver Menu
-            case 3:
+            case GameState.GameOver:
                 isInGame = false;
                 UI_Display(3);
                 UI_array[2].GetComponentInChildren<Timer>().stopTimer();
@@ -274,7 +290,7 @@ public class GameManager : MonoBehaviour
 
                 break;
             // 4: Tutorial Menu
-            case 4:
+            case GameState.Tutorial:
                 SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .25f);
                 UI_Display(4);
                 keepCurrentPlanet = true;
@@ -282,7 +298,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             // 5: Sound Settings Menu
-            case 5:
+            case GameState.SoundSettings:
                 SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .25f);
                 UI_Display(5);
                 keepCurrentPlanet = true;

@@ -9,8 +9,13 @@ public class Crater : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // 不要再於 Start 中自動啟動計時器
+    }
+
+    public void Activate()
+    {
         //transform.RotateAround(Vector3.forward, 90f);
-        Invoke(nameof(DestroyCrater), destroy_time);
+        StartCoroutine(ReturnToPoolAfterDelay(destroy_time));
         //explosion_audio.Play();
         
         //SoundFXManager.instance.PlaySoundFXClip(explosion_audioClip, transform, 1f);
@@ -21,8 +26,11 @@ public class Crater : MonoBehaviour
         transform.localScale = new Vector3(scale, scale, scale);
     }
 
-    private void DestroyCrater()
+    private IEnumerator ReturnToPoolAfterDelay(float delay)
     {
-        Destroy(gameObject);
+        yield return new WaitForSeconds(delay);
+        if (gameObject.activeInHierarchy) {
+            ObjectPooler.Instance.ReturnToPool("Crater", gameObject);
+        }
     }
 }

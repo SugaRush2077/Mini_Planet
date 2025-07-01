@@ -13,6 +13,13 @@ public class CameraFollow : MonoBehaviour
 
     public float smoothSpeed = 0.5f;
 
+    private Camera mainCamera;
+
+    void Awake()
+    {
+        mainCamera = Camera.main;
+    }
+
     // Update is called once per frame
     void LateUpdate()
     {
@@ -26,10 +33,10 @@ public class CameraFollow : MonoBehaviour
         }
 
         //ZOOM
-        float fov = Camera.main.fieldOfView;
+        float fov = mainCamera.fieldOfView;
         fov += Input.GetAxis("Mouse ScrollWheel") * -sensitivity;
         fov = Mathf.Clamp(fov, minFov, maxFov);
-        Camera.main.fieldOfView = fov;
+        mainCamera.fieldOfView = fov;
 
     }
 }
