@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+public enum CameraView
+{
+    Menu,
+    Color,
+    Game,
+    Tutorial,
+    Sound
+}
+
 public class SwitchCam : MonoBehaviour
 {
     public Camera MenuCam;
@@ -24,38 +33,36 @@ public class SwitchCam : MonoBehaviour
     [SerializeField]
     public float CameraPanTime;
     private float startTime;
-
-    public void switchCam(string s)
+    
+    public void switchCam(CameraView view)
     {
         deactivateAll();
-        if(s == "Menu")
+        switch (view)
         {
-            MenuCam.enabled = true;
-            setToMenu();
-        }
-        else if (s == "Color")
-        {
-            MenuCam.enabled = true;
-            //ColorCam.enabled = true;
-            setToColor();
-        }
-        else if (s == "Game")
-        {
-            GameCam.enabled = true;
-        }
-        else if (s == "Tutorial")
-        {
-            MenuCam.enabled = true;
-            setToTutorial();
-        }
-        else if (s == "Sound")
-        {
-            MenuCam.enabled = true;
-            setToSound();
-        }
-        else
-        {
-            Debug.Log("Wrong Camera Index!");
+            case CameraView.Menu:
+                MenuCam.enabled = true;
+                setToMenu();
+                break;
+            case CameraView.Color:
+                MenuCam.enabled = true;
+                setToColor();
+                break;
+            case CameraView.Game:
+                GameCam.enabled = true;
+                break;
+            case CameraView.Tutorial:
+                MenuCam.enabled = true;
+                setToTutorial();
+                break;
+            case CameraView.Sound:
+                MenuCam.enabled = true;
+                setToSound();
+                break;
+            default:
+                Debug.LogWarning("Unhandled CameraView: " + view);
+                MenuCam.enabled = true;
+                setToMenu();
+                break;
         }
     }
 

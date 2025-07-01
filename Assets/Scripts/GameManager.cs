@@ -217,6 +217,8 @@ public class GameManager : MonoBehaviour
         Crater[] obstacles = FindObjectsOfType<Crater>();
         foreach (var obstacle in obstacles)
         {
+            // 不要銷毀池化物件，這會導致 MissingReferenceException
+            // 正確的做法是將它歸還給物件池
             if (obstacle.gameObject.activeInHierarchy)
             {
                 ObjectPooler.Instance.ReturnToPool("Crater", obstacle.gameObject);
@@ -226,8 +228,6 @@ public class GameManager : MonoBehaviour
         Meteor[] mtrs = FindObjectsOfType<Meteor>();
         foreach (var mtr in mtrs)
         {
-            // 不要銷毀池化物件，這會導致 MissingReferenceException
-            // 正確的做法是將它歸還給物件池
             if (mtr.gameObject.activeInHierarchy)
             {
                 ObjectPooler.Instance.ReturnToPool("Meteor", mtr.gameObject);
@@ -248,7 +248,7 @@ public class GameManager : MonoBehaviour
                     planet.RandomGeneratePlanet(CurrentPlanetType);
                 }
                 
-                camManager.switchCam("Menu");
+                camManager.switchCam(CameraView.Menu);
                 exterior_spawner.gameObject.SetActive(false);
                 planet.GetComponent<SelfRotate>().enabled = true;
                 ClearObstacle();
@@ -259,7 +259,7 @@ public class GameManager : MonoBehaviour
                 SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .25f);
                 UI_Display(1);
                 keepCurrentPlanet = true;
-                camManager.switchCam("Color");
+                camManager.switchCam(CameraView.Color);
                 break;
             // 2: In Game
             case GameState.InGame:
@@ -269,7 +269,7 @@ public class GameManager : MonoBehaviour
                 planet.GetComponent<SelfRotate>().enabled = false;
                 UI_array[2].GetComponentInChildren<Timer>().startTimer();
                 //planet.RandomGeneratePlanet();
-                camManager.switchCam("Game");
+                camManager.switchCam(CameraView.Game);
                 enabled = true;
                 
                 player.initialize();
@@ -294,7 +294,7 @@ public class GameManager : MonoBehaviour
                 SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .25f);
                 UI_Display(4);
                 keepCurrentPlanet = true;
-                camManager.switchCam("Tutorial");
+                camManager.switchCam(CameraView.Tutorial);
                 break;
 
             // 5: Sound Settings Menu
@@ -302,7 +302,7 @@ public class GameManager : MonoBehaviour
                 SoundFXManager.instance.PlayRandomSoundFXClip(audioClips, transform, .25f);
                 UI_Display(5);
                 keepCurrentPlanet = true;
-                camManager.switchCam("Sound");
+                camManager.switchCam(CameraView.Sound);
                 break;
 
             default:

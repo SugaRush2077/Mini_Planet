@@ -40,8 +40,10 @@ public class Buggy : MonoBehaviour
     private void ProcessGravity() 
     {
         Vector3 diff = transform.position - gravityTarget.position; // position diff between our object and planet
-        rb.AddForce(diff - diff.normalized * gravity * (rb.mass));
-        Debug.DrawRay(transform.position, diff.normalized, Color.red);
+        // The original gravity calculation was complex. A standard approach is to apply a force along the normalized vector.
+        Vector3 gravityUp = diff.normalized;
+        rb.AddForce(gravityUp * -gravity * rb.mass); // Apply force towards the gravity target
+        Debug.DrawRay(transform.position, gravityUp * -1, Color.red);
 
         if(autoOrient) {
             AutoOrient(-diff);

@@ -138,7 +138,7 @@ public class Meteor : MonoBehaviour
             {
                 Crater ctr = craterObj.GetComponent<Crater>();
                 ctr.setScale(transform.localScale.x);
-                ctr.Activate(); // 啟動銷毀計時器
+                ctr.Activate(); // Activate the timer to return to the pool
             }
             
             Explode();
